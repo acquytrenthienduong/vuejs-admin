@@ -49,8 +49,8 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      const start = format(this.event.start, "YYYY-MM-DD");
-      const end = format(this.event.end, "YYYY-MM-DD");
+      const start = format(this.event.start, "yyyy-MM-dd");
+      const end = format(this.event.end, "yyyy-MM-dd");
       const event = {
         ...this.event,
         start,

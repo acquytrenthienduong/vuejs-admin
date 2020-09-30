@@ -5,7 +5,7 @@
         <calendar :events="events" />
       </div>
       <div class="form-holder">
-        <h3>Schedule an event</h3>
+        <h3>Schedule an event halo </h3>
         <event-form />
       </div>
     </div>

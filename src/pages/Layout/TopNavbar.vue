@@ -76,10 +76,26 @@
               </a>
             </li>
 
-            <md-list-item href="#/user">
+            <!-- <md-list-item href="#/user">
               <i class="material-icons">person</i>
               <p class="hidden-lg hidden-md">Profile</p>
-            </md-list-item>
+            </md-list-item> -->
+
+            <div class="md-list-item-content">
+              <drop-down>
+                <md-button
+                  slot="title"
+                  class="md-button md-just-icon md-simple"
+                  data-toggle="dropdown"
+                >
+                  <i class="material-icons">person</i>
+                  <p class="hidden-lg hidden-md">Profile</p>
+                </md-button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <md-button @click="logout"> Logout</md-button>
+                </ul>
+              </drop-down>
+            </div>
           </md-list>
         </div>
       </div>
@@ -107,6 +123,12 @@ export default {
   methods: {
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+    },
+    logout: function() {
+      if (localStorage.getItem("username")) {
+        localStorage.removeItem("username");
+        this.$router.push("/login");
+      }
     }
   }
 };

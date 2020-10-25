@@ -1,87 +1,58 @@
+
 <template>
-  <div id="app">
-    <div class="main">
-      <div class="calendar-holder">
-        <calendar :events="events" />
-      </div>
-      <div class="form-holder">
-        <h3>Schedule an event halo </h3>
-        <event-form />
-      </div>
-    </div>
-  </div>
+  <calendar />
 </template>
 
-<script>
-import Calendar from "./Schedule/Calendar.vue";
-import EventForm from "./Schedule/EventForm.vue";
-import Pusher from "pusher-js";
 
+<script>
+import Calendar from "../pages/Schedule/Calendar";
 export default {
   components: {
-    Calendar,
-    EventForm
+    Calendar
   },
-  data() {
-    return {
-      events: [
-        {
-          title: "event1",
-          start: "2020-09-09",
-          cssClass: "blue",
-          YOUR_DATA: {}
-        },
-        {
-          title: "event2",
-          start: "2020-09-10",
-          end: "2020-09-12",
-          cssClass: ["orange"]
-        }
-      ]
-    };
-  },
-  created() {
-    // Add your pusher credentials
-    var pusher = new Pusher("a3d8de3b78a9366d487c", {
-      cluster: "ap1"
-    });
-    var channel = pusher.subscribe("schedule");
-    channel.bind("new-event", data => {
-      // eslint-disable-next-line
-      console.log("data", data);
-      this.events = [...this.events, data];
-    });
-  }
+  data: () => ({
+    today: "2019-01-08",
+    events: [
+      {
+        name: "Weekly Meeting",
+        start: "2019-01-07 09:00",
+        end: "2019-01-07 10:00"
+      },
+      {
+        name: `Thomas' Birthday`,
+        start: "2019-01-10"
+      },
+      {
+        name: "Mash Potatoes",
+        start: "2019-01-09 12:30",
+        end: "2019-01-09 15:30"
+      }
+    ]
+  })
 };
 </script>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-.main {
-  display: flex;
-  align-items: center;
-}
-.calendar-holder {
-  width: 65%;
-}
-.form-holder {
-  width: 35%;
+<style scoped>
+.my-event {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 2px;
+  background-color: #1867c0;
+  color: #ffffff;
+  border: 1px solid #1867c0;
+  font-size: 12px;
+  padding: 3px;
+  cursor: pointer;
+  margin-bottom: 1px;
+  left: 4px;
+  margin-right: 8px;
+  position: relative;
 }
 
-.form-holder > h3 {
-  color: orangered;
-  text-transform: uppercase;
-  font-size: 16px;
-  text-align: left;
-  margin-left: 30px;
-  margin-bottom: 10px;
+.my-event.with-time {
+  position: absolute;
+  right: 4px;
+  margin-right: 0px;
 }
 </style>
-

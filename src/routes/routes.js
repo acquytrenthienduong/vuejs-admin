@@ -1,4 +1,5 @@
 import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
+import LoginComponent from "@/pages/Layout/LoginComponent.vue";
 
 import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
@@ -11,9 +12,22 @@ import UpgradeToPRO from "@/pages/UpgradeToPRO.vue";
 
 const routes = [
   {
+    path: "/login",
+    name: "login",
+    component: () => import("@/pages/Layout/LoginComponent.vue"),
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('username')) {
+        next({ name: 'dashboard' });
+      }
+      else {
+        next();
+      }
+    }
+  },
+  {
     path: "/",
+    name: "dashboard",
     component: DashboardLayout,
-    redirect: "/dashboard",
     children: [
       {
         path: "dashboard",
@@ -58,7 +72,15 @@ const routes = [
         name: "Upgrade to PRO",
         component: UpgradeToPRO
       }
-    ]
+    ],
+    beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem('username')) {
+        next({ name: 'login' });
+      }
+      else {
+        next();
+      }
+    }
   }
 ];
 

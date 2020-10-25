@@ -113,7 +113,9 @@ export default {
     loadData() {
       axios
         .get("http://localhost:8000/customer")
-        .then((response) => (this.customers = response.data));
+        .then((response) => 
+        // console.log(response)
+        (this.customers = response.data));
     },
   },
   mounted() {

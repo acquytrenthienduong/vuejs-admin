@@ -5,7 +5,7 @@ import StatsCard from "./Cards/StatsCard.vue";
 
 // Tables
 import NavTabsTable from "./Tables/NavTabsTable.vue";
-import StaffTable from "./Tables/StaffTable.vue";
+import ManagerTable from "./Tables/ManagerTable.vue";
 
 
 export {
@@ -13,5 +13,5 @@ export {
   NavTabsCard,
   StatsCard,
   NavTabsTable,
-  StaffTable
+  ManagerTable
 };

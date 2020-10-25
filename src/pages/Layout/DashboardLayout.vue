@@ -17,7 +17,7 @@
       </sidebar-link>
       <sidebar-link to="/table">
         <md-icon>content_paste</md-icon>
-        <p>Staff List</p>
+        <p>Account Manager</p>
       </sidebar-link>
       <sidebar-link to="/typography">
         <md-icon>library_books</md-icon>

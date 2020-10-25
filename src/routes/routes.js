@@ -2,7 +2,7 @@ import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
 
 import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
-import StaffList from "@/pages/StaffList.vue";
+import AccountManager from "@/pages/AccountManager.vue";
 import Typography from "@/pages/Typography.vue";
 import Icons from "@/pages/Icons.vue";
 import Maps from "@/pages/Maps.vue";
@@ -28,7 +28,7 @@ const routes = [
       {
         path: "table",
         name: "Table List",
-        component: StaffList
+        component: AccountManager
       },
       {
         path: "typography",

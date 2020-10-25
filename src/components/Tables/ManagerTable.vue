@@ -20,7 +20,7 @@
         aria-modal
       >
         <template #default="props">
-          <AddNewCustomerModal @close="props.close" :callback="loadData"></AddNewCustomerModal>
+          <AddNewManagerModal @close="props.close" :callback="loadData"></AddNewManagerModal>
         </template>
       </b-modal>
     </section>
@@ -87,10 +87,10 @@
 
 <script>
 import axios from "axios";
-import AddNewCustomerModal from "../Modal/AddNewCustomerModal";
+import AddNewManagerModal from "../Modal/AddNewManagerModal";
 export default {
   components: {
-    AddNewCustomerModal,
+    AddNewManagerModal,
   },
   data() {
     return {
@@ -112,7 +112,7 @@ export default {
 
     loadData() {
       axios
-        .get("http://localhost:8000/customer")
+        .get("http://localhost:8000/manager")
         .then((response) => (this.customers = response.data));
     },
   },

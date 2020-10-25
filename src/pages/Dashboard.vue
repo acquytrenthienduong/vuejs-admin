@@ -173,7 +173,7 @@
             <p class="category">New employees on 15th September, 2016</p>
           </md-card-header>
           <md-card-content>
-            <StaffTable table-header-color="orange"></StaffTable>
+            <ManagerTable table-header-color="orange"></ManagerTable>
           </md-card-content>
         </md-card>
       </div>
@@ -209,7 +209,7 @@ import {
   ChartCard,
   NavTabsCard,
   NavTabsTable,
-  StaffTable
+  ManagerTable
 } from "@/components";
 
 export default {
@@ -218,7 +218,7 @@ export default {
     ChartCard,
     NavTabsCard,
     NavTabsTable,
-    StaffTable
+    ManagerTable
   },
   data() {
     return {

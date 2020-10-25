@@ -3,7 +3,7 @@
     <form action="">
       <div class="modal-card" style="width: 600px;  height: 500px">
         <header class="modal-card-head">
-          <p class="modal-card-title">Add New Staff</p>
+          <p class="modal-card-title">Add New Manager</p>
           <button type="button" class="delete" @click="$emit('close')" />
         </header>
         <section class="modal-card-body">
@@ -57,7 +57,7 @@
           <button class="button" type="button" @click="$emit('close')">
             Close
           </button>
-          <button @click="addNewCustomer" class="button is-primary">
+          <button @click="addNewManager" class="button is-primary">
             Submit
           </button>
         </footer>
@@ -84,9 +84,9 @@ export default {
     };
   },
   methods: {
-    addNewCustomer() {
+    addNewManager() {
       axios
-        .post("http://localhost:8000/addNewCustomer", {
+        .post("http://localhost:8000/addNewManager", {
           account: this.account,
           email: this.email,
           password: this.password,

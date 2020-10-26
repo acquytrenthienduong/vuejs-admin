@@ -12,12 +12,12 @@
         <p>Dashboard</p>
       </sidebar-link>
       <sidebar-link to="/user">
-        <md-icon>person</md-icon>
-        <p>User Profile</p>
+        <md-icon>schedule</md-icon>
+        <p>Schedule</p>
       </sidebar-link>
       <sidebar-link to="/table">
-        <md-icon>content_paste</md-icon>
-        <p>Account Manager</p>
+        <md-icon>account_circle</md-icon>
+        <p>Account</p>
       </sidebar-link>
       <sidebar-link to="/typography">
         <md-icon>library_books</md-icon>

@@ -3,7 +3,7 @@
     <v-app id="inspire">
       <v-row class="fill-height">
         <v-col>
-          <v-sheet height="64">
+          <v-sheet height="64" class="display-flex">
             <v-toolbar flat>
               <v-btn
                 outlined
@@ -13,6 +13,7 @@
               >
                 Today
               </v-btn>
+              <AddNewReservationDialog></AddNewReservationDialog>
               <v-btn fab text small color="grey darken-2" @click="prev">
                 <v-icon small>
                   mdi-chevron-left
@@ -32,6 +33,7 @@
           </v-sheet>
           <v-sheet height="700">
             <v-calendar
+              class="calendar_quang_anh"
               ref="calendar"
               v-model="focus"
               color="primary"
@@ -82,8 +84,12 @@
 
 <script>
 import axios from "axios";
+import AddNewReservationDialog from "../../components/Modal/AddNewReservationDialog";
 
 export default {
+  components: {
+    AddNewReservationDialog
+  },
   data: () => ({
     allReservationDetail: null,
     focus: "",
@@ -194,3 +200,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.display-flex {
+  display: flex;
+}
+</style>

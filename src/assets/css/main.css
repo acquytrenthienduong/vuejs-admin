@@ -114,3 +114,8 @@
     transition: none;
     color: #222222;
   }
+
+.calendar_quang_anh 
+  .v-menu__content {
+    margin-left: -250px !important; 
+  }

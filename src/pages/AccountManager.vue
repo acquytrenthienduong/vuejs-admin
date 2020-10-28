@@ -8,11 +8,26 @@
           <md-card-header data-background-color="dark">
             <h4 class="title">Account List</h4>
             <p class="category">
-              This is where you can config the staff information
+              This is where you can config the Account information
             </p>
           </md-card-header>
           <md-card-content>
-            <ManagerTable />
+            <!-- <ManagerTable /> -->
+            <section>
+              <b-tabs>
+                <b-tab-item icon="google-photos" label="Manager">
+                  <ManagerTable />
+                </b-tab-item>
+
+                <b-tab-item icon="google-drive" label="Staff">
+                  <h1>List of staff</h1>
+                </b-tab-item>
+
+                <b-tab-item icon="video" label="Receptionist">
+                  <h1>List of Receptionist</h1>
+                </b-tab-item>
+              </b-tabs>
+            </section>
           </md-card-content>
         </md-card>
       </div>
@@ -27,5 +42,6 @@ export default {
   components: {
     ManagerTable,
   },
+  
 };
 </script>

@@ -18,17 +18,6 @@
             </b-input>
           </b-field>
 
-          <b-field label="Email">
-            <b-input
-              type="email"
-              v-model="email"
-              :value="email"
-              placeholder="Your email"
-              required
-            >
-            </b-input>
-          </b-field>
-
           <b-field label="Password">
             <b-input
               type="password"
@@ -36,6 +25,17 @@
               :value="password"
               password-reveal
               placeholder="Your password"
+              required
+            >
+            </b-input>
+          </b-field>
+
+          <b-field label="DoB">
+            <b-input
+              type="date"
+              v-model="dob"
+              :value="dob"
+              placeholder="Your email"
               required
             >
             </b-input>
@@ -70,39 +70,41 @@
 import axios from "axios";
 export default {
   props: {
-      reload: {
-        type: Function
-      }
+    reload: {
+      type: Function,
     },
-  // props: ["email", "password", "account"],
+  },
+  // props: ["dob","gender", "password", "account"],
   data() {
     return {
       account: "",
-      email: "",
+      dob: "",
       password: "",
       gender: "",
+      errors : null
     };
   },
   methods: {
     addNewManager() {
       axios
-        .post("http://localhost:8000/addNewManager", {
+        .post("http://localhost:8000/addManager", {
           account: this.account,
-          email: this.email,
           password: this.password,
+          dob: this.dob,
           gender: this.gender,
         })
         .then((response) => {
           console.log(response);
           this.account = "";
-          this.email = "";
+          this.dob = "";
           this.password = "";
           this.gender = "";
-          this.$emit('close');
+          this.$emit("close");
           this.reload();
+          // window.location.reload();
         })
         .catch((e) => {
-          this.errors.push(e);
+          this.errors.push(e); // co loi o day chua fix duoc 
         });
     },
   },

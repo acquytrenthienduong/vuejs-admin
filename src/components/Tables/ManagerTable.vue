@@ -1,7 +1,10 @@
 <template>
   <div>
     <section>
-      <div class="buttons">
+      <div
+        class="buttons"
+        style=".buttons:not(:last-child) : margin-bottom: 1rem"
+      >
         <b-button
           size="is-medium"
           class="fas fa-user-plus"
@@ -22,7 +25,7 @@
         <template #default="props">
           <AddNewManagerModal
             @close="props.close"
-            :callback="loadData"
+            :reload="loadData"
           ></AddNewManagerModal>
         </template>
       </b-modal>
@@ -38,7 +41,6 @@
         aria-previous-label="Previous page"
         aria-page-label="Page"
         aria-current-label="Current page"
-        
       >
         <b-table-column label="ID" width="40" numeric>
           <template v-slot="props">
@@ -96,7 +98,7 @@ import AddNewManagerModal from "../Modal/AddNewManagerModal";
 import { id } from "date-fns/locale";
 export default {
   components: {
-    AddNewManagerModal,
+    AddNewManagerModal
   },
   data() {
     return {
@@ -108,7 +110,7 @@ export default {
       //   account: "toilatai",
       // },
       //data for modal
-      isComponentModalActive: false,
+      isComponentModalActive: false
     };
   },
   methods: {
@@ -119,23 +121,35 @@ export default {
     deleteManager(managerID) {
       axios
         .delete("http://localhost:8000/manager/" + managerID)
-        .then((response) => {
-          console.log(response);
+        .then(response => {
           this.loadData();
           // window.location.reload();
         });
     },
 
     loadData() {
-      axios.get("http://localhost:8000/manager").then(
-        (response) =>
-          // console.log(response)
-          (this.managers = response.data)
-      );
+      console.log('quang anh 1234')
+      axios
+        .get("http://localhost:8000/manager")
+        .then(response => (this.managers = response.data));
     },
+
+    reloadPage() {
+      window.location.reload();
+    }
   },
   mounted() {
     this.loadData();
-  },
+  }
 };
 </script>
+
+<style>
+.buttons:last-child {
+  margin-bottom: 1rem !important;
+}
+
+li {
+  list-style: none !important;
+}
+</style>

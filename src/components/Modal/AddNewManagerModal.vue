@@ -101,7 +101,6 @@ export default {
           this.gender = "";
           this.$emit("close");
           this.reload();
-          // window.location.reload();
         })
         .catch((e) => {
           this.errors.push(e); // co loi o day chua fix duoc 

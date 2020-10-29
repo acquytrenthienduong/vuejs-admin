@@ -8,14 +8,14 @@
         <b-button
           size="is-medium"
           class="fas fa-user-plus"
-          @click="isComponentModalActive = true"
+          @click="isAddNewModalActive = true"
         >
         </b-button>
       </div>
 
       <!-- modal form -->
       <b-modal
-        v-model="isComponentModalActive"
+        v-model="isAddNewModalActive"
         has-modal-card
         trap-focus
         :destroy-on-hide="false"
@@ -27,6 +27,23 @@
             @close="props.close"
             :reload="loadData"
           ></AddNewManagerModal>
+        </template>
+      </b-modal>
+      <!-- UpdateManagerModal -->
+      <b-modal
+        v-model="isUpdateModalActive"
+        has-modal-card
+        trap-focus
+        :destroy-on-hide="false"
+        aria-role="dialog"
+        aria-modal
+      >
+        <template #default="props">
+          <UpdateManagerModal
+            @close="props.close"
+            :manager="manager"
+            :reload="loadData"
+          ></UpdateManagerModal>
         </template>
       </b-modal>
     </section>
@@ -62,7 +79,8 @@
 
         <b-table-column label="DoB" centered>
           <template v-slot="props">
-            {{ new Date(props.row.dob).toLocaleDateString() }}
+            <!-- {{ new Date(props.row.dob).toLocaleDateString() }} -->
+            {{props.row.dob}}
           </template>
         </b-table-column>
 
@@ -74,7 +92,10 @@
 
         <b-table-column label="Action">
           <template v-slot="props">
-            <md-button class="md-just-icon md-simple md-primary">
+            <md-button
+              class="md-just-icon md-simple md-primary"
+              @click="loadDataByID(props.row.manager_id)"
+            >
               <md-icon>edit</md-icon>
               <md-tooltip md-direction="top">Edit</md-tooltip>
             </md-button>
@@ -95,52 +116,54 @@
 <script>
 import axios from "axios";
 import AddNewManagerModal from "../Modal/AddNewManagerModal";
+import UpdateManagerModal from "../Modal/UpdateManagerModal";
+
 import { id } from "date-fns/locale";
 export default {
   components: {
-    AddNewManagerModal
+    AddNewManagerModal,
+    UpdateManagerModal,
   },
   data() {
     return {
       managers: [],
-
-      // formProps: {
-      //   email: "evan@you.com",
-      //   password: "testing",
-      //   account: "toilatai",
-      // },
+      manager: {},
       //data for modal
-      isComponentModalActive: false
+      isAddNewModalActive: false,
+      isUpdateModalActive: false,
     };
   },
   methods: {
-    edit(customerID) {
-      alert("viet function cho bm di");
-    },
-
     deleteManager(managerID) {
       axios
         .delete("http://localhost:8000/manager/" + managerID)
-        .then(response => {
+        .then((response) => {
           this.loadData();
           // window.location.reload();
         });
     },
 
     loadData() {
-      console.log('quang anh 1234')
       axios
         .get("http://localhost:8000/manager")
-        .then(response => (this.managers = response.data));
+        .then((response) => (this.managers = response.data));
+    },
+
+    loadDataByID(managerID) {
+      this.isUpdateModalActive = true;
+      axios
+        .get("http://localhost:8000/getManagerByID/" + managerID)
+        .then((response) => (this.manager = response.data));
     },
 
     reloadPage() {
       window.location.reload();
-    }
+    },
   },
   mounted() {
     this.loadData();
-  }
+    // this.loadDataByID();
+  },
 };
 </script>
 

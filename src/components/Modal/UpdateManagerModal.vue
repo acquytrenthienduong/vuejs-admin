@@ -86,7 +86,6 @@ export default {
           gender: this.manager.gender,
         })
         .then((response) => {
-          console.log(response);
           this.reload();
           this.$emit("close");
         });

@@ -89,20 +89,13 @@ export default {
   }),
   methods: {
     asyncFind(query) {
-      console.log("123", query);
       if (query != "") {
         this.isLoading = true;
         axios
           .get("http://localhost:8000/findAllByAccount/" + query)
           .then((response) => {
-            console.log(response);
             // customers = [];
-            response.data.forEach((element) => {
-              let selectItem = {};
-              selectItem.name = element.account;
-              selectItem.id = element.customer_id;
-              this.customers = response.data
-            });
+            this.customers = response.data;
             this.isLoading = false;
           });
       } else {

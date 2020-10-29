@@ -134,7 +134,6 @@ export default {
         .then((response) => console.log("get login", response));
     },
     transFormData(data) {
-      console.log("data", data);
       if (data) {
         data.forEach((element) => {
           let event = {};
@@ -143,13 +142,11 @@ export default {
           event.color = "red";
           // event.end = element.checkout_time;
           this.events.push(event);
-          console.log(this.events);
         });
       }
     },
 
     convertDate(date) {
-      console.log("date", date);
       let dateRaw = new Date(date);
       let year = dateRaw.getFullYear();
       let month = dateRaw.getMonth() + 1;
@@ -157,7 +154,6 @@ export default {
       let hour = dateRaw.getHours() - 7;
       let minute = dateRaw.getMinutes();
 
-      console.log("hour", hour);
       if (dt < 10) {
         dt = "0" + dt;
       }
@@ -184,7 +180,6 @@ export default {
       this.$refs.calendar.next();
     },
     showEvent({ nativeEvent, event }) {
-      console.log("s", event);
       const open = () => {
         this.selectedEvent = event;
         this.selectedElement = nativeEvent.target;

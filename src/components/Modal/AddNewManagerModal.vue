@@ -94,7 +94,6 @@ export default {
           gender: this.gender,
         })
         .then((response) => {
-          console.log(response);
           this.account = "";
           this.dob = "";
           this.password = "";

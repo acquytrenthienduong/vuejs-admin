@@ -44,9 +44,6 @@ export default {
     getSelectedDate() {
       this.selectedDate = date;
     },
-    click() {
-      console.log("click", this.date);
-    },
     onInput(val) {
       this.menu = false
       this.date = val
@@ -54,10 +51,5 @@ export default {
       
     }
   },
-  watch: {
-    pickerDate(val) {
-      console.log("sadasdas", val);
-    }
-  }
 };
 </script>

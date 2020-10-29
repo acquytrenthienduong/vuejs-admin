@@ -131,7 +131,6 @@ export default {
         axios
           .get("http://localhost:8000/logoutCustomer")
           .then((response) => {
-            console.log(response);
           });
 
         this.$router.push("/login");

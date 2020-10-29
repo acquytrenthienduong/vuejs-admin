@@ -26,6 +26,7 @@
     "vue-fullcalendar": "^1.0.9",
     "vue-github-buttons": "3.1.0",
     "vue-material": "1.0.0-beta-11",
+    "vue-multiselect": "^2.1.6",
     "vue-router": "3.1.6",
     "vue-social-sharing": "2.4.7",
     "vuejs-datepicker": "^1.6.2",

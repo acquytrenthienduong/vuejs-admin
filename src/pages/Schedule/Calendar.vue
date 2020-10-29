@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-app id="inspire">
+    <v-app id="inspire" class="calendar_quang_anh">
       <v-row class="fill-height">
         <v-col>
           <v-sheet height="64" class="display-flex">
@@ -33,7 +33,6 @@
           </v-sheet>
           <v-sheet height="700">
             <v-calendar
-              class="calendar_quang_anh"
               ref="calendar"
               v-model="focus"
               color="primary"
@@ -88,7 +87,7 @@ import AddNewReservationDialog from "../../components/Modal/AddNewReservationDia
 
 export default {
   components: {
-    AddNewReservationDialog
+    AddNewReservationDialog,
   },
   data: () => ({
     allReservationDetail: null,
@@ -102,36 +101,42 @@ export default {
         name: "Weekly Meeting",
         start: "2020-10-23 09:00",
         end: "2020-10-23 10:00",
-        color: "blue"
+        color: "blue",
       },
       {
         name: "Event 1",
         start: "2020-10-21 09:30",
         end: "2020-10-21 10:00",
-        color: "blue"
+        color: "blue",
       },
       {
         name: "Event 2",
         start: "2020-10-26 10:30",
         // end: "2020-10-26 11:00",
-        color: "red"
-      }
-    ]
+        color: "red",
+      },
+    ],
   }),
   mounted() {
     this.$refs.calendar.checkChange();
     this.loadData();
+    this.loadData1();
   },
   methods: {
     loadData() {
       axios
         .get("http://localhost:8000/getAllReservationDetail")
-        .then(response => this.transFormData(response.data));
+        .then((response) => this.transFormData(response.data));
+    },
+    loadData1() {
+      axios
+        .get("http://localhost:8000/login")
+        .then((response) => console.log("get login", response));
     },
     transFormData(data) {
       console.log("data", data);
       if (data) {
-        data.forEach(element => {
+        data.forEach((element) => {
           let event = {};
           event.name = "New Event";
           event.start = this.convertDate(element.checkin_time);
@@ -196,13 +201,19 @@ export default {
       }
 
       nativeEvent.stopPropagation();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
 .display-flex {
   display: flex;
+}
+.v-menu__content--fixed {
+  margin-left: 0px !important;
+}
+.calendar_quang_anh .v-menu__content {
+  margin-left: -250px;
 }
 </style>

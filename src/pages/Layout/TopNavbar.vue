@@ -104,6 +104,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -116,8 +117,8 @@ export default {
         "Angela Martin",
         "Kelly Kapoor",
         "Ryan Howard",
-        "Kevin Malone"
-      ]
+        "Kevin Malone",
+      ],
     };
   },
   methods: {
@@ -127,10 +128,16 @@ export default {
     logout: function() {
       if (localStorage.getItem("username")) {
         localStorage.removeItem("username");
+        axios
+          .get("http://localhost:8000/logoutCustomer")
+          .then((response) => {
+            console.log(response);
+          });
+
         this.$router.push("/login");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

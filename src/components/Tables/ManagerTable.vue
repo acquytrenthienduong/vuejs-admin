@@ -128,7 +128,7 @@ export default {
     },
 
     loadData() {
-      console.log('quang anh 1234')
+      // console.log('quang anh 1234')
       axios
         .get("http://localhost:8000/manager")
         .then(response => (this.managers = response.data));

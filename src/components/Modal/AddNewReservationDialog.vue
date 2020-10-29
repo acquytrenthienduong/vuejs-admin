@@ -13,58 +13,45 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field label="Legal first name*" required></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-row justify="center">
-                  <v-text-field
-                    label="Legal first name*"
-                    required
-                  ></v-text-field>
-                </v-row>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="Legal last name*"
-                  hint="example of persistent helper text"
-                  persistent-hint
-                  required
-                ></v-text-field>
+              <v-col cols="12">
+                <multiselect
+                  v-model="customer"
+                  id="ajax"
+                  placeholder="Type to search"
+                  open-direction="bottom"
+                  :options="customers"
+                  :multiple="false"
+                  :searchable="true"
+                  :loading="isLoading"
+                  :internal-search="false"
+                  :clear-on-select="false"
+                  :close-on-select="false"
+                  :options-limit="1000"
+                  :limit="3"
+                  :max-height="600"
+                  :show-no-results="false"
+                  label="account"
+                  track-by="account"
+                  @search-change="asyncFind"
+                >
+                </multiselect>
+                <!-- {{ customer }} -->
               </v-col>
               <v-col cols="12">
                 <v-text-field label="Email*" required></v-text-field>
               </v-col>
-              <v-col cols="12">
-                <DatePicker></DatePicker>
-              </v-col>
               <v-col cols="12" sm="6">
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Age*"
-                  required
-                ></v-select>
+                <DatePicker
+                  v-model="selectedDate"
+                  :selectedDate="selectedDate"
+                ></DatePicker>
               </v-col>
+              <!-- {{ selectedDate }} -->
               <v-col cols="12" sm="6">
-                <v-autocomplete
-                  :items="[
-                    'Skiing',
-                    'Ice hockey',
-                    'Soccer',
-                    'Basketball',
-                    'Hockey',
-                    'Reading',
-                    'Writing',
-                    'Coding',
-                    'Basejump'
-                  ]"
-                  label="Interests"
-                  multiple
-                ></v-autocomplete>
+                <TimePicker></TimePicker>
               </v-col>
             </v-row>
           </v-container>
-          <small>*indicates required field</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -82,13 +69,48 @@
 
 <script>
 import DatePicker from "../../pages/Schedule/DatePicker";
+import TimePicker from "../../pages/Schedule/TimePicker";
+import Multiselect from "vue-multiselect";
+import axios from "axios";
 
 export default {
   components: {
-    DatePicker
+    DatePicker,
+    TimePicker,
+    Multiselect,
   },
   data: () => ({
-    dialog: false
-  })
+    dialog: false,
+    selectedDate: new Date().toISOString().substr(0, 10),
+    selectedTime: null,
+    customer: null,
+    customers: [],
+    isLoading: false,
+  }),
+  methods: {
+    asyncFind(query) {
+      console.log("123", query);
+      if (query != "") {
+        this.isLoading = true;
+        axios
+          .get("http://localhost:8000/findAllByAccount/" + query)
+          .then((response) => {
+            console.log(response);
+            // customers = [];
+            response.data.forEach((element) => {
+              let selectItem = {};
+              selectItem.name = element.account;
+              selectItem.id = element.customer_id;
+              this.customers = response.data
+            });
+            this.isLoading = false;
+          });
+      } else {
+        this.customers = [];
+      }
+    },
+  },
 };
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

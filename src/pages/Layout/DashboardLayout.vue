@@ -11,11 +11,11 @@
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
-      <sidebar-link to="/user">
+      <sidebar-link to="/schedule">
         <md-icon>schedule</md-icon>
         <p>Schedule</p>
       </sidebar-link>
-      <sidebar-link to="/table">
+      <sidebar-link to="/account">
         <md-icon>account_circle</md-icon>
         <p>Account</p>
       </sidebar-link>

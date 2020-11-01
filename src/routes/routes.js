@@ -34,13 +34,13 @@ const routes = [
         component: Dashboard
       },
       {
-        path: "user",
-        name: "User Profile",
+        path: "schedule",
+        name: "Schedule",
         component: UserProfile
       },
       {
-        path: "table",
-        name: "Table List",
+        path: "account",
+        name: "Account Manager",
         component: AccountManager
       },
       {

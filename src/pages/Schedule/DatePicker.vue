@@ -48,7 +48,6 @@ export default {
       this.menu = false
       this.date = val
       this.$emit('input', val)
-      
     }
   },
 };

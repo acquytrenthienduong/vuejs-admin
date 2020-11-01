@@ -13,7 +13,9 @@
               >
                 Today
               </v-btn>
-              <AddNewReservationDialog></AddNewReservationDialog>
+              <AddNewReservationDialog
+                :reload="loadData"
+              ></AddNewReservationDialog>
               <v-btn fab text small color="grey darken-2" @click="prev">
                 <v-icon small>
                   mdi-chevron-left
@@ -63,13 +65,20 @@
                     <v-icon>mdi-dots-vertical</v-icon>
                   </v-btn>
                 </v-toolbar>
+                <v-checkbox
+                  v-model="selectedEvent.isCheck"
+                  :label="`Trạng Thái: ${selectedEvent.text}`"
+                ></v-checkbox>
                 <v-card-text>
                   Start: <span v-html="selectedEvent.start"></span><br />
-                  End: <span v-html="selectedEvent.end"></span>
+                  End: <span v-html="selectedEvent.checkout_time"></span>
                 </v-card-text>
-                <v-card-actions>
-                  <v-btn text color="secondary" @click="selectedOpen = false">
-                    Cancel
+                <v-card-actions class="footer-card">
+                  <v-btn text color="secondary" @click="updateReservation">
+                    Update
+                  </v-btn>
+                  <v-btn text color="secondary" @click="Remove">
+                    Remove
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -96,51 +105,44 @@ export default {
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
-    events: [
-      {
-        name: "Weekly Meeting",
-        start: "2020-10-23 09:00",
-        end: "2020-10-23 10:00",
-        color: "blue",
-      },
-      {
-        name: "Event 1",
-        start: "2020-10-21 09:30",
-        end: "2020-10-21 10:00",
-        color: "blue",
-      },
-      {
-        name: "Event 2",
-        start: "2020-10-26 10:30",
-        // end: "2020-10-26 11:00",
-        color: "red",
-      },
-    ],
+    events: [],
+    checkbox: false,
+    text: "",
   }),
   mounted() {
     this.$refs.calendar.checkChange();
     this.loadData();
-    this.loadData1();
   },
   methods: {
     loadData() {
       axios
-        .get("http://localhost:8000/getAllReservationDetail")
+        .get("http://localhost:8000/getAllReservation")
         .then((response) => this.transFormData(response.data));
     },
-    loadData1() {
-      axios
-        .get("http://localhost:8000/login")
-        .then((response) => console.log("get login", response));
-    },
+    // loadData1() {
+    //   axios
+    //     .get("http://localhost:8000/login")
+    //     .then((response) => console.log("get login", response));
+    // },
     transFormData(data) {
       if (data) {
         data.forEach((element) => {
           let event = {};
-          event.name = "New Event";
-          event.start = this.convertDate(element.checkin_time);
+          event.name = element.customer.account;
+          event.reservation_id = element.reservation_id;
+          event.start = element.reservation_date + " " + element.checkin_time;
+          event.checkout_time =
+            element.reservation_date + " " + element.checkout_time;
           event.color = "red";
-          // event.end = element.checkout_time;
+          event.isCheck = false;
+          event.status = 0;
+          event.text = "Chưa Thanh Toán";
+          if (element.status === 1) {
+            event.color = "green";
+            event.isCheck = true;
+            event.text = "Đã Thanh Toán";
+            event.status = 1;
+          }
           this.events.push(event);
         });
       }
@@ -197,6 +199,45 @@ export default {
 
       nativeEvent.stopPropagation();
     },
+    updateReservation() {
+      let dateRaw = new Date();
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
+      axios
+        .post(
+          "http://localhost:8000/updateReservation/" +
+            this.selectedEvent.reservation_id,
+          {
+            status: this.selectedEvent.status,
+            checkout_time: hour + ":" + minute + ":" + second,
+          }
+        )
+        .then((response) => {
+          this.selectedOpen = false;
+          this.loadData();
+        });
+    },
+    Remove() {
+      console.log("remove");
+    },
+  },
+  watch: {
+    "selectedEvent.isCheck": function(val) {
+      if (val) {
+        this.selectedEvent.color = "green";
+        this.selectedEvent.text = "Đã Thanh Toán";
+        this.selectedEvent.status = 1;
+      } else {
+        this.selectedEvent.color = "red";
+        this.selectedEvent.text = "Chưa Thanh Toán";
+        this.selectedEvent.status = 0;
+      }
+      this.checkbox = val;
+    },
   },
 };
 </script>
@@ -210,5 +251,9 @@ export default {
 }
 .calendar_quang_anh .v-menu__content {
   margin-left: -250px;
+}
+.footer-card{
+  display: flex;
+  justify-content: space-between
 }
 </style>

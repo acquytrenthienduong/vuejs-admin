@@ -45,10 +45,37 @@
                   v-model="selectedDate"
                   :selectedDate="selectedDate"
                 ></DatePicker>
+                {{ selectedDate }}
               </v-col>
-              <!-- {{ selectedDate }} -->
               <v-col cols="12" sm="6">
-                <TimePicker></TimePicker>
+                <v-menu
+                  ref="menu"
+                  v-model="menu2"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="time"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="time"
+                      label="Chọn Giờ"
+                      prepend-icon="mdi-clock-time-four-outline"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="menu2"
+                    v-model="time"
+                    full-width
+                    @click:minute="$refs.menu.save(time)"
+                  ></v-time-picker>
+                </v-menu>
               </v-col>
             </v-row>
           </v-container>
@@ -58,7 +85,7 @@
           <v-btn color="blue darken-1" text @click="dialog = false">
             Close
           </v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false">
+          <v-btn color="blue darken-1" text @click="createNewReservation">
             Create
           </v-btn>
         </v-card-actions>
@@ -69,23 +96,28 @@
 
 <script>
 import DatePicker from "../../pages/Schedule/DatePicker";
-import TimePicker from "../../pages/Schedule/TimePicker";
 import Multiselect from "vue-multiselect";
 import axios from "axios";
 
 export default {
   components: {
     DatePicker,
-    TimePicker,
     Multiselect,
+  },
+  props: {
+    reload: {
+      type: Function,
+    },
   },
   data: () => ({
     dialog: false,
     selectedDate: new Date().toISOString().substr(0, 10),
-    selectedTime: null,
     customer: null,
     customers: [],
     isLoading: false,
+    time: null,
+    menu2: false,
+    modal2: false,
   }),
   methods: {
     asyncFind(query) {
@@ -101,6 +133,24 @@ export default {
       } else {
         this.customers = [];
       }
+    },
+
+    createNewReservation() {
+      axios
+        .post("http://localhost:8000/createNewReservation", {
+          customer_id: this.customer.customer_id,
+          checkin_time: this.time,
+          reservation_date: this.selectedDate,
+          status: 0,
+        })
+        .then((response) => {
+          console.log(response);
+          this.dialog = false;
+          this.reload();
+        })
+        .catch((e) => {
+          this.errors.push(e); // co loi o day chua fix duoc
+        });
     },
   },
 };

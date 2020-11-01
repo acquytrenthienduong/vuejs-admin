@@ -33,12 +33,25 @@
 
 <script>
 export default {
+  props: {
+    selectedTime: {
+      type: String,
+    },
+  },
   data() {
     return {
       time: null,
       menu2: false,
-      modal2: false
+      modal2: false,
     };
-  }
+  },
+  method: {
+    onInput(val) {
+      console.log("val", val);
+      this.menu = false;
+      this.time = val;
+      this.$emit("input", val);
+    },
+  },
 };
 </script>

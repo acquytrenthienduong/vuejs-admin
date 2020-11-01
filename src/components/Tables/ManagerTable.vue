@@ -139,7 +139,6 @@ export default {
         .delete("http://localhost:8000/manager/" + managerID)
         .then((response) => {
           this.loadData();
-          // window.location.reload();
         });
     },
 
@@ -154,10 +153,6 @@ export default {
       axios
         .get("http://localhost:8000/getManagerByID/" + managerID)
         .then((response) => (this.manager = response.data));
-    },
-
-    reloadPage() {
-      window.location.reload();
     },
   },
   mounted() {

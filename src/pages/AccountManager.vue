@@ -20,7 +20,7 @@
                 </b-tab-item>
 
                 <b-tab-item icon="google-drive" label="Staff">
-                  <h1>List of staff</h1>
+                   <StaffTable />
                 </b-tab-item>
 
                 <b-tab-item icon="video" label="Receptionist">
@@ -37,10 +37,13 @@
 
 <script>
 import { ManagerTable } from "@/components";
+import StaffTable from '../components/Tables/StaffTable'
+
 
 export default {
   components: {
     ManagerTable,
+    StaffTable
   },
   
 };

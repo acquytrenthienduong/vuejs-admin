@@ -23,10 +23,11 @@
         aria-modal
       >
         <template #default="props">
-          <AddNewManagerModal
+          <AddNewStaffModal
             @close="props.close"
             :reload="loadData"
-          ></AddNewManagerModal>
+            :shifts="shifts"
+          ></AddNewStaffModal>
         </template>
       </b-modal>
       <!-- UpdateManagerModal -->
@@ -39,18 +40,19 @@
         aria-modal
       >
         <template #default="props">
-          <UpdateManagerModal
+          <UpdateStaffModal
             @close="props.close"
-            :manager="manager"
+            :staff="staff"
             :reload="loadData"
-          ></UpdateManagerModal>
+            :shifts="shifts"
+          ></UpdateStaffModal>
         </template>
       </b-modal>
     </section>
 
     <section>
       <b-table
-        :data="managers"
+        :data="staffs"
         ref="table"
         paginated
         per-page="5"
@@ -61,26 +63,13 @@
       >
         <b-table-column label="ID" width="40" numeric>
           <template v-slot="props">
-            {{ props.row.manager_id }}
-          </template>
-        </b-table-column>
-
-        <b-table-column label="Account">
-          <template v-slot="props">
-            {{ props.row.account }}
-          </template>
-        </b-table-column>
-
-        <b-table-column label="Password">
-          <template v-slot="props">
-            {{ props.row.password }}
+            {{ props.row.staff_id }}
           </template>
         </b-table-column>
 
         <b-table-column label="DoB" centered>
           <template v-slot="props">
-            <!-- {{ new Date(props.row.dob).toLocaleDateString() }} -->
-            {{props.row.dob}}
+            {{ new Date(props.row.dob).toLocaleDateString() }}
           </template>
         </b-table-column>
 
@@ -90,19 +79,22 @@
           </span>
         </b-table-column>
 
+        <b-table-column label="shift">
+          <template v-slot="props">
+            {{ props.row.shift.shift_name }}
+          </template>
+        </b-table-column>
+
         <b-table-column label="Action">
           <template v-slot="props">
             <md-button
               class="md-just-icon md-simple md-primary"
-              @click="loadDataByID(props.row.manager_id)"
+              @click="loadStaffByID(props.row.staff_id)"
             >
               <md-icon>edit</md-icon>
               <md-tooltip md-direction="top">Edit</md-tooltip>
             </md-button>
-            <md-button
-              @click="deleteManager(props.row.manager_id)"
-              class="md-just-icon md-simple md-danger"
-            >
+            <md-button class="md-just-icon md-simple md-danger" @click="deleteStaff(props.row.staff_id)">
               <md-icon>delete</md-icon>
               <md-tooltip md-direction="top">delete</md-tooltip>
             </md-button>
@@ -115,48 +107,63 @@
 
 <script>
 import axios from "axios";
-import AddNewManagerModal from "../Modal/AddNewManagerModal";
-import UpdateManagerModal from "../Modal/UpdateManagerModal";
+import AddNewStaffModal from "../Modal/AddNewStaffModal";
+import UpdateStaffModal from "../Modal/UpdateStaffModal";
 
 import { id } from "date-fns/locale";
 export default {
   components: {
-    AddNewManagerModal,
-    UpdateManagerModal,
+    AddNewStaffModal,
+    UpdateStaffModal,
   },
   data() {
     return {
-      managers: [],
-      manager: {},
+      shifts: [],
+      staffs: [],
+      staff: {},
       //data for modal
       isAddNewModalActive: false,
       isUpdateModalActive: false,
     };
   },
   methods: {
-    deleteManager(managerID) {
+    deleteStaff(staffID) {
       axios
-        .delete("http://localhost:8000/manager/" + managerID)
+        .delete("http://localhost:8000/deleteStaff/" + staffID)
         .then((response) => {
           this.loadData();
+          // window.location.reload();
         });
     },
-
+    loadShift() {
+      axios.get("http://localhost:8000/shift").then((response) => {
+        // console.log(response);
+        this.shifts = response.data;
+      });
+    },
     loadData() {
       axios
-        .get("http://localhost:8000/manager")
-        .then((response) => (this.managers = response.data));
+        .get("http://localhost:8000/staff")
+        .then((response) => (this.staffs = response.data));
+      // .then((response) => console.log(response));
     },
 
-    loadDataByID(managerID) {
+    loadStaffByID(staffID) {
       this.isUpdateModalActive = true;
       axios
-        .get("http://localhost:8000/getManagerByID/" + managerID)
-        .then((response) => (this.manager = response.data));
+        .get("http://localhost:8000/findId/" + staffID)
+        .then((response) => (this.staff = response.data));
+        // .then((response) => console.log(response));
+
+    },
+
+    reloadPage() {
+      window.location.reload();
     },
   },
   mounted() {
     this.loadData();
+    this.loadShift();
   },
 };
 </script>

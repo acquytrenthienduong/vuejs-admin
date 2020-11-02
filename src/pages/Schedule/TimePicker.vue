@@ -47,7 +47,6 @@ export default {
   },
   method: {
     onInput(val) {
-      console.log("val", val);
       this.menu = false;
       this.time = val;
       this.$emit("input", val);

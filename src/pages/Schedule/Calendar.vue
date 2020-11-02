@@ -151,7 +151,6 @@ export default {
           event.serviceName = element.sub_service.name;
           event.serviceTime = element.sub_service.time;
           if (element.sub_service.type === 2) {
-            console.log(element.sub_service.sesstion);
             event.serviceTime = element.sub_service.sesstion + " Buổi";
           }
           event.text = "Chưa Thanh Toán";
@@ -229,10 +228,6 @@ export default {
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
 
-      console.log(
-        'year + "-" + month + "-" + dt',
-        year + "-" + month + "-" + dt
-      );
       axios
         .post(
           "http://localhost:8000/updateReservation/" +
@@ -248,7 +243,14 @@ export default {
         });
     },
     Remove() {
-      console.log("remove");
+      axios
+        .delete(
+          "http://localhost:8000/deleteReservation/" +
+            this.selectedEvent.reservation_id
+        )
+        .then((response) => {
+          window.location.reload();
+        });
     },
   },
   watch: {

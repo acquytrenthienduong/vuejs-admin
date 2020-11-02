@@ -43,6 +43,7 @@
                 </v-radio-group>
               </v-col>
               <v-col cols="12">
+                {{ selectSubService }}
                 <v-select
                   v-model="selectSubService"
                   :items="items"
@@ -155,6 +156,7 @@ export default {
     },
 
     createNewReservation() {
+      console.log(this.selectSubService.value);
       axios
         .post("http://localhost:8000/createNewReservation", {
           customer_id: this.customer.customer_id,
@@ -164,7 +166,6 @@ export default {
           sub_service_sub_service_id: this.selectSubService.value,
         })
         .then((response) => {
-          console.log(response);
           this.dialog = false;
           this.reload();
           this.closeDialog();
@@ -189,7 +190,6 @@ export default {
     },
 
     loadSubService(type) {
-      console.log("asdasds");
       axios
         .get("http://localhost:8000/getAllSubService/" + type)
         .then((res) => {

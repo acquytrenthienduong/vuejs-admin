@@ -35,17 +35,30 @@
                   @search-change="asyncFind"
                 >
                 </multiselect>
-                <!-- {{ customer }} -->
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Email*" required></v-text-field>
+                <v-radio-group v-model="selectType" row>
+                  <v-radio label="ByLength" value="1"></v-radio>
+                  <v-radio label="BySession" value="2"></v-radio>
+                </v-radio-group>
+              </v-col>
+              <v-col cols="12">
+                {{ selectSubService }}
+                <v-select
+                  v-model="selectSubService"
+                  :items="items"
+                  item-text="name"
+                  item-value="value"
+                  label="Service"
+                  return-object
+                  single-line
+                ></v-select>
               </v-col>
               <v-col cols="12" sm="6">
                 <DatePicker
                   v-model="selectedDate"
                   :selectedDate="selectedDate"
                 ></DatePicker>
-                {{ selectedDate }}
               </v-col>
               <v-col cols="12" sm="6">
                 <v-menu
@@ -82,7 +95,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">
+          <v-btn color="blue darken-1" text @click="closeDialog">
             Close
           </v-btn>
           <v-btn color="blue darken-1" text @click="createNewReservation">
@@ -118,7 +131,14 @@ export default {
     time: null,
     menu2: false,
     modal2: false,
+    selectSubService: null,
+    items: [],
+    selectType: null,
   }),
+
+  mounted() {
+    this.loadSubService(this.selectType);
+  },
   methods: {
     asyncFind(query) {
       if (query != "") {
@@ -136,21 +156,65 @@ export default {
     },
 
     createNewReservation() {
+      console.log(this.selectSubService.value);
       axios
         .post("http://localhost:8000/createNewReservation", {
           customer_id: this.customer.customer_id,
           checkin_time: this.time,
           reservation_date: this.selectedDate,
           status: 0,
+          sub_service_sub_service_id: this.selectSubService.value,
         })
         .then((response) => {
-          console.log(response);
           this.dialog = false;
           this.reload();
+          this.closeDialog();
         })
         .catch((e) => {
-          this.errors.push(e); // co loi o day chua fix duoc
+          this.errors.push(e);
         });
+    },
+
+    closeDialog() {
+      this.dialog = false;
+      this.selectedDate = new Date().toISOString().substr(0, 10);
+      this.customer = null;
+      this.customers = [];
+      this.isLoading = false;
+      this.time = null;
+      this.menu2 = false;
+      this.modal2 = false;
+      this.selectSubService = null;
+      this.items = [];
+      this.selectType = null;
+    },
+
+    loadSubService(type) {
+      axios
+        .get("http://localhost:8000/getAllSubService/" + type)
+        .then((res) => {
+          this.items = [];
+          res.data.forEach((element) => {
+            let selectItem = {};
+            if (element.type === 1) {
+              selectItem.name = element.time;
+              selectItem.value = element.sub_service_id;
+            } else {
+              selectItem.name = element.sesstion + " Buổi";
+              selectItem.value = element.sub_service_id;
+            }
+            this.items.push(selectItem);
+          });
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
+    },
+  },
+
+  watch: {
+    selectType: function(val) {
+      this.loadSubService(val);
     },
   },
 };

@@ -70,8 +70,18 @@
                   :label="`Trạng Thái: ${selectedEvent.text}`"
                 ></v-checkbox>
                 <v-card-text>
+                  Service: <span v-html="selectedEvent.serviceName"></span
+                  ><br />
+                  TotalTime: <span v-html="selectedEvent.serviceTime"></span
+                  ><br />
+                  <!-- TimeLess: <span v-html="selectedEvent.TimeLess"></span><br /> -->
+                </v-card-text>
+                <v-card-text>
                   Start: <span v-html="selectedEvent.start"></span><br />
                   End: <span v-html="selectedEvent.checkout_time"></span>
+                </v-card-text>
+                <v-card-text>
+                  <Bill></Bill>
                 </v-card-text>
                 <v-card-actions class="footer-card">
                   <v-btn text color="secondary" @click="updateReservation">
@@ -93,10 +103,12 @@
 <script>
 import axios from "axios";
 import AddNewReservationDialog from "../../components/Modal/AddNewReservationDialog";
+import Bill from "../../components/Modal/Bill";
 
 export default {
   components: {
     AddNewReservationDialog,
+    Bill,
   },
   data: () => ({
     allReservationDetail: null,
@@ -119,11 +131,7 @@ export default {
         .get("http://localhost:8000/getAllReservation")
         .then((response) => this.transFormData(response.data));
     },
-    // loadData1() {
-    //   axios
-    //     .get("http://localhost:8000/login")
-    //     .then((response) => console.log("get login", response));
-    // },
+
     transFormData(data) {
       if (data) {
         data.forEach((element) => {
@@ -131,17 +139,29 @@ export default {
           event.name = element.customer.account;
           event.reservation_id = element.reservation_id;
           event.start = element.reservation_date + " " + element.checkin_time;
-          event.checkout_time =
-            element.reservation_date + " " + element.checkout_time;
+          event.checkout_time = element.reservation_date;
+          if (element.checkout_time != null) {
+            event.checkout_time =
+              element.reservation_date + " " + element.checkout_time;
+          }
           event.color = "red";
           event.isCheck = false;
           event.status = 0;
+          event.service = element.sub_service;
+          event.serviceName = element.sub_service.name;
+          event.serviceTime = element.sub_service.time;
+          if (element.sub_service.type === 2) {
+            event.serviceTime = element.sub_service.sesstion + " Buổi";
+          }
           event.text = "Chưa Thanh Toán";
           if (element.status === 1) {
             event.color = "green";
             event.isCheck = true;
             event.text = "Đã Thanh Toán";
             event.status = 1;
+          }
+          if (element.sub_service.type === 2 && element.status === 1) {
+            event.TimeLess = element.sub_service.sesstion - 1;
           }
           this.events.push(event);
         });
@@ -207,6 +227,7 @@ export default {
       let hour = dateRaw.getHours();
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
+
       axios
         .post(
           "http://localhost:8000/updateReservation/" +
@@ -222,7 +243,14 @@ export default {
         });
     },
     Remove() {
-      console.log("remove");
+      axios
+        .delete(
+          "http://localhost:8000/deleteReservation/" +
+            this.selectedEvent.reservation_id
+        )
+        .then((response) => {
+          window.location.reload();
+        });
     },
   },
   watch: {
@@ -252,8 +280,8 @@ export default {
 .calendar_quang_anh .v-menu__content {
   margin-left: -250px;
 }
-.footer-card{
+.footer-card {
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
 }
 </style>

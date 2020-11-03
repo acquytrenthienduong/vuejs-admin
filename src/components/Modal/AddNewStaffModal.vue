@@ -76,7 +76,6 @@ export default {
           shift_shift_id: this.selected_shift,
         })
         .then((response) => {
-          console.log(response);
           this.dob = "";
           this.gender = "";
           this.selected_shift = "";

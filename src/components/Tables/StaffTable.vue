@@ -69,7 +69,7 @@
 
         <b-table-column label="DoB" centered>
           <template v-slot="props">
-            {{ new Date(props.row.dob).toLocaleDateString() }}
+            {{ props.row.dob }}
           </template>
         </b-table-column>
 

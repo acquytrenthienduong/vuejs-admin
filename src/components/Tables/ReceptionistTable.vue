@@ -23,10 +23,11 @@
         aria-modal
       >
         <template #default="props">
-          <AddNewManagerModal
+          <AddNewReceptionistModal
             @close="props.close"
             :reload="loadData"
-          ></AddNewManagerModal>
+            :shifts="shifts"
+          ></AddNewReceptionistModal>
         </template>
       </b-modal>
       <!-- UpdateManagerModal -->
@@ -39,18 +40,19 @@
         aria-modal
       >
         <template #default="props">
-          <UpdateManagerModal
+          <UpdateReceptionistModal
             @close="props.close"
-            :manager="manager"
+            :receptionist="receptionist"
             :reload="loadData"
-          ></UpdateManagerModal>
+            :shifts="shifts"
+          ></UpdateReceptionistModal>
         </template>
       </b-modal>
     </section>
 
     <section>
       <b-table
-        :data="managers"
+        :data="receptionists"
         ref="table"
         paginated
         per-page="5"
@@ -61,7 +63,7 @@
       >
         <b-table-column label="ID" width="40" numeric>
           <template v-slot="props">
-            {{ props.row.manager_id }}
+            {{ props.row.receptionist_id }}
           </template>
         </b-table-column>
 
@@ -83,24 +85,24 @@
           </template>
         </b-table-column>
 
-        <b-table-column label="Gender" v-slot="props">
-          <span>
-            {{ props.row.gender === 1 ? "Male" : "Female" }}
-          </span>
+        <b-table-column label="shift">
+          <template v-slot="props">
+            {{ props.row.shift.shift_name }}
+          </template>
         </b-table-column>
 
         <b-table-column label="Action">
           <template v-slot="props">
             <md-button
               class="md-just-icon md-simple md-primary"
-              @click="loadDataByID(props.row.manager_id)"
+              @click="loadReceptionistByID(props.row.receptionist_id)"
             >
               <md-icon>edit</md-icon>
               <md-tooltip md-direction="top">Edit</md-tooltip>
             </md-button>
             <md-button
-              @click="deleteManager(props.row.manager_id)"
               class="md-just-icon md-simple md-danger"
+              @click="deleteReceptionist(props.row.receptionist_id)"
             >
               <md-icon>delete</md-icon>
               <md-tooltip md-direction="top">delete</md-tooltip>
@@ -114,48 +116,59 @@
 
 <script>
 import axios from "axios";
-import AddNewManagerModal from "../Modal/AddNewManagerModal";
-import UpdateManagerModal from "../Modal/UpdateManagerModal";
+import AddNewReceptionistModal from "../Modal/AddNewReceptionistModal";
+import UpdateReceptionistModal from "../Modal/UpdateReceptionistModal";
 
 import { id } from "date-fns/locale";
 export default {
   components: {
-    AddNewManagerModal,
-    UpdateManagerModal,
+    AddNewReceptionistModal,
+    UpdateReceptionistModal,
   },
   data() {
     return {
-      managers: [],
-      manager: {},
+      receptionists: [],
+      shifts: [],
+      receptionist: {},
       //data for modal
       isAddNewModalActive: false,
       isUpdateModalActive: false,
     };
   },
   methods: {
-    deleteManager(managerID) {
+    deleteReceptionist(id) {
       axios
-        .delete("http://localhost:8000/manager/" + managerID)
+        .delete("http://localhost:8000/deleteReceptionist/" + id)
         .then((response) => {
           this.loadData();
         });
     },
 
-    loadData() {
-      axios
-        .get("http://localhost:8000/manager")
-        .then((response) => (this.managers = response.data));
+    loadShift() {
+      axios.get("http://localhost:8000/shift").then((response) => {
+        // console.log(response);
+        this.shifts = response.data;
+      });
     },
 
-    loadDataByID(managerID) {
+    loadData() {
+      axios
+        .get("http://localhost:8000/receptionist")
+        .then((response) => (this.receptionists = response.data));
+      // .then((response) => console.log(response));
+    },
+
+    loadReceptionistByID(receptionist_id) {
       this.isUpdateModalActive = true;
       axios
-        .get("http://localhost:8000/getManagerByID/" + managerID)
-        .then((response) => (this.manager = response.data));
+        .get("http://localhost:8000/getReceptionistByID/" + receptionist_id)
+        .then((response) => (this.receptionist = response.data));
+        // .then((response) => console.log(response));
     },
   },
   mounted() {
     this.loadData();
+    this.loadShift();
   },
 };
 </script>

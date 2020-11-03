@@ -24,7 +24,7 @@
                 </b-tab-item>
 
                 <b-tab-item icon="video" label="Receptionist">
-                  <h1>List of Receptionist</h1>
+                  <ReceptionistTable />
                 </b-tab-item>
               </b-tabs>
             </section>
@@ -38,12 +38,14 @@
 <script>
 import { ManagerTable } from "@/components";
 import StaffTable from '../components/Tables/StaffTable'
+import ReceptionistTable from '../components/Tables/ReceptionistTable'
 
 
 export default {
   components: {
     ManagerTable,
-    StaffTable
+    StaffTable,
+    ReceptionistTable
   },
   
 };

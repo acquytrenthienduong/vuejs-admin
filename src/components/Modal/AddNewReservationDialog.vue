@@ -38,12 +38,11 @@
               </v-col>
               <v-col cols="12">
                 <v-radio-group v-model="selectType" row>
-                  <v-radio label="ByLength" value="1"></v-radio>
-                  <v-radio label="BySession" value="2"></v-radio>
+                  <v-radio label="Tanning" value="1"></v-radio>
+                  <v-radio label="Massage" value="2"></v-radio>
                 </v-radio-group>
               </v-col>
               <v-col cols="12">
-                {{ selectSubService }}
                 <v-select
                   v-model="selectSubService"
                   :items="items"
@@ -200,7 +199,7 @@ export default {
               selectItem.name = element.time;
               selectItem.value = element.sub_service_id;
             } else {
-              selectItem.name = element.sesstion + " Buổi";
+              selectItem.name = element.session;
               selectItem.value = element.sub_service_id;
             }
             this.items.push(selectItem);

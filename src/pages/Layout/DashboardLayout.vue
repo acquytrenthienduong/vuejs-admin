@@ -20,8 +20,8 @@
         <p>Account</p>
       </sidebar-link>
       <sidebar-link to="/typography">
-        <md-icon>library_books</md-icon>
-        <p>Typography</p>
+        <md-icon>pending</md-icon>
+        <p>Pending Request</p>
       </sidebar-link>
       <sidebar-link to="/icons">
         <md-icon>bubble_chart</md-icon>

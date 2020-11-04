@@ -65,15 +65,11 @@
                     <v-icon>mdi-dots-vertical</v-icon>
                   </v-btn>
                 </v-toolbar>
-                <v-checkbox
-                  v-model="selectedEvent.isCheck"
-                  :label="`Trạng Thái: ${selectedEvent.text}`"
-                ></v-checkbox>
                 <v-card-text>
                   Service: <span v-html="selectedEvent.serviceName"></span
                   ><br />
-                  TotalTime: <span v-html="selectedEvent.serviceTime"></span
-                  ><br />
+                  <!-- TotalTime: <span v-html="selectedEvent.serviceTime"></span
+                  ><br /> -->
                   <!-- TimeLess: <span v-html="selectedEvent.TimeLess"></span><br /> -->
                 </v-card-text>
                 <v-card-text>
@@ -81,8 +77,12 @@
                   End: <span v-html="selectedEvent.checkout_time"></span>
                 </v-card-text>
                 <v-card-text>
-                  <Bill></Bill>
+                  <Bill :event="selectedEvent"></Bill>
                 </v-card-text>
+                <v-checkbox
+                  v-model="selectedEvent.isCheck"
+                  :label="`Trạng Thái: ${selectedEvent.text}`"
+                ></v-checkbox>
                 <v-card-actions class="footer-card">
                   <v-btn text color="secondary" @click="updateReservation">
                     Update
@@ -94,6 +94,18 @@
               </v-card>
             </v-menu>
           </v-sheet>
+          <v-dialog v-model="detelefail" max-width="500px">
+            <v-card>
+              <v-card-title>
+                <span>Khong The Xoa Cuoc Hen Nay Vi Ban Da Tao Bill</span>
+              </v-card-title>
+              <v-card-actions>
+                <v-btn color="primary" text @click="detelefail = false">
+                  Close
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-col>
       </v-row>
     </v-app>
@@ -120,6 +132,7 @@ export default {
     events: [],
     checkbox: false,
     text: "",
+    detelefail: false,
   }),
   mounted() {
     this.$refs.calendar.checkChange();
@@ -150,9 +163,6 @@ export default {
           event.service = element.sub_service;
           event.serviceName = element.sub_service.name;
           event.serviceTime = element.sub_service.time;
-          if (element.sub_service.type === 2) {
-            event.serviceTime = element.sub_service.sesstion + " Buổi";
-          }
           event.text = "Chưa Thanh Toán";
           if (element.status === 1) {
             event.color = "green";
@@ -160,9 +170,7 @@ export default {
             event.text = "Đã Thanh Toán";
             event.status = 1;
           }
-          if (element.sub_service.type === 2 && element.status === 1) {
-            event.TimeLess = element.sub_service.sesstion - 1;
-          }
+
           this.events.push(event);
         });
       }
@@ -250,6 +258,9 @@ export default {
         )
         .then((response) => {
           window.location.reload();
+        })
+        .catch((e) => {
+          this.detelefail = true;
         });
     },
   },

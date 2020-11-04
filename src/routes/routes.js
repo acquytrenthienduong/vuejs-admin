@@ -5,6 +5,7 @@ import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import AccountManager from "@/pages/AccountManager.vue";
 import Typography from "@/pages/Typography.vue";
+import PendingRequest from "@/pages/PendingRequest.vue";
 import Icons from "@/pages/Icons.vue";
 import Maps from "@/pages/Maps.vue";
 import Notifications from "@/pages/Notifications.vue";
@@ -46,7 +47,7 @@ const routes = [
       {
         path: "typography",
         name: "Typography",
-        component: Typography
+        component: PendingRequest
       },
       {
         path: "icons",

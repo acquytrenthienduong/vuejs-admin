@@ -128,6 +128,7 @@ export default {
     logout: function() {
       if (localStorage.getItem("username")) {
         localStorage.removeItem("username");
+        localStorage.removeItem("role");
         axios
           .get("http://localhost:8000/logoutCustomer")
           .then((response) => {

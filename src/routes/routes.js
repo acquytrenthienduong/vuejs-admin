@@ -42,7 +42,15 @@ const routes = [
       {
         path: "account",
         name: "Account Manager",
-        component: AccountManager
+        component: AccountManager,
+        beforeEnter: (to, from, next) => {
+          if (localStorage.getItem('role') != 'admin' ) {
+            next({ name: 'Dashboard' });
+          }
+          else {
+            next();
+          }
+        }
       },
       {
         path: "typography",

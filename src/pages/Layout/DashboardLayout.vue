@@ -3,6 +3,7 @@
     <notifications></notifications>
 
     <side-bar
+      v-if="role == 'receptionist'"
       :sidebar-item-color="sidebarBackground"
       :sidebar-background-image="sidebarBackgroundImage"
     >
@@ -15,13 +16,49 @@
         <md-icon>schedule</md-icon>
         <p>Schedule</p>
       </sidebar-link>
+      <sidebar-link to="/typography">
+        <md-icon>pending</md-icon>
+        <p>Pending Request</p>
+      </sidebar-link>
+    </side-bar>
+
+    <side-bar
+      v-if="role == 'admin'"
+      :sidebar-item-color="sidebarBackground"
+      :sidebar-background-image="sidebarBackgroundImage"
+    >
+      <mobile-menu slot="content"></mobile-menu>
+      <sidebar-link to="/dashboard">
+        <md-icon>dashboard</md-icon>
+        <p>Dashboard</p>
+      </sidebar-link>
       <sidebar-link to="/account">
         <md-icon>account_circle</md-icon>
         <p>Account</p>
       </sidebar-link>
+    </side-bar>
+
+    <side-bar
+      v-if="role == 'manager'"
+      :sidebar-item-color="sidebarBackground"
+      :sidebar-background-image="sidebarBackgroundImage"
+    >
+      <mobile-menu slot="content"></mobile-menu>
+      <sidebar-link to="/dashboard">
+        <md-icon>dashboard</md-icon>
+        <p>Dashboard</p>
+      </sidebar-link>
+      <sidebar-link to="/schedule">
+        <md-icon>schedule</md-icon>
+        <p>Schedule</p>
+      </sidebar-link>
       <sidebar-link to="/typography">
         <md-icon>pending</md-icon>
         <p>Pending Request</p>
+      </sidebar-link>
+      <sidebar-link to="/account">
+        <md-icon>account_circle</md-icon>
+        <p>Account</p>
       </sidebar-link>
       <sidebar-link to="/icons">
         <md-icon>bubble_chart</md-icon>
@@ -47,15 +84,12 @@
       </fixed-plugin>
 
       <dashboard-content> </dashboard-content>
-
-      <content-footer v-if="!$route.meta.hideFooter"></content-footer>
     </div>
   </div>
 </template>
 
 <script>
 import TopNavbar from "./TopNavbar.vue";
-import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
 import MobileMenu from "@/pages/Layout/MobileMenu.vue";
 import FixedPlugin from "./Extra/FixedPlugin.vue";
@@ -64,15 +98,15 @@ export default {
   components: {
     TopNavbar,
     DashboardContent,
-    ContentFooter,
     MobileMenu,
-    FixedPlugin
+    FixedPlugin,
   },
   data() {
     return {
       sidebarBackground: "green",
-      sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg")
+      sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
+      role: localStorage.getItem("role"),
     };
-  }
+  },
 };
 </script>

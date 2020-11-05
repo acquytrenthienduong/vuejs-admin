@@ -141,7 +141,7 @@ export default {
   methods: {
     loadData() {
       axios
-        .get("http://localhost:8000/getAllReservation")
+        .get("http://localhost:8000/getAllReservationAccess")
         .then((response) => this.transFormData(response.data));
     },
 

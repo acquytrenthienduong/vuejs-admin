@@ -6,7 +6,7 @@ import UserProfile from "@/pages/UserProfile.vue";
 import AccountManager from "@/pages/AccountManager.vue";
 import Typography from "@/pages/Typography.vue";
 import PendingRequest from "@/pages/PendingRequest.vue";
-import Icons from "@/pages/Icons.vue";
+import Products from "@/pages/Products.vue";
 import Maps from "@/pages/Maps.vue";
 import Notifications from "@/pages/Notifications.vue";
 
@@ -58,9 +58,9 @@ const routes = [
         component: PendingRequest
       },
       {
-        path: "icons",
-        name: "Icons",
-        component: Icons
+        path: "products",
+        name: "Products",
+        component: Products
       },
       {
         path: "maps",

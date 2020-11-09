@@ -7,7 +7,7 @@ import AccountManager from "@/pages/AccountManager.vue";
 import Typography from "@/pages/Typography.vue";
 import PendingRequest from "@/pages/PendingRequest.vue";
 import Icons from "@/pages/Icons.vue";
-import Maps from "@/pages/Maps.vue";
+import SearchCustomer from "@/pages/SearchCustomer.vue";
 import Notifications from "@/pages/Notifications.vue";
 
 const routes = [
@@ -65,10 +65,7 @@ const routes = [
       {
         path: "maps",
         name: "Maps",
-        meta: {
-          hideFooter: true
-        },
-        component: Maps
+        component: SearchCustomer
       },
       {
         path: "notifications",

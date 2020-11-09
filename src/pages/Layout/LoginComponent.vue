@@ -160,7 +160,7 @@ export default {
         });
     },
     loginForReceptionist: function() {
-      console.log(config.config.host);
+      console.log("asdasdas",config.config.host);
       const url = config.config.host + ":" + config.config.port;
       axios
         .post(url + "/loginReceptionist", {

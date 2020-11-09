@@ -4,6 +4,7 @@ import 'buefy/dist/buefy.css'
 import vuetify from '@/plugins/vuetify'
 import VueRouter from "vue-router";
 import App from "./App";
+import excel from 'vue-excel-export'
 
 // router setup
 import routes from "./routes/routes";
@@ -32,7 +33,8 @@ Vue.use(MaterialDashboard);
 Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
 Vue.use(Notifications);
-Vue.use(Buefy)
+Vue.use(Buefy);
+Vue.use(excel)
 
 /* eslint-disable no-new */
 new Vue({

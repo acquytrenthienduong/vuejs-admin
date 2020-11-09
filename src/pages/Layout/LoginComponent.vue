@@ -76,7 +76,7 @@
                 ></v-text-field>
 
                 <v-btn class="mr-4" @click="loginForManager">
-                  Login
+                  LoginManager
                 </v-btn>
               </v-form>
             </v-card>
@@ -117,7 +117,7 @@
 
 <script>
 import axios from "axios";
-
+import config from "../../config/config.js";
 export default {
   data() {
     return {
@@ -136,6 +136,8 @@ export default {
 
   methods: {
     loginForManager: function() {
+      console.log("host", config.config.host);
+      console.log("port", config.config.port);
       axios
         .post("http://localhost:8000/loginManager", {
           username: this.username,
@@ -143,7 +145,7 @@ export default {
         })
         .then((response) => {
           if (response.status === 200) {
-            console.log(response);
+            // console.log(response);
             localStorage.setItem("username", response.data.account);
             localStorage.setItem("role", response.data.role);
 
@@ -160,10 +162,13 @@ export default {
     loginForReceptionist: function() {
       console.log("receptionist");
       axios
-        .post("http://localhost:8000/loginReceptionist", {
-          username: this.username,
-          password: this.password,
-        })
+        .post(
+          config.config.host + ":" + config.config.port + "/loginReceptionist",
+          {
+            username: this.username,
+            password: this.password,
+          }
+        )
         .then((response) => {
           console.log("response", response);
           if (response.status === 200) {

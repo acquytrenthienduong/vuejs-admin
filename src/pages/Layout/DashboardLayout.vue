@@ -60,9 +60,9 @@
         <md-icon>account_circle</md-icon>
         <p>Account</p>
       </sidebar-link>
-      <sidebar-link to="/icons">
-        <md-icon>bubble_chart</md-icon>
-        <p>Icons</p>
+      <sidebar-link to="/products">
+        <md-icon>shutter_speed</md-icon>
+        <p>Products</p>
       </sidebar-link>
       <sidebar-link to="/maps">
         <md-icon>location_on</md-icon>

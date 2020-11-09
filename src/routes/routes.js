@@ -4,11 +4,9 @@ import LoginComponent from "@/pages/Layout/LoginComponent.vue";
 import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import AccountManager from "@/pages/AccountManager.vue";
-import Typography from "@/pages/Typography.vue";
 import PendingRequest from "@/pages/PendingRequest.vue";
 import SearchCustomer from "@/pages/SearchCustomer.vue";
 import Products from "@/pages/Products.vue";
-import Maps from "@/pages/Maps.vue";
 import Notifications from "@/pages/Notifications.vue";
 
 const routes = [

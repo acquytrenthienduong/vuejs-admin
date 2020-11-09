@@ -11,21 +11,21 @@
           data-background-color="blue"
         >
           <template slot="content">
-            <h4 class="title">Daily Sales</h4>
+            <h4 class="title">Reservation in week</h4>
             <p class="category">
-              <span class="text-success"
+              <!-- <span class="text-success"
                 ><i class="fas fa-long-arrow-alt-up"></i> 55%
-              </span>
-              increase in today sales.
+              </span> -->
+              <!-- increase in today sales. -->
             </p>
           </template>
 
-          <template slot="footer">
+          <!-- <template slot="footer">
             <div class="stats">
               <md-icon>access_time</md-icon>
               updated 4 minutes ago
             </div>
-          </template>
+          </template> -->
         </chart-card>
       </div>
       <div
@@ -209,47 +209,47 @@ import {
   ChartCard,
   NavTabsCard,
   NavTabsTable,
-  ManagerTable
+  ManagerTable,
 } from "@/components";
-
+import axios from "axios";
 export default {
   components: {
     StatsCard,
     ChartCard,
     NavTabsCard,
     NavTabsTable,
-    ManagerTable
+    ManagerTable,
   },
   data() {
     return {
       dailySalesChart: {
         data: {
           labels: ["M", "T", "W", "T", "F", "S", "S"],
-          series: [[12, 17, 7, 17, 23, 18, 38]]
+          series: [[0, 0, 0, 0, 0, 0, 0]],
         },
         options: {
           lineSmooth: this.$Chartist.Interpolation.cardinal({
-            tension: 0
+            tension: 0,
           }),
           low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 8, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: {
             top: 0,
             right: 0,
             bottom: 0,
-            left: 0
-          }
-        }
+            left: 0,
+          },
+        },
       },
       dataCompletedTasksChart: {
         data: {
           labels: ["12am", "3pm", "6pm", "9pm", "12pm", "3am", "6am", "9am"],
-          series: [[230, 750, 450, 300, 280, 240, 200, 190]]
+          series: [[230, 750, 450, 300, 280, 240, 200, 190]],
         },
 
         options: {
           lineSmooth: this.$Chartist.Interpolation.cardinal({
-            tension: 0
+            tension: 0,
           }),
           low: 0,
           high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
@@ -257,9 +257,9 @@ export default {
             top: 0,
             right: 0,
             bottom: 0,
-            left: 0
-          }
-        }
+            left: 0,
+          },
+        },
       },
       emailsSubscriptionChart: {
         data: {
@@ -275,13 +275,15 @@ export default {
             "Se",
             "Oc",
             "No",
-            "De"
+            "De",
           ],
-          series: [[542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]]
+          series: [
+            [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
+          ],
         },
         options: {
           axisX: {
-            showGrid: false
+            showGrid: false,
           },
           low: 0,
           high: 1000,
@@ -289,8 +291,8 @@ export default {
             top: 0,
             right: 5,
             bottom: 0,
-            left: 0
-          }
+            left: 0,
+          },
         },
         responsiveOptions: [
           [
@@ -300,13 +302,161 @@ export default {
               axisX: {
                 labelInterpolationFnc: function(value) {
                   return value[0];
-                }
-              }
-            }
-          ]
-        ]
-      }
+                },
+              },
+            },
+          ],
+        ],
+      },
     };
-  }
+  },
+  methods: {
+    loadReservationInWeek() {
+      let dateRaw = new Date();
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
+
+      var current_day = dateRaw.getDay();
+
+      // Biến lưu tên của thứ
+      var day_name = "";
+      let from = "";
+      let to = "";
+      let temp = parseInt(dt, 10);
+      let start;
+      let end;
+      // Lấy tên thứ của ngày hiện tại
+      switch (current_day) {
+        case 0:
+          start = temp;
+          end = temp + 6;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+        case 1:
+          start = temp - 1;
+          end = temp + 5;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+        case 2:
+          start = temp - 2;
+          end = temp + 4;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+        case 3:
+          start = temp - 3;
+          end = temp + 3;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+        case 4:
+          start = temp - 4;
+          end = temp + 2;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+        case 5:
+          start = temp - 5;
+          end = temp + 1;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+        case 6:
+          start = temp - 6;
+          end = temp;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+      }
+
+      axios
+        .get("http://localhost:8000/findReservation/" + from + "/" + to)
+        .then((response) => {
+          // console.log(response);
+          this.convertToChartData(response.data);
+        });
+    },
+
+    convertToChartData(array) {
+      // console.log("array", array);
+
+      let week = [];
+      var now = new Date();
+      var current_day = now.getDay();
+      var days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+
+      // var day = days[now.getDay()];
+      let x = [[0, 0, 0, 0, 0, 0, 0]];
+
+      array.forEach((element) => {
+        let day = new Date(element.reservation_date);
+        let thutrongtuan = days[day.getDay()];
+        switch (thutrongtuan) {
+          case "Sunday":
+            // this.dailySalesChart.data.series[0][0]++;
+            x[0][6]++;
+            break;
+          case "Monday":
+            // this.dailySalesChart.data.series[0][1]++;
+            x[0][0]++;
+            break;
+          case "Tuesday":
+            // this.dailySalesChart.data.series[0][2]++;
+            x[0][1]++;
+            break;
+          case "Wednesday":
+            // this.dailySalesChart.data.series[0][3]++;
+            x[0][2]++;
+            break;
+          case "Thursday":
+            // this.dailySalesChart.data.series[0][4]++;
+            x[0][3]++;
+            break;
+          case "Friday":
+            // this.dailySalesChart.data.series[0][5]++;
+            x[0][4]++;
+            break;
+          case "Saturday":
+            // this.dailySalesChart.data.series[0][6]++;
+            x[0][5]++;
+            break;
+        }
+      });
+      this.dailySalesChart.data.series = x;
+      // console.log(this.dailySalesChart.data.series);
+    },
+
+    // testGetLogin() {
+    //   axios.defaults.withCrendentails = true;
+    //   axios.get("http://localhost:8000/loginReceptionist").then((response) => {
+    //     console.log("getlogin ", response);
+    //   });
+    // },
+  },
+  mounted() {
+    this.loadReservationInWeek();
+    // this.testGetLogin();
+    // this.convertToChartData();
+  },
+  // watch: {
+  //   "dailySalesChart.data.series": function(val) {
+  //     console.log("val", val);
+  //     // this.dailySalesChart.data.series = val;
+  //   },
+  // },
 };
 </script>

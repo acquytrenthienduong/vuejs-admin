@@ -80,11 +80,26 @@
                   <Bill :event="selectedEvent"></Bill>
                 </v-card-text>
                 <v-checkbox
+                  v-if="selectedEvent.isPassed"
+                  disabled
                   v-model="selectedEvent.isCheck"
                   :label="`Trạng Thái: ${selectedEvent.text}`"
                 ></v-checkbox>
-                <v-card-actions class="footer-card">
-                  <v-btn text color="secondary" @click="updateReservation">
+                <v-checkbox
+                  v-if="!selectedEvent.isPassed"
+                  v-model="selectedEvent.isCheck"
+                  :label="`Trạng Thái: ${selectedEvent.text}`"
+                ></v-checkbox>
+                <v-card-actions v-if="selectedEvent.isPassed" class="footer-card">
+                  <v-btn disabled text color="secondary" @click="updateReservation">
+                    Update
+                  </v-btn>
+                  <v-btn disabled text color="secondary" @click="Remove">
+                    Remove
+                  </v-btn>
+                </v-card-actions>
+                <v-card-actions v-if="!selectedEvent.isPassed" class="footer-card">
+                  <v-btn  text color="secondary" @click="updateReservation">
                     Update
                   </v-btn>
                   <v-btn text color="secondary" @click="Remove">
@@ -153,6 +168,7 @@ export default {
           event.reservation_id = element.reservation_id;
           event.start = element.reservation_date + " " + element.checkin_time;
           event.checkout_time = element.reservation_date;
+          event.isPassed = this.compareDate(element.reservation_date);
           if (element.checkout_time != null) {
             event.checkout_time =
               element.reservation_date + " " + element.checkout_time;
@@ -191,6 +207,30 @@ export default {
         month = "0" + month;
       }
       return year + "-" + month + "-" + dt + " " + hour + ":" + minute;
+    },
+
+    compareDate(date) {
+      let today = new Date();
+      let dateRaw = new Date(date);
+      // console.log("today", today.getFullYear() === dateRaw.getFullYear());
+      // console.log("return ", today.getMonth() > dateRaw.getMonth());
+      // console.log("dateRaw", dateRaw);
+
+      if (today.getFullYear() > dateRaw.getFullYear()) {
+        return true;
+      }
+
+      if (today.getMonth() > dateRaw.getMonth()) {
+        return true;
+      }
+
+      if (today.getDate() > dateRaw.getDate()) {
+        return true;
+      }
+
+      return false;
+      // console.log(today.getTime() === dateRaw.getTime());
+      // return today.getTime() === dateRaw.getTime();
     },
 
     viewDay({ date }) {

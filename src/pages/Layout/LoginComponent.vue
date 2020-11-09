@@ -160,15 +160,13 @@ export default {
         });
     },
     loginForReceptionist: function() {
-      console.log("receptionist");
+      console.log(config.config.host);
+      const url = config.config.host + ":" + config.config.port;
       axios
-        .post(
-          config.config.host + ":" + config.config.port + "/loginReceptionist",
-          {
-            username: this.username,
-            password: this.password,
-          }
-        )
+        .post(url + "/loginReceptionist", {
+          username: this.username,
+          password: this.password,
+        })
         .then((response) => {
           console.log("response", response);
           if (response.status === 200) {

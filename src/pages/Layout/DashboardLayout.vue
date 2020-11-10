@@ -12,10 +12,12 @@
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
+
       <sidebar-link to="/schedule">
         <md-icon>schedule</md-icon>
         <p>Schedule</p>
       </sidebar-link>
+
       <sidebar-link to="/typography">
         <md-icon>pending</md-icon>
         <p>Pending Request</p>
@@ -48,6 +50,12 @@
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
+
+      <sidebar-link to="/lichlamviec">
+        <md-icon>facebook</md-icon>
+        <p>lichlamviec</p>
+      </sidebar-link>
+      
       <sidebar-link to="/schedule">
         <md-icon>schedule</md-icon>
         <p>Schedule</p>
@@ -61,8 +69,8 @@
         <p>Account</p>
       </sidebar-link>
       <sidebar-link to="/products">
-        <md-icon>shutter_speed</md-icon>
-        <p>Products</p>
+        <md-icon>get_app</md-icon>
+        <p>Export report</p>
       </sidebar-link>
       <sidebar-link to="/maps">
         <md-icon>location_on</md-icon>

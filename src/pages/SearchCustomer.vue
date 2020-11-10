@@ -33,34 +33,37 @@
         <v-row>
           <v-col cols="12">
             <v-text-field
+              v-model="customer.account"
               label="Customer Name"
             ></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-text-field
-              label="Service Name"
-            ></v-text-field>
+            <v-col cols="12">
+              <v-select
+                v-model="items"
+                :items="value"
+                attach
+                chips
+                label="Chips"
+                multiple
+              ></v-select>
+            </v-col>
           </v-col>
           <v-col cols="12">
             <v-text-field
-              label="Money"
-              prefix="$"
+              v-model="customer.email"
+              label="xxx"
+              prefix=""
             ></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-text-field
-              label="Time"
-            ></v-text-field>
+            <v-text-field label="Time"></v-text-field>
           </v-col>
           <v-col cols="12" sm="6">
-            <v-text-field
-              label="Checkin Time"
-            ></v-text-field>
+            <v-text-field label="Checkin Time"></v-text-field>
           </v-col>
           <v-col cols="12" sm="6">
-            <v-text-field
-              label="Checkout Time"
-            ></v-text-field>
+            <v-text-field label="Checkout Time"></v-text-field>
           </v-col>
         </v-row>
       </v-container>
@@ -80,6 +83,9 @@ export default {
     isLoading: false,
     customer: null,
     customers: [],
+    items: [],
+    value: [],
+    totalMoney: 0,
     headers: [
       {
         text: "account",
@@ -97,7 +103,7 @@ export default {
       if (query != "") {
         this.isLoading = true;
         axios
-          .get("http://localhost:8000/findAllByAccount/" + query)
+          .get("http://localhost:8000/searchCustomer/" + query)
           .then((response) => {
             console.log(response);
             // customers = [];
@@ -106,6 +112,26 @@ export default {
           });
       } else {
         this.customers = [];
+      }
+    },
+  },
+
+  watch: {
+    customer: function(val) {
+      console.log(val);
+      if (val != null) {
+        val.reservations.forEach((element) => {
+          let x = element.sub_service.name + " " + element.sub_service.time;
+
+          if (element.sub_service.type === 2) {
+            x = element.sub_service.name + " " + element.sub_service.session;
+          }
+          this.items.push(x);
+          this.value.push(x);
+        });
+      } else {
+        this.items = [];
+        this.value = [];
       }
     },
   },

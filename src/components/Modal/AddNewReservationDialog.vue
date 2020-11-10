@@ -163,6 +163,7 @@ export default {
           reservation_date: this.selectedDate,
           status: 0,
           sub_service_sub_service_id: this.selectSubService.value,
+          is_access: 1,
         })
         .then((response) => {
           this.dialog = false;

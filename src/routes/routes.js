@@ -3,6 +3,7 @@ import LoginComponent from "@/pages/Layout/LoginComponent.vue";
 
 import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
+import StaffSchedule from "@/pages/StaffSchedule.vue";
 import AccountManager from "@/pages/AccountManager.vue";
 import PendingRequest from "@/pages/PendingRequest.vue";
 import SearchCustomer from "@/pages/SearchCustomer.vue";
@@ -39,11 +40,16 @@ const routes = [
         component: UserProfile
       },
       {
+        path: "lichlamviec",
+        name: "lichlamviec",
+        component: StaffSchedule
+      },
+      {
         path: "account",
         name: "Account Manager",
         component: AccountManager,
         beforeEnter: (to, from, next) => {
-          if (localStorage.getItem('role') != 'admin' ) {
+          if (localStorage.getItem('role') != 'admin') {
             next({ name: 'Dashboard' });
           }
           else {

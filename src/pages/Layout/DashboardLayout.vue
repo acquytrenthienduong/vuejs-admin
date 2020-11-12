@@ -55,7 +55,12 @@
         <md-icon>facebook</md-icon>
         <p>lichlamviec</p>
       </sidebar-link>
-      
+
+      <sidebar-link to="/products">
+        <md-icon>extension</md-icon>
+        <p>Products</p>
+      </sidebar-link>
+
       <sidebar-link to="/schedule">
         <md-icon>schedule</md-icon>
         <p>Schedule</p>
@@ -68,7 +73,7 @@
         <md-icon>account_circle</md-icon>
         <p>Account</p>
       </sidebar-link>
-      <sidebar-link to="/products">
+      <sidebar-link to="/report">
         <md-icon>get_app</md-icon>
         <p>Export report</p>
       </sidebar-link>

@@ -55,26 +55,6 @@
         </b-table-column>
       </b-table>
     </section>
-
-    <div class="file">
-      <form @submit.prevent="onSubmit" enctype="multipart/form-data">
-        <div class="fields">
-          <label> Upload File</label><br>
-          <input type="file" ref="file" @change="onSelect">
-
-        </div>
-
-        <div class="fields"> 
-          <button>submit</button>
-        </div>
-
-        <div class="message">
-          <h5> {{message}}</h5>
-        </div>
-
-
-      </form>
-    </div>
   </div>
 </template>
 
@@ -87,27 +67,9 @@ export default {
   data() {
     return {
       products: [],
-      file: "",
-      message: "",
     };
   },
   methods: {
-    onSelect() {
-      const file = this.$refs.file.files[0];
-      this.file = file;
-    },
-    async onSubmit(){
-      const formData = new FormData();
-      formData.append('file', this.file);
-      try {
-        await axios.post('/addProduct', formData).then((response) => console.log(response));
-        this.message = "Uploaded!";
-      } catch (err) {
-        console.log(err);
-        this.message = "Something went wrong!"
-      }
-    },
-
     loadAllProducts() {
       axios
         .get("http://localhost:8000/products")

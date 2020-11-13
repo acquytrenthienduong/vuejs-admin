@@ -32,10 +32,19 @@
       <v-container>
         <v-row>
           <v-col cols="12">
-            <v-text-field
+            <h3>
+              Customer Name: <span>{{ customer.name }}</span>
+            </h3>
+            <!-- <v-text-field v-model="customer.name" label="Name"></v-text-field> -->
+          </v-col>
+          <v-col cols="12">
+            <h3>
+              Customer Account: <span>{{ customer.account }}</span>
+            </h3>
+            <!-- <v-text-field
               v-model="customer.account"
-              label="Customer Name"
-            ></v-text-field>
+              label="Customer Account"
+            ></v-text-field> -->
           </v-col>
           <v-col cols="12">
             <v-col cols="12">
@@ -50,20 +59,14 @@
             </v-col>
           </v-col>
           <v-col cols="12">
-            <v-text-field
+            <h3>
+              Customer Email: <span>{{ customer.email }}</span>
+            </h3>
+            <!-- <v-text-field
               v-model="customer.email"
               label="xxx"
               prefix=""
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field label="Time"></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-text-field label="Checkin Time"></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-text-field label="Checkout Time"></v-text-field>
+            ></v-text-field> -->
           </v-col>
         </v-row>
       </v-container>

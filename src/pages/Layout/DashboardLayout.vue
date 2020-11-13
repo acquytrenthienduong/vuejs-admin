@@ -51,11 +51,11 @@
         <p>Dashboard</p>
       </sidebar-link>
 
-      <sidebar-link to="/lichlamviec">
+      <!-- <sidebar-link to="/lichlamviec">
         <md-icon>facebook</md-icon>
         <p>lichlamviec</p>
-      </sidebar-link>
-      
+      </sidebar-link> -->
+
       <sidebar-link to="/schedule">
         <md-icon>schedule</md-icon>
         <p>Schedule</p>
@@ -74,12 +74,17 @@
       </sidebar-link>
       <sidebar-link to="/maps">
         <md-icon>location_on</md-icon>
-        <p>Maps</p>
+        <p>Search customer</p>
       </sidebar-link>
       <sidebar-link to="/notifications">
         <md-icon>notifications</md-icon>
         <p>Notifications</p>
       </sidebar-link>
+
+      <!-- <sidebar-link to="/checkintaff">
+        <md-icon>pending</md-icon>
+        <p>checkintaff</p>
+      </sidebar-link> -->
     </side-bar>
 
     <div class="main-panel">

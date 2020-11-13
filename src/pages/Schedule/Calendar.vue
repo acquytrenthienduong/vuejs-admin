@@ -164,7 +164,7 @@ export default {
       if (data) {
         data.forEach((element) => {
           let event = {};
-          event.name = element.customer.account;
+          event.name = element.customer.name;
           event.reservation_id = element.reservation_id;
           event.start = element.reservation_date + " " + element.checkin_time;
           event.checkout_time = element.reservation_date;

@@ -6,6 +6,7 @@ import UserProfile from "@/pages/UserProfile.vue";
 import StaffSchedule from "@/pages/StaffSchedule.vue";
 import AccountManager from "@/pages/AccountManager.vue";
 import PendingRequest from "@/pages/PendingRequest.vue";
+import CheckInForStaff from "@/pages/CheckInForStaff.vue";
 import SearchCustomer from "@/pages/SearchCustomer.vue";
 import Products from "@/pages/Products.vue";
 import Notifications from "@/pages/Notifications.vue";
@@ -76,6 +77,11 @@ const routes = [
         path: "notifications",
         name: "Notifications",
         component: Notifications
+      },
+      {
+        path: "checkintaff",
+        name: "CheckInForStaff",
+        component: CheckInForStaff
       }
     ],
     beforeEnter: (to, from, next) => {

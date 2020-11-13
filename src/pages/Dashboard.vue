@@ -87,7 +87,7 @@
 
           <template slot="content">
             <p class="category">Revenue</p>
-            <h3 class="title">$34,245</h3>
+            <h3 class="title">${{ totalMoney }}</h3>
           </template>
 
           <template slot="footer">
@@ -308,6 +308,8 @@ export default {
           ],
         ],
       },
+
+      totalMoney: 0,
     };
   },
   methods: {
@@ -440,6 +442,15 @@ export default {
       // console.log(this.dailySalesChart.data.series);
     },
 
+    loadTotalBill() {
+      axios.get("http://localhost:8000/findAllBill").then((response) => {
+        console.log("getlogin ", response);
+        response.data.forEach((data) => {
+          this.totalMoney += data.total_money;
+        });
+      });
+    },
+
     // testGetLogin() {
     //   axios.defaults.withCrendentails = true;
     //   axios.get("http://localhost:8000/loginReceptionist").then((response) => {
@@ -451,6 +462,7 @@ export default {
     this.loadReservationInWeek();
     // this.testGetLogin();
     // this.convertToChartData();
+    this.loadTotalBill();
   },
   // watch: {
   //   "dailySalesChart.data.series": function(val) {

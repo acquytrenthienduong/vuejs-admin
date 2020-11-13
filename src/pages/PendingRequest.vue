@@ -23,6 +23,12 @@
           </template>
         </b-table-column>
 
+        <b-table-column label="Name">
+          <template v-slot="props">
+            {{ props.row.customer.name }}
+          </template>
+        </b-table-column>
+
         <b-table-column label="Time">
           <template v-slot="props">
             {{ props.row.checkin_time }}
@@ -45,7 +51,7 @@
           <template v-slot="props">
             <md-button
               class="md-just-icon md-simple md-primary"
-              @click="acceptRequest(props.row.reservation_id)"
+              @click="confirm(props.row.reservation_id)"
             >
               <md-icon>done</md-icon>
               <md-tooltip md-direction="top">Accept</md-tooltip>
@@ -79,6 +85,19 @@ export default {
     };
   },
   methods: {
+    confirm(id) {
+      this.$buefy.dialog.confirm({
+        message: "Accept this request?",
+        onConfirm: () => this.acceptRequest(id),
+      });
+    },
+    success() {
+      this.$buefy.toast.open({
+        message: "Something happened correctly!",
+        type: "is-success",
+        // duration: 5000000,
+      });
+    },
     loadAllPendingRequests() {
       axios
         .get("http://localhost:8000/getAllReservationNotAccess")
@@ -87,12 +106,15 @@ export default {
     },
 
     acceptRequest(requestID) {
-      window.alert("Your request is accpeted!");
+      // this.success();
+
+      // window.alert("Your request is accpeted!");
       axios
         .post("http://localhost:8000/updateReservation/" + requestID, {
           is_access: 1,
         })
         .then((response) => {
+          this.success();
           this.loadAllPendingRequests();
           console.log(response);
         });
@@ -111,5 +133,9 @@ export default {
 
 li {
   list-style: none !important;
+}
+
+.toast {
+  flex-basis: 45px !important;
 }
 </style>

@@ -8,8 +8,10 @@ import AccountManager from "@/pages/AccountManager.vue";
 import PendingRequest from "@/pages/PendingRequest.vue";
 import CheckInForStaff from "@/pages/CheckInForStaff.vue";
 import SearchCustomer from "@/pages/SearchCustomer.vue";
-import Products from "@/pages/Products.vue";
+import Report from "@/pages/Report.vue";
 import Notifications from "@/pages/Notifications.vue";
+import Products from "@/pages/Products.vue";
+
 
 const routes = [
   {
@@ -64,9 +66,9 @@ const routes = [
         component: PendingRequest
       },
       {
-        path: "products",
-        name: "Products",
-        component: Products
+        path: "report",
+        name: "Report",
+        component: Report
       },
       {
         path: "maps",
@@ -82,6 +84,11 @@ const routes = [
         path: "checkintaff",
         name: "CheckInForStaff",
         component: CheckInForStaff
+      },
+      {
+        path: "products",
+        name: "Products",
+        component: Products
       }
     ],
     beforeEnter: (to, from, next) => {

@@ -1,57 +1,93 @@
 <template>
-  <download-excel
-    class="btn btn-default"
-    :data="json_data"
-    :fields="json_fields"
-    worksheet="My Worksheet"
-    name="report.xls"
-  >
-    Download Excel (you can customize this with html code!)
-  </download-excel>
+  <div>
+    <section>
+      <b-table
+        :data="products"
+        ref="table"
+        paginated
+        per-page="5"
+        aria-next-label="Next page"
+        aria-previous-label="Previous page"
+        aria-page-label="Page"
+        aria-current-label="Current page"
+      >
+        <b-table-column label="ID" width="40" numeric>
+          <template v-slot="props">
+            {{ props.row.product_id }}
+          </template>
+        </b-table-column>
+
+        <b-table-column label="Product Name">
+          <template v-slot="props">
+            {{ props.row.productName }}
+          </template>
+        </b-table-column>
+
+        <b-table-column label="URL">
+          <template v-slot="props">
+            {{ props.row.img_url }}
+          </template>
+        </b-table-column>
+
+        <b-table-column label="Service">
+          <template v-slot="props">
+            {{ props.row.sub_service_sub_service_id }}
+          </template>
+        </b-table-column>
+
+        <b-table-column label="Action">
+          <template v-slot="props">
+            <md-button
+              class="md-just-icon md-simple md-primary"
+              @click="loadDataByID(props.row.manager_id)"
+            >
+              <md-icon>edit</md-icon>
+              <md-tooltip md-direction="top">Edit</md-tooltip>
+            </md-button>
+            <md-button
+              @click="deleteManager(props.row.manager_id)"
+              class="md-just-icon md-simple md-danger"
+            >
+              <md-icon>delete</md-icon>
+              <md-tooltip md-direction="top">delete</md-tooltip>
+            </md-button>
+          </template>
+        </b-table-column>
+      </b-table>
+    </section>
+  </div>
 </template>
 
 <script>
-import Vue from "vue";
-import JsonExcel from "vue-json-excel";
 import axios from "axios";
 
-Vue.component("downloadExcel", JsonExcel);
-
+import { id } from "date-fns/locale";
 export default {
+  components: {},
   data() {
     return {
-      json_fields: {
-        "Date bill ": "date",
-        total_money: "total_money",
-        // "Telephone 2": {
-        //   field: "phone.landline",
-        //   callback: (value) => {
-        //     return `Landline Phone - ${value}`;
-        //   },
-        // },
-      },
-      json_data: [],
-      json_meta: [
-        [
-          {
-            key: "charset",
-            value: "utf-8",
-          },
-        ],
-      ],
+      products: [],
     };
   },
-
   methods: {
-    loadData() {
+    loadAllProducts() {
       axios
-        .get("http://localhost:8000/findAllBill")
-        .then((response) => (this.json_data = response.data));
+        .get("http://localhost:8000/products")
+        .then((response) => (this.products = response.data));
     },
   },
-
   mounted() {
-    this.loadData();
+    this.loadAllProducts();
   },
 };
 </script>
+
+<style>
+.buttons:last-child {
+  margin-bottom: 1rem !important;
+}
+
+li {
+  list-style: none !important;
+}
+</style>

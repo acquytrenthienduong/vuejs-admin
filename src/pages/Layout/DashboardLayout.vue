@@ -68,19 +68,22 @@
         <md-icon>account_circle</md-icon>
         <p>Account</p>
       </sidebar-link>
-      <sidebar-link to="/products">
+      <sidebar-link to="/report">
         <md-icon>get_app</md-icon>
         <p>Export report</p>
       </sidebar-link>
       <sidebar-link to="/maps">
-        <md-icon>location_on</md-icon>
+        <md-icon>search</md-icon>
         <p>Search customer</p>
       </sidebar-link>
       <sidebar-link to="/notifications">
         <md-icon>notifications</md-icon>
         <p>Notifications</p>
       </sidebar-link>
-
+      <sidebar-link to="/products">
+        <md-icon>extension</md-icon>
+        <p>Products</p>
+      </sidebar-link>
       <!-- <sidebar-link to="/checkintaff">
         <md-icon>pending</md-icon>
         <p>checkintaff</p>

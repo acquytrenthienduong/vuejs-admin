@@ -1,6 +1,5 @@
 module.exports = {
     config: {
-        host: "http://ec2-13-229-184-138.ap-southeast-1.compute.amazonaws.com",
-        port: 8000
+        host: "http://ec2-18-136-123-210.ap-southeast-1.compute.amazonaws.com"
     }
 };

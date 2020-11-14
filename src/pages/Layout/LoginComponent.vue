@@ -160,8 +160,8 @@ export default {
         });
     },
     loginForReceptionist: function() {
-      console.log("asdasdas",config.config.host);
-      const url = config.config.host + ":" + config.config.port;
+      // console.log("asdasdas",config.config.host);
+      const url = config.config.host;
       axios
         .post(url + "/loginReceptionist", {
           username: this.username,

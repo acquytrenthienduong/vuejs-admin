@@ -90,16 +90,27 @@
                   v-model="selectedEvent.isCheck"
                   :label="`Trạng Thái: ${selectedEvent.text}`"
                 ></v-checkbox>
-                <v-card-actions v-if="selectedEvent.isPassed" class="footer-card">
-                  <v-btn disabled text color="secondary" @click="updateReservation">
+                <v-card-actions
+                  v-if="selectedEvent.isPassed"
+                  class="footer-card"
+                >
+                  <v-btn
+                    disabled
+                    text
+                    color="secondary"
+                    @click="updateReservation"
+                  >
                     Update
                   </v-btn>
                   <v-btn disabled text color="secondary" @click="Remove">
                     Remove
                   </v-btn>
                 </v-card-actions>
-                <v-card-actions v-if="!selectedEvent.isPassed" class="footer-card">
-                  <v-btn  text color="secondary" @click="updateReservation">
+                <v-card-actions
+                  v-if="!selectedEvent.isPassed"
+                  class="footer-card"
+                >
+                  <v-btn text color="secondary" @click="updateReservation">
                     Update
                   </v-btn>
                   <v-btn text color="secondary" @click="Remove">
@@ -174,6 +185,7 @@ export default {
               element.reservation_date + " " + element.checkout_time;
           }
           event.color = "red";
+
           event.isCheck = false;
           event.status = 0;
           event.service = element.sub_service;
@@ -183,6 +195,9 @@ export default {
           if (element.status === 1) {
             event.color = "green";
             event.isCheck = true;
+            // if (this.compareDate(element.reservation_date)) {
+            //   event.color = "gray";
+            // }
             event.text = "Đã Thanh Toán";
             event.status = 1;
           }

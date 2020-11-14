@@ -16,7 +16,7 @@
         </md-button>
 
         <div class="md-collapse">
-          <div class="md-autocomplete">
+          <!-- <div class="md-autocomplete">
             <md-autocomplete
               class="search"
               v-model="selectedEmployee"
@@ -24,7 +24,7 @@
             >
               <label>Search...</label>
             </md-autocomplete>
-          </div>
+          </div> -->
           <md-list>
             <md-list-item href="#/">
               <i class="material-icons">dashboard</i>
@@ -50,7 +50,6 @@
 
             <li class="md-list-item">
               <a
-                href="#/notifications"
                 class="md-list-item-router md-list-item-container md-button-clean dropdown"
               >
                 <div class="md-list-item-content">
@@ -61,25 +60,24 @@
                       data-toggle="dropdown"
                     >
                       <md-icon>notifications</md-icon>
-                      <span class="notification">5</span>
+                      <span class="notification">{{
+                        numberOfNotificationNotSeen
+                      }}</span>
                       <p class="hidden-lg hidden-md">Notifications</p>
                     </md-button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                      <li><a href="#">Mike John responded to your email</a></li>
-                      <li><a href="#">You have 5 new tasks</a></li>
-                      <li><a href="#">You're now friend with Andrew</a></li>
-                      <li><a href="#">Another Notification</a></li>
-                      <li><a href="#">Another One</a></li>
+                      <li
+                        class="notification-item"
+                        v-for="noti in notifications"
+                        :key="noti.content"
+                      >
+                        <a @click="seenNoti(noti)">{{ noti.content }}</a>
+                      </li>
                     </ul>
                   </drop-down>
                 </div>
               </a>
             </li>
-
-            <!-- <md-list-item href="#/user">
-              <i class="material-icons">person</i>
-              <p class="hidden-lg hidden-md">Profile</p>
-            </md-list-item> -->
 
             <div class="md-list-item-content">
               <drop-down>
@@ -119,9 +117,34 @@ export default {
         "Ryan Howard",
         "Kevin Malone",
       ],
+      numberOfNotificationNotSeen: 0,
+      notifications: [],
     };
   },
+
+  mounted() {
+    this.loadNotification();
+
+    setInterval(() => {
+      this.loadNotification();
+    }, 5000);
+  },
   methods: {
+    loadNotification() {
+      axios
+        .get("http://localhost:8000/getNotificationForManager")
+        .then((response) => {
+          if (response.data) {
+            this.numberOfNotificationNotSeen = 0;
+            response.data.forEach((element) => {
+              if (element.seen === 0) {
+                this.numberOfNotificationNotSeen++;
+              }
+            });
+          }
+          this.notifications = response.data;
+        });
+    },
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
     },
@@ -131,14 +154,38 @@ export default {
         localStorage.removeItem("role");
         axios
           .get("http://localhost:8000/logoutCustomer")
-          .then((response) => {
-          });
+          .then((response) => {});
 
         this.$router.push("/login");
       }
+    },
+
+    seenNoti(noti) {
+      console.log(noti);
+      noti.seen = 1;
+      axios
+        .post("http://localhost:8000/seenNoti/" + noti.notification_id, {
+          noti,
+        })
+        .then((response) => {
+          if (this.$route.name != "Typography") {
+            this.$router.push("/typography");
+          }
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
     },
   },
 };
 </script>
 
-<style lang="css"></style>
+<style lang="css">
+.notification-item {
+  display: flex;
+  align-items: center;
+}
+.margin-left {
+  margin-left: 29px;
+}
+</style>

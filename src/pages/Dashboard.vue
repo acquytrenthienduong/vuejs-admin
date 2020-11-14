@@ -12,20 +12,8 @@
         >
           <template slot="content">
             <h4 class="title">Reservation in week</h4>
-            <p class="category">
-              <!-- <span class="text-success"
-                ><i class="fas fa-long-arrow-alt-up"></i> 55%
-              </span> -->
-              <!-- increase in today sales. -->
-            </p>
+            <p class="category"></p>
           </template>
-
-          <!-- <template slot="footer">
-            <div class="stats">
-              <md-icon>access_time</md-icon>
-              updated 4 minutes ago
-            </div>
-          </template> -->
         </chart-card>
       </div>
       <div
@@ -82,19 +70,12 @@
       >
         <stats-card data-background-color="green">
           <template slot="header">
-            <md-icon>store</md-icon>
+            <md-icon>attach_money</md-icon>
           </template>
 
           <template slot="content">
-            <p class="category">Revenue</p>
+            <p class="category">Total Money</p>
             <h3 class="title">${{ totalMoney }}</h3>
-          </template>
-
-          <template slot="footer">
-            <div class="stats">
-              <md-icon>date_range</md-icon>
-              Last 24 Hours
-            </div>
           </template>
         </stats-card>
       </div>
@@ -103,22 +84,15 @@
       >
         <stats-card data-background-color="orange">
           <template slot="header">
-            <md-icon>content_copy</md-icon>
+            <md-icon>attach_money</md-icon>
           </template>
 
           <template slot="content">
-            <p class="category">Used Space</p>
+            <p class="category">This Month</p>
             <h3 class="title">
               49/50
               <small>GB</small>
             </h3>
-          </template>
-
-          <template slot="footer">
-            <div class="stats">
-              <md-icon class="text-danger">warning</md-icon>
-              <a href="#pablo">Get More Space...</a>
-            </div>
           </template>
         </stats-card>
       </div>
@@ -127,19 +101,12 @@
       >
         <stats-card data-background-color="red">
           <template slot="header">
-            <md-icon>info_outline</md-icon>
+            <md-icon>attach_money</md-icon>
           </template>
 
           <template slot="content">
-            <p class="category">Fixed Issues</p>
-            <h3 class="title">75</h3>
-          </template>
-
-          <template slot="footer">
-            <div class="stats">
-              <md-icon>local_offer</md-icon>
-              Tracked from Github
-            </div>
+            <p class="category">This Week</p>
+            <h3 class="title">{{ moneyInWeek }}</h3>
           </template>
         </stats-card>
       </div>
@@ -148,77 +115,33 @@
       >
         <stats-card data-background-color="blue">
           <template slot="header">
-            <i class="fab fa-twitter"></i>
+            <md-icon>attach_money</md-icon>
           </template>
 
           <template slot="content">
-            <p class="category">Folowers</p>
+            <p class="category">Today</p>
             <h3 class="title">+245</h3>
           </template>
-
+          <!-- 
           <template slot="footer">
             <div class="stats">
               <md-icon>update</md-icon>
               Just Updated
             </div>
-          </template>
+          </template> -->
         </stats-card>
-      </div>
-      <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
-      >
-        <md-card>
-          <md-card-header data-background-color="orange">
-            <h4 class="title">Employees Stats</h4>
-            <p class="category">New employees on 15th September, 2016</p>
-          </md-card-header>
-          <md-card-content>
-            <ManagerTable table-header-color="orange"></ManagerTable>
-          </md-card-content>
-        </md-card>
-      </div>
-      <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
-      >
-        <nav-tabs-card>
-          <template slot="content">
-            <span class="md-nav-tabs-title">Tasks:</span>
-            <md-tabs class="md-success" md-alignment="left">
-              <md-tab id="tab-home" md-label="Bugs" md-icon="bug_report">
-                <nav-tabs-table></nav-tabs-table>
-              </md-tab>
-
-              <md-tab id="tab-pages" md-label="Website" md-icon="code">
-                <nav-tabs-table></nav-tabs-table>
-              </md-tab>
-
-              <md-tab id="tab-posts" md-label="server" md-icon="cloud">
-                <nav-tabs-table></nav-tabs-table>
-              </md-tab>
-            </md-tabs>
-          </template>
-        </nav-tabs-card>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {
-  StatsCard,
-  ChartCard,
-  NavTabsCard,
-  NavTabsTable,
-  ManagerTable,
-} from "@/components";
+import { StatsCard, ChartCard } from "@/components";
 import axios from "axios";
 export default {
   components: {
     StatsCard,
     ChartCard,
-    NavTabsCard,
-    NavTabsTable,
-    ManagerTable,
   },
   data() {
     return {
@@ -310,6 +233,7 @@ export default {
       },
 
       totalMoney: 0,
+      moneyInWeek: 0,
     };
   },
   methods: {
@@ -444,10 +368,101 @@ export default {
 
     loadTotalBill() {
       axios.get("http://localhost:8000/findAllBill").then((response) => {
-        console.log("getlogin ", response);
+        // console.log("getlogin ", response);
         response.data.forEach((data) => {
           this.totalMoney += data.total_money;
         });
+      });
+    },
+
+    loadMoneyInWeek() {
+      let dateRaw = new Date();
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
+
+      var current_day = dateRaw.getDay();
+
+      // Biến lưu tên của thứ
+      var day_name = "";
+      let from = "";
+      let to = "";
+      let temp = parseInt(dt, 10);
+      let start;
+      let end;
+      // Lấy tên thứ của ngày hiện tại
+      switch (current_day) {
+        case 0:
+          start = temp;
+          end = temp + 6;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+        case 1:
+          start = temp - 1;
+          end = temp + 5;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+        case 2:
+          start = temp - 2;
+          end = temp + 4;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+        case 3:
+          start = temp - 3;
+          end = temp + 3;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+        case 4:
+          start = temp - 4;
+          end = temp + 2;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+        case 5:
+          start = temp - 5;
+          end = temp + 1;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+        case 6:
+          start = temp - 6;
+          end = temp;
+          from = year + "-" + month + "-" + start;
+          to = year + "-" + month + "-" + end;
+          break;
+      }
+      axios
+        .get("http://localhost:8000/findBill/" + from + "/" + to)
+        .then((response) => {
+          response.data.forEach((data) => {
+            this.moneyInWeek += data.total_money;
+          });
+        });
+    },
+
+    loadMoneyToday() {
+      let dateRaw = new Date();
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
+
+      let today = year + "-" + month + "-" + dt;
+
+      axios.get("http://localhost:8000/findBillToday").then((response) => {
+        console.log("today  ", response);
+        // response.data.forEach((data) => {
+        //   this.moneyInWeek += data.total_money;
+        // });
       });
     },
 
@@ -463,6 +478,8 @@ export default {
     // this.testGetLogin();
     // this.convertToChartData();
     this.loadTotalBill();
+    this.loadMoneyInWeek();
+    this.loadMoneyToday();
   },
   // watch: {
   //   "dailySalesChart.data.series": function(val) {

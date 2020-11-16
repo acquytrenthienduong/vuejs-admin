@@ -145,8 +145,8 @@ export default {
           noti,
         })
         .then((response) => {
-          if (this.$route.name != "Typography") {
-            this.$router.push("/typography");
+          if (this.$route.name != "PendingRequest") {
+            this.$router.push("/pendingRequest");
           }
         })
         .catch((e) => {

@@ -36,6 +36,13 @@
                 >
                 </multiselect>
               </v-col>
+              <v-col v-if="customer != null" cols="12">
+                <v-text-field
+                  label="Customer Name"
+                  v-model="customer.name"
+                  disabled
+                ></v-text-field>
+              </v-col>
               <v-col cols="12">
                 <v-radio-group v-model="selectType" row>
                   <v-radio label="Tanning" value="1"></v-radio>
@@ -101,6 +108,14 @@
             Create
           </v-btn>
         </v-card-actions>
+        <v-overlay :z-index="0" :value="overlay">
+          <v-progress-circular
+            :size="70"
+            :width="7"
+            color="primary"
+            indeterminate
+          ></v-progress-circular>
+        </v-overlay>
       </v-card>
     </v-dialog>
   </v-row>
@@ -133,6 +148,7 @@ export default {
     selectSubService: null,
     items: [],
     selectType: null,
+    overlay: false,
   }),
 
   mounted() {
@@ -156,6 +172,9 @@ export default {
 
     createNewReservation() {
       console.log(this.selectSubService.value);
+      this.overlay = true;
+      // setTimeout(() => (this.isHidden = false), 500);
+
       axios
         .post("http://localhost:8000/createNewReservation", {
           customer_id: this.customer.customer_id,
@@ -166,9 +185,13 @@ export default {
           is_access: 1,
         })
         .then((response) => {
-          this.dialog = false;
-          this.reload();
-          this.closeDialog();
+          // console.log('res', response);
+          setTimeout(() => {
+            this.dialog = false;
+            this.reload();
+            this.overlay = false;
+            this.closeDialog();
+          }, 1000);
         })
         .catch((e) => {
           this.errors.push(e);

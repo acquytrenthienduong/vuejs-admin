@@ -68,16 +68,10 @@
                 <v-card-text>
                   Service: <span v-html="selectedEvent.serviceName"></span
                   ><br />
-                  <!-- TotalTime: <span v-html="selectedEvent.serviceTime"></span
-                  ><br /> -->
-                  <!-- TimeLess: <span v-html="selectedEvent.TimeLess"></span><br /> -->
                 </v-card-text>
                 <v-card-text>
                   Start: <span v-html="selectedEvent.start"></span><br />
                   End: <span v-html="selectedEvent.checkout_time"></span>
-                </v-card-text>
-                <v-card-text>
-                  <Bill :event="selectedEvent"></Bill>
                 </v-card-text>
                 <v-checkbox
                   v-if="selectedEvent.isPassed"
@@ -86,6 +80,7 @@
                   :label="`Trạng Thái: ${selectedEvent.text}`"
                 ></v-checkbox>
                 <v-checkbox
+                  disabled
                   v-if="!selectedEvent.isPassed"
                   v-model="selectedEvent.isCheck"
                   :label="`Trạng Thái: ${selectedEvent.text}`"
@@ -94,14 +89,7 @@
                   v-if="selectedEvent.isPassed"
                   class="footer-card"
                 >
-                  <v-btn
-                    disabled
-                    text
-                    color="secondary"
-                    @click="updateReservation"
-                  >
-                    Update
-                  </v-btn>
+                  <Bill :event="selectedEvent"></Bill>
                   <v-btn disabled text color="secondary" @click="Remove">
                     Remove
                   </v-btn>
@@ -110,9 +98,11 @@
                   v-if="!selectedEvent.isPassed"
                   class="footer-card"
                 >
-                  <v-btn text color="secondary" @click="updateReservation">
+                  <!-- <v-btn text color="secondary" @click="updateReservation">
                     Update
-                  </v-btn>
+                  </v-btn> -->
+                  <Bill :event="selectedEvent" :reload="loadData"></Bill>
+
                   <v-btn text color="secondary" @click="Remove">
                     Remove
                   </v-btn>
@@ -282,29 +272,6 @@ export default {
 
       nativeEvent.stopPropagation();
     },
-    updateReservation() {
-      let dateRaw = new Date();
-      let year = dateRaw.getFullYear();
-      let month = dateRaw.getMonth() + 1;
-      let dt = dateRaw.getDate();
-      let hour = dateRaw.getHours();
-      let minute = dateRaw.getMinutes();
-      let second = dateRaw.getSeconds();
-
-      axios
-        .post(
-          "http://localhost:8000/updateReservation/" +
-            this.selectedEvent.reservation_id,
-          {
-            status: this.selectedEvent.status,
-            checkout_time: hour + ":" + minute + ":" + second,
-          }
-        )
-        .then((response) => {
-          this.selectedOpen = false;
-          this.loadData();
-        });
-    },
     Remove() {
       axios
         .delete(
@@ -349,5 +316,9 @@ export default {
 .footer-card {
   display: flex;
   justify-content: space-between;
+}
+
+.v-btn--contained {
+  box-shadow: none !important;
 }
 </style>

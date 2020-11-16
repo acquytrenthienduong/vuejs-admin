@@ -34,7 +34,8 @@ Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
 Vue.use(Notifications);
 Vue.use(Buefy);
-Vue.use(excel)
+Vue.use(excel);
+
 
 /* eslint-disable no-new */
 new Vue({

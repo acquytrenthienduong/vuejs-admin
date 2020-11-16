@@ -65,6 +65,7 @@
             </md-button>
           </template>
         </b-table-column>
+        <h3 class="empty" v-if="requests.length == 0">No request Pending</h3>
       </b-table>
     </section>
   </div>
@@ -137,5 +138,12 @@ li {
 
 .toast {
   flex-basis: 45px !important;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-weight: bold;
 }
 </style>

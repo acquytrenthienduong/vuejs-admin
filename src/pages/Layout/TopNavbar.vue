@@ -16,37 +16,11 @@
         </md-button>
 
         <div class="md-collapse">
-          <!-- <div class="md-autocomplete">
-            <md-autocomplete
-              class="search"
-              v-model="selectedEmployee"
-              :md-options="employees"
-            >
-              <label>Search...</label>
-            </md-autocomplete>
-          </div> -->
           <md-list>
-            <md-list-item href="#/">
+            <md-list-item href="#/dashboard">
               <i class="material-icons">dashboard</i>
               <p class="hidden-lg hidden-md">Dashboard</p>
             </md-list-item>
-
-            <!-- <md-list-item href="#/notifications" class="dropdown">
-              <drop-down>
-                <a slot="title" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="material-icons">notifications</i>
-                  <span class="notification">5</span>
-                  <p class="hidden-lg hidden-md">Notifications</p>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-right">
-                  <li><a href="#">Mike John responded to your email</a></li>
-                  <li><a href="#">You have 5 new tasks</a></li>
-                  <li><a href="#">You're now friend with Andrew</a></li>
-                  <li><a href="#">Another Notification</a></li>
-                  <li><a href="#">Another One</a></li>
-                </ul>
-              </drop-down>
-            </md-list-item> -->
 
             <li class="md-list-item">
               <a
@@ -66,6 +40,7 @@
                       <p class="hidden-lg hidden-md">Notifications</p>
                     </md-button>
                     <ul class="dropdown-menu dropdown-menu-right">
+                      <li v-if="notifications.length == 0"><a>Nothing</a></li>
                       <li
                         class="notification-item"
                         v-for="noti in notifications"
@@ -127,7 +102,7 @@ export default {
 
     setInterval(() => {
       this.loadNotification();
-    }, 5000);
+    }, 10000);
   },
   methods: {
     loadNotification() {
@@ -136,13 +111,15 @@ export default {
         .then((response) => {
           if (response.data) {
             this.numberOfNotificationNotSeen = 0;
+            this.notifications = [];
             response.data.forEach((element) => {
               if (element.seen === 0) {
                 this.numberOfNotificationNotSeen++;
+                this.notifications.push(element);
               }
             });
           }
-          this.notifications = response.data;
+          // this.notifications = response.data;
         });
     },
     toggleSidebar() {

@@ -3,7 +3,6 @@ import LoginComponent from "@/pages/Layout/LoginComponent.vue";
 
 import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
-import StaffSchedule from "@/pages/StaffSchedule.vue";
 import AccountManager from "@/pages/AccountManager.vue";
 import PendingRequest from "@/pages/PendingRequest.vue";
 import CheckInForStaff from "@/pages/CheckInForStaff.vue";
@@ -41,11 +40,6 @@ const routes = [
         path: "schedule",
         name: "Schedule",
         component: UserProfile
-      },
-      {
-        path: "lichlamviec",
-        name: "lichlamviec",
-        component: StaffSchedule
       },
       {
         path: "account",

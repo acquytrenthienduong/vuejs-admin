@@ -106,7 +106,7 @@
 
           <template slot="content">
             <p class="category">This Week</p>
-            <h3 class="title">{{ moneyInWeek }}</h3>
+            <h3 class="title">${{ moneyInWeek }}</h3>
           </template>
         </stats-card>
       </div>
@@ -234,6 +234,22 @@ export default {
 
       totalMoney: 0,
       moneyInWeek: 0,
+
+      value: "1234567.89",
+      label: "Value",
+      placeholder: " ",
+      readonly: false,
+      disabled: false,
+      outlined: true,
+      clearable: true,
+      valueWhenIsEmpty: "",
+      options1: {
+        locale: "pt-BR",
+        prefix: "R$",
+        suffix: "",
+        length: 11,
+        precision: 2,
+      },
     };
   },
   methods: {

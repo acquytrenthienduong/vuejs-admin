@@ -63,6 +63,10 @@
       <sidebar-link to="/typography">
         <md-icon>pending</md-icon>
         <p>Pending Request</p>
+
+        <p v-if="numberOfPending != 0" class="count-noti">
+          {{ numberOfPending }}
+        </p>
       </sidebar-link>
       <sidebar-link to="/account">
         <md-icon>account_circle</md-icon>
@@ -109,6 +113,7 @@ import TopNavbar from "./TopNavbar.vue";
 import DashboardContent from "./Content.vue";
 import MobileMenu from "@/pages/Layout/MobileMenu.vue";
 import FixedPlugin from "./Extra/FixedPlugin.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -122,7 +127,40 @@ export default {
       sidebarBackground: "green",
       sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
       role: localStorage.getItem("role"),
+      numberOfPending: 101,
     };
+  },
+
+  methods: {
+    loadAllPendingRequests() {
+      console.log("loadAllPendingRequests");
+      axios
+        .get("http://localhost:8000/getAllReservationNotAccess")
+        .then((response) => (this.numberOfPending = response.data.length));
+      // .then((response) => console.log(response));
+    },
+
+    mounted() {
+      setInterval(() => {
+      // this.loadNotification();
+      console.log('123123');
+    }, 5000);
+    },
+
+    // mounted: function() {
+    //   this.loadAllPendingRequests();
+    // },
   },
 };
 </script>
+
+<style scoped>
+.count-noti {
+  margin-left: 25px !important;
+  border-radius: 50%;
+  background-color: red;
+  /* padding: 7px; */
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>

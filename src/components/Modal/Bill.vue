@@ -1,11 +1,9 @@
 <template>
   <v-row>
+    <v-btn @click.stop="dialog = true">
+      Payment
+    </v-btn>
     <v-dialog v-model="dialog" persistent max-width="600px">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="grey darken-2" dark v-bind="attrs" v-on="on">
-          View Bill
-        </v-btn>
-      </template>
       <v-card>
         <v-card-title>
           <span class="headline">Bill</span>
@@ -144,12 +142,37 @@ export default {
           console.log("res", response);
           if (response.status === 200) {
             this.successdialog = true;
+            this.updateReservation();
           } else {
             this.faildialog = true;
           }
         })
         .catch((e) => {
           this.faildialog = true;
+        });
+    },
+
+    updateReservation() {
+      let dateRaw = new Date();
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
+
+      axios
+        .post(
+          "http://localhost:8000/updateReservation/" +
+            this.event.reservation_id,
+          {
+            status: 1,
+            checkout_time: hour + ":" + minute + ":" + second,
+          }
+        )
+        .then((response) => {
+          // this.selectedOpen = false;
+          this.reload();
         });
     },
   },

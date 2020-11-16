@@ -80,10 +80,6 @@
         <md-icon>search</md-icon>
         <p>Search customer</p>
       </sidebar-link>
-      <sidebar-link to="/notifications">
-        <md-icon>notifications</md-icon>
-        <p>Notifications</p>
-      </sidebar-link>
       <sidebar-link to="/products">
         <md-icon>extension</md-icon>
         <p>Products</p>

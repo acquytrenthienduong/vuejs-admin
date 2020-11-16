@@ -13,6 +13,7 @@
           <template slot="content">
             <h4 class="title">Reservation in week</h4>
             <p class="category"></p>
+            <h4>Total: {{ totalInWeek }}</h4>
           </template>
         </chart-card>
       </div>
@@ -89,10 +90,7 @@
 
           <template slot="content">
             <p class="category">This Month</p>
-            <h3 class="title">
-              49/50
-              <small>GB</small>
-            </h3>
+            <h3 class="title">${{ moneyMonth }}</h3>
           </template>
         </stats-card>
       </div>
@@ -120,7 +118,7 @@
 
           <template slot="content">
             <p class="category">Today</p>
-            <h3 class="title">+245</h3>
+            <h3 class="title">${{ moneyToday }}</h3>
           </template>
           <!-- 
           <template slot="footer">
@@ -234,22 +232,9 @@ export default {
 
       totalMoney: 0,
       moneyInWeek: 0,
-
-      value: "1234567.89",
-      label: "Value",
-      placeholder: " ",
-      readonly: false,
-      disabled: false,
-      outlined: true,
-      clearable: true,
-      valueWhenIsEmpty: "",
-      options1: {
-        locale: "pt-BR",
-        prefix: "R$",
-        suffix: "",
-        length: 11,
-        precision: 2,
-      },
+      totalInWeek: 0,
+      moneyToday: 0,
+      moneyMonth: 0,
     };
   },
   methods: {
@@ -321,6 +306,7 @@ export default {
         .get("http://localhost:8000/findReservation/" + from + "/" + to)
         .then((response) => {
           // console.log(response);
+          this.totalInWeek = response.data.length;
           this.convertToChartData(response.data);
         });
     },
@@ -475,10 +461,19 @@ export default {
       let today = year + "-" + month + "-" + dt;
 
       axios.get("http://localhost:8000/findBillToday").then((response) => {
-        console.log("today  ", response);
-        // response.data.forEach((data) => {
-        //   this.moneyInWeek += data.total_money;
-        // });
+        // console.log("today  ", response);
+        response.data.forEach((data) => {
+          this.moneyToday += data.total_money;
+        });
+      });
+    },
+
+    loadMoneyMonth() {
+      axios.get("http://localhost:8000/findBillMonth").then((response) => {
+        // console.log("today  ", response);
+        response.data.forEach((data) => {
+          this.moneyMonth += data.total_money;
+        });
       });
     },
 
@@ -496,6 +491,7 @@ export default {
     this.loadTotalBill();
     this.loadMoneyInWeek();
     this.loadMoneyToday();
+    this.loadMoneyMonth();
   },
   // watch: {
   //   "dailySalesChart.data.series": function(val) {

@@ -64,6 +64,7 @@
       <v-dialog v-model="successdialog" max-width="500px">
         <v-card>
           <v-card-title>
+            <md-icon>mood</md-icon>
             <span>Create Bill Success</span>
           </v-card-title>
           <v-card-actions>
@@ -76,7 +77,8 @@
       <v-dialog v-model="faildialog" max-width="500px">
         <v-card>
           <v-card-title>
-            <span>Bill Da Dc Tao ROI</span>
+            <md-icon>mood_bad</md-icon>
+            <span>Bill has been created already</span>
           </v-card-title>
           <v-card-actions>
             <v-btn color="primary" text @click="faildialog = false">
@@ -125,8 +127,9 @@ export default {
       let time = hour + ":" + minute + ":" + second;
 
       let date = year + "-" + month + "-" + dt;
-      console.log("time", time);
-      console.log("date", date);
+      console.log("year", year);
+      console.log("month", month);
+      console.log("dt", dt);
 
       axios
         .post("http://localhost:8000/createBill", {
@@ -137,14 +140,23 @@ export default {
           payment_method_payment_method_id: 1,
           reservation_reservation_id: this.event.reservation_id,
           sub_service_sub_service_id: this.event.service.service_service_id,
+          year: year,
+          month: month,
+          day: dt,
         })
         .then((response) => {
           console.log("res", response);
           if (response.status === 200) {
             this.successdialog = true;
             this.updateReservation();
+            setTimeout(() => {
+              this.successdialog = false;
+            }, 2000);
           } else {
             this.faildialog = true;
+            // setTimeout(() => {
+            //   this.faildialog = false;
+            // }, 2000);
           }
         })
         .catch((e) => {
@@ -186,5 +198,9 @@ export default {
 .footer-card {
   display: flex;
   justify-content: space-between;
+}
+
+.md-icon {
+  margin: 0 !important;
 }
 </style>

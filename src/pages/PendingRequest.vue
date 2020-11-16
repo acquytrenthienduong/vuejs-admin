@@ -51,7 +51,12 @@
           <template v-slot="props">
             <md-button
               class="md-just-icon md-simple md-primary"
-              @click="confirm(props.row.reservation_id)"
+              @click="
+                confirm(
+                  props.row.reservation_id,
+                  props.row.customer.customer_id
+                )
+              "
             >
               <md-icon>done</md-icon>
               <md-tooltip md-direction="top">Accept</md-tooltip>
@@ -86,10 +91,10 @@ export default {
     };
   },
   methods: {
-    confirm(id) {
+    confirm(id, customer_id) {
       this.$buefy.dialog.confirm({
         message: "Accept this request?",
-        onConfirm: () => this.acceptRequest(id),
+        onConfirm: () => this.acceptRequest(id, customer_id),
       });
     },
     success() {
@@ -106,7 +111,7 @@ export default {
       // .then((response) => console.log(response));
     },
 
-    acceptRequest(requestID) {
+    acceptRequest(requestID, customer_id) {
       // this.success();
 
       // window.alert("Your request is accpeted!");
@@ -117,7 +122,15 @@ export default {
         .then((response) => {
           this.success();
           this.loadAllPendingRequests();
-          console.log(response);
+
+          axios
+            .post("http://localhost:8000/createNotification/" + customer_id, {
+              content: "Lịch của bạn đã được đặt thành công!",
+            })
+            .then((response) => {
+              console.log(response);
+            });
+          // console.log(response);
         });
     },
   },

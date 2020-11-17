@@ -13,7 +13,7 @@
       >
         <b-table-column label="Stt" width="40" numeric>
           <template v-slot="props">
-            {{ props.row.reservation_id }}
+            {{ props.row.stt }}
           </template>
         </b-table-column>
 
@@ -35,7 +35,7 @@
           </template>
         </b-table-column>
 
-        <b-table-column label="Date" centered>
+        <b-table-column label="Date">
           <template v-slot="props">
             {{ props.row.reservation_date }}
           </template>
@@ -86,35 +86,43 @@ export default {
     return {
       requests: [],
       request: {},
-
       isActive: false,
+      
     };
   },
   methods: {
     confirm(id, customer_id) {
+
       this.$buefy.dialog.confirm({
-        message: "Accept this request?",
+        message: "Do you want to accept the request?",
         onConfirm: () => this.acceptRequest(id, customer_id),
       });
     },
     success() {
       this.$buefy.toast.open({
-        message: "Something happened correctly!",
+        message: "Request Accepted!",
         type: "is-success",
         // duration: 5000000,
       });
     },
     loadAllPendingRequests() {
+      this.requests = [];
+      var stt = 1;
       axios
         .get("http://localhost:8000/getAllReservationNotAccess")
-        .then((response) => (this.requests = response.data));
-      // .then((response) => console.log(response));
+        .then((response) => {
+          // console.log("response", response.data);
+          response.data.forEach((element) => {
+            let request = {};
+            request = element;
+            request.stt = stt++;
+            this.requests.push(request);
+          });
+          // console.log("requests", requests);
+        });
     },
 
     acceptRequest(requestID, customer_id) {
-      // this.success();
-
-      // window.alert("Your request is accpeted!");
       axios
         .post("http://localhost:8000/updateReservation/" + requestID, {
           is_access: 1,
@@ -149,6 +157,9 @@ li {
   list-style: none !important;
 }
 
+ul {
+  margin-bottom: unset !important;
+}
 .toast {
   flex-basis: 45px !important;
 }
@@ -158,5 +169,17 @@ li {
   align-items: center;
   justify-content: space-around;
   font-weight: bold;
+}
+table {
+  margin-left: 30px;
+  width: 94% !important;
+}
+
+.level-right {
+  margin-right: 33px !important;
+}
+
+table td {
+  vertical-align: inherit !important;
 }
 </style>

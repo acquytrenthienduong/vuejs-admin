@@ -262,7 +262,7 @@ export default {
 };
 </script>
 
-<style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css">
 label {
   margin-bottom: unset !important;
 }

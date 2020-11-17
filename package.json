@@ -17,6 +17,7 @@
     "core-js": "3.6.4",
     "date-fns": "^2.16.1",
     "google-maps": "4.2.3",
+    "moment": "^2.29.1",
     "pusher-js": "^7.0.0",
     "v-calendar": "^1.0.8",
     "v-col": "^1.0.0",

@@ -165,4 +165,8 @@ export default {
 .margin-left {
   margin-left: 29px;
 }
+.md-title {
+  font-family: ui-monospace;
+  font-size: x-large !important;
+}
 </style>

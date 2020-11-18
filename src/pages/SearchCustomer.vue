@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-row>
+    <v-row class="searchCustomer">
       <v-col cols="12" sm="3">
-        Enter number of customer:
+        <h4>Enter Phone Number:</h4>
       </v-col>
       <v-col cols="12" sm="9">
         <multiselect
@@ -28,49 +28,77 @@
         </multiselect>
       </v-col>
     </v-row>
-    <v-card-text v-if="customer != null">
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <h3>
-              Customer Name: <span>{{ customer.name }}</span>
-            </h3>
-            <!-- <v-text-field v-model="customer.name" label="Name"></v-text-field> -->
-          </v-col>
-          <v-col cols="12">
-            <h3>
-              Customer Account: <span>{{ customer.account }}</span>
-            </h3>
-            <!-- <v-text-field
-              v-model="customer.account"
-              label="Customer Account"
-            ></v-text-field> -->
-          </v-col>
-          <v-col cols="12">
-            <v-col cols="12">
-              <v-select
-                v-model="items"
-                :items="value"
-                attach
-                chips
-                label="Chips"
-                multiple
-              ></v-select>
-            </v-col>
-          </v-col>
-          <v-col cols="12">
-            <h3>
-              Customer Email: <span>{{ customer.email }}</span>
-            </h3>
-            <!-- <v-text-field
-              v-model="customer.email"
-              label="xxx"
-              prefix=""
-            ></v-text-field> -->
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-card-text>
+
+    <v-container class="grey lighten-5">
+      <v-row>
+        <v-col cols="12" sm="8">
+          <v-card v-if="customer != null" class="pa-2" outlined tile>
+            <v-container>
+              <v-card-text>
+                <v-card-title>
+                  Data Services
+                </v-card-title>
+
+                <div>
+                  <p>
+                    Total Visit: <span>{{ items.length }}</span>
+                  </p>
+                  <p>Total Money:</p>
+                  <p>Favourite Service:</p>
+                  <!-- <v-col cols="12">
+                  <v-select
+                    v-model="items"
+                    :items="value"
+                    attach
+                    chips
+                    label="Used Services"
+                    multiple
+                  ></v-select>
+                </v-col> -->
+                </div>
+              </v-card-text>
+            </v-container>
+            <hr />
+            <v-container>
+              <v-card-text>
+                <v-card-title>
+                  Lastest Visit
+                </v-card-title>
+                <v-data-table
+                  :headers="headers"
+                  :items="reservations"
+                  :items-per-page="5"
+                  class="elevation-1"
+                ></v-data-table>
+              </v-card-text>
+            </v-container>
+          </v-card>
+        </v-col>
+        <v-col cols="12" sm="4">
+          <v-card v-if="customer != null" class="pa-2" outlined tile>
+            <v-container>
+              <v-card-text>
+                <v-card-title>
+                  Profile
+                </v-card-title>
+
+                <div class="text--primary">
+                  <p>
+                    Name: <span>{{ customer.name }}</span>
+                  </p>
+                  <p>
+                    Account: <span>{{ customer.account }}</span>
+                  </p>
+                  <p>
+                    Email: <span>{{ customer.email }}</span>
+                  </p>
+                </div>
+              </v-card-text>
+            </v-container>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -89,16 +117,28 @@ export default {
     items: [],
     value: [],
     totalMoney: 0,
+    reservations: [],
+    // headers: [
+    //   {
+    //     text: "account",
+    //     align: "start",
+    //     sortable: false,
+    //     value: "account",
+    //   },
+    //   { text: "email", value: "email" },
+    //   { text: "gender", value: "gender" },
+    //   { text: "password", value: "password" },
+    // ],
     headers: [
       {
-        text: "account",
+        text: "Date",
         align: "start",
-        sortable: false,
-        value: "account",
+        // sortable: false,
+        value: "reservation_date",
       },
-      { text: "email", value: "email" },
-      { text: "gender", value: "gender" },
-      { text: "password", value: "password" },
+      { text: "Service", value: "sub_service.name" },
+      { text: "Type", value: "" },
+      { text: "Bill", value: "sub_service.time" },
     ],
   }),
   methods: {
@@ -121,7 +161,8 @@ export default {
 
   watch: {
     customer: function(val) {
-      console.log(val);
+      console.log("quang", val);
+      this.reservations = val.reservations;
       if (val != null) {
         val.reservations.forEach((element) => {
           let x = element.sub_service.name + " " + element.sub_service.time;
@@ -140,3 +181,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.searchCustomer {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.customerTable {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+</style>

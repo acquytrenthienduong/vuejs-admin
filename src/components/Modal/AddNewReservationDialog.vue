@@ -239,7 +239,7 @@ export default {
           res.data.forEach((element) => {
             let selectItem = {};
             if (element.type === 1) {
-              selectItem.name = element.time;
+              selectItem.name = element.time.replace(/(?:0)?(\d+):(?:0)?(\d+).*/,'$1h $2m');
               selectItem.value = element.sub_service_id;
             } else {
               selectItem.name = element.session;

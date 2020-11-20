@@ -123,29 +123,26 @@ export default {
       sidebarBackground: "green",
       sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
       role: localStorage.getItem("role"),
-      numberOfPending: 101,
+      numberOfPending: 0,
     };
   },
 
   methods: {
     loadAllPendingRequests() {
-      console.log("loadAllPendingRequests");
       axios
         .get("http://localhost:8000/getAllReservationNotAccess")
-        .then((response) => (this.numberOfPending = response.data.length));
-      // .then((response) => console.log(response));
+        .then((response) => {
+          console.log("response.data.length", response.data.length);
+          this.numberOfPending = response.data.length;
+        });
     },
+  },
 
-    mounted() {
-      setInterval(() => {
-      // this.loadNotification();
-      console.log('123123');
+  mounted() {
+    this.loadAllPendingRequests();
+    setInterval(() => {
+      this.loadAllPendingRequests();
     }, 5000);
-    },
-
-    // mounted: function() {
-    //   this.loadAllPendingRequests();
-    // },
   },
 };
 </script>

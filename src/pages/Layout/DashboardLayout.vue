@@ -18,7 +18,7 @@
         <p>Schedule</p>
       </sidebar-link>
 
-      <sidebar-link to="/typography">
+      <sidebar-link to="/pendingRequest">
         <md-icon>pending</md-icon>
         <p>Pending Request</p>
       </sidebar-link>
@@ -60,7 +60,7 @@
         <md-icon>schedule</md-icon>
         <p>Schedule</p>
       </sidebar-link>
-      <sidebar-link to="/typography">
+      <sidebar-link to="/pendingRequest">
         <md-icon>pending</md-icon>
         <p>Pending Request</p>
 
@@ -76,7 +76,7 @@
         <md-icon>get_app</md-icon>
         <p>Export report</p>
       </sidebar-link>
-      <sidebar-link to="/maps">
+      <sidebar-link to="/customerDetails">
         <md-icon>search</md-icon>
         <p>Search customer</p>
       </sidebar-link>

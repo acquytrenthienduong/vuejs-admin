@@ -3,12 +3,12 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="grey darken-2" dark v-bind="attrs" v-on="on">
-          Create new reservation
+          New Reservation
         </v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">new reservation</span>
+          <span class="headline">New Reservation</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -17,7 +17,7 @@
                 <multiselect
                   v-model="customer"
                   id="ajax"
-                  placeholder="Type to search"
+                  placeholder="Customer Name"
                   open-direction="bottom"
                   :options="customers"
                   :multiple="false"
@@ -45,17 +45,36 @@
               </v-col>
               <v-col cols="12">
                 <v-radio-group v-model="selectType" row>
-                  <v-radio label="Tanning" value="1"></v-radio>
-                  <v-radio label="Massage" value="2"></v-radio>
+                  <v-radio
+                    label="Tanning"
+                    class="alignContent"
+                    :value="1"
+                  ></v-radio>
+                  <v-radio
+                    label="Massage"
+                    class="alignContent"
+                    :value="2"
+                  ></v-radio>
                 </v-radio-group>
               </v-col>
-              <v-col cols="12">
+              <v-col v-if="selectType == 1" cols="12">
                 <v-select
                   v-model="selectSubService"
                   :items="items"
                   item-text="name"
                   item-value="value"
-                  label="Service"
+                  label="Duration"
+                  return-object
+                  single-line
+                ></v-select>
+              </v-col>
+              <v-col v-if="selectType == 2" cols="12">
+                <v-select
+                  v-model="selectSubService"
+                  :items="items"
+                  item-text="name"
+                  item-value="value"
+                  label="Package"
                   return-object
                   single-line
                 ></v-select>
@@ -81,7 +100,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="time"
-                      label="Chọn Giờ"
+                      label="Pick Time"
                       prepend-icon="mdi-clock-time-four-outline"
                       readonly
                       v-bind="attrs"
@@ -101,11 +120,11 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeDialog">
-            Close
-          </v-btn>
           <v-btn color="blue darken-1" text @click="createNewReservation">
             Create
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="closeDialog">
+            Close
           </v-btn>
         </v-card-actions>
         <v-overlay :z-index="0" :value="overlay">
@@ -220,7 +239,7 @@ export default {
           res.data.forEach((element) => {
             let selectItem = {};
             if (element.type === 1) {
-              selectItem.name = element.time;
+              selectItem.name = element.time.replace(/(?:0)?(\d+):(?:0)?(\d+).*/,'$1h $2m');
               selectItem.value = element.sub_service_id;
             } else {
               selectItem.name = element.session;
@@ -243,4 +262,8 @@ export default {
 };
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css">
+label {
+  margin-bottom: unset !important;
+}
+</style>

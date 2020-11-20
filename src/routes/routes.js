@@ -55,8 +55,8 @@ const routes = [
         }
       },
       {
-        path: "typography",
-        name: "Typography",
+        path: "pendingRequest",
+        name: "Pending Request",
         component: PendingRequest
       },
       {
@@ -65,8 +65,8 @@ const routes = [
         component: Report
       },
       {
-        path: "maps",
-        name: "Maps",
+        path: "customerDetails",
+        name: "Customer Details",
         component: SearchCustomer
       },
       {

@@ -145,8 +145,8 @@ export default {
           noti,
         })
         .then((response) => {
-          if (this.$route.name != "Typography") {
-            this.$router.push("/typography");
+          if (this.$route.name != "PendingRequest") {
+            this.$router.push("/pendingRequest");
           }
         })
         .catch((e) => {
@@ -164,5 +164,9 @@ export default {
 }
 .margin-left {
   margin-left: 29px;
+}
+.md-title {
+  font-family: ui-monospace;
+  font-size: x-large !important;
 }
 </style>

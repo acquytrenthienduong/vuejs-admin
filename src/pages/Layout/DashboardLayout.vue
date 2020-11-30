@@ -84,10 +84,6 @@
         <md-icon>extension</md-icon>
         <p>Products</p>
       </sidebar-link>
-      <!-- <sidebar-link to="/checkintaff">
-        <md-icon>pending</md-icon>
-        <p>checkintaff</p>
-      </sidebar-link> -->
     </side-bar>
 
     <div class="main-panel">

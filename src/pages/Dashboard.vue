@@ -242,72 +242,26 @@ export default {
   methods: {
     loadReservationInWeek() {
       let dateRaw = new Date();
-      let year = dateRaw.getFullYear();
-      let month = dateRaw.getMonth() + 1;
-      let dt = dateRaw.getDate();
-      let hour = dateRaw.getHours();
-      let minute = dateRaw.getMinutes();
-      let second = dateRaw.getSeconds();
-
-      var current_day = dateRaw.getDay();
+      // let month = dateRaw.getMonth() + 1;
+      var first = dateRaw.getDate() - dateRaw.getDay(); // First day is the day of the month - the day of the week
+      var last = first + 6; // last day is the first day + 6
+      var firstday = new Date(dateRaw.setDate(first));
+      var lastday = new Date(dateRaw.setDate(last));
+      let monthFrom = firstday.getMonth() + 1;
+      let monthTo = lastday.getMonth() + 1;
 
       // Biến lưu tên của thứ
-      var day_name = "";
       let from = "";
       let to = "";
-      let temp = parseInt(dt, 10);
-      let start;
-      let end;
-      // Lấy tên thứ của ngày hiện tại
-      switch (current_day) {
-        case 0:
-          start = temp;
-          end = temp + 6;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-        case 1:
-          start = temp - 1;
-          end = temp + 5;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-        case 2:
-          start = temp - 2;
-          end = temp + 4;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-        case 3:
-          start = temp - 3;
-          end = temp + 3;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-        case 4:
-          start = temp - 4;
-          end = temp + 2;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-        case 5:
-          start = temp - 5;
-          end = temp + 1;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-        case 6:
-          start = temp - 6;
-          end = temp;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-      }
-
+      from =
+        firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
+      to = lastday.getFullYear() + "-" + monthTo + "-" + lastday.getDate();
+      console.log("from ", from);
+      console.log("to ", to);
       axios
         .get(this.host + "/findReservation/" + from + "/" + to)
         .then((response) => {
-          // console.log(response);
+          console.log("dau buoi ", response);
           this.totalInWeek = response.data.length;
           this.convertToChartData(response.data);
         });
@@ -381,67 +335,19 @@ export default {
 
     loadMoneyInWeek() {
       let dateRaw = new Date();
-      let year = dateRaw.getFullYear();
-      let month = dateRaw.getMonth() + 1;
-      let dt = dateRaw.getDate();
-      let hour = dateRaw.getHours();
-      let minute = dateRaw.getMinutes();
-      let second = dateRaw.getSeconds();
-
-      var current_day = dateRaw.getDay();
-
-      // Biến lưu tên của thứ
-      var day_name = "";
+      var first = dateRaw.getDate() - dateRaw.getDay();
+      var last = first + 6;
+      var firstday = new Date(dateRaw.setDate(first));
+      var lastday = new Date(dateRaw.setDate(last));
+      let monthFrom = firstday.getMonth() + 1;
+      let monthTo = lastday.getMonth() + 1;
       let from = "";
       let to = "";
-      let temp = parseInt(dt, 10);
-      let start;
-      let end;
-      // Lấy tên thứ của ngày hiện tại
-      switch (current_day) {
-        case 0:
-          start = temp;
-          end = temp + 6;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-        case 1:
-          start = temp - 1;
-          end = temp + 5;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-        case 2:
-          start = temp - 2;
-          end = temp + 4;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-        case 3:
-          start = temp - 3;
-          end = temp + 3;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-        case 4:
-          start = temp - 4;
-          end = temp + 2;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-        case 5:
-          start = temp - 5;
-          end = temp + 1;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-        case 6:
-          start = temp - 6;
-          end = temp;
-          from = year + "-" + month + "-" + start;
-          to = year + "-" + month + "-" + end;
-          break;
-      }
+      from =
+        firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
+      to = lastday.getFullYear() + "-" + monthTo + "-" + lastday.getDate();
+      console.log("from ", from);
+      console.log("to ", to);
       axios.get(this.host + "/findBill/" + from + "/" + to).then((response) => {
         response.data.forEach((data) => {
           this.moneyInWeek += data.total_money;

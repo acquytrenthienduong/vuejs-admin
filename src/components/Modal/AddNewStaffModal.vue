@@ -50,6 +50,8 @@
 
 <script>
 import axios from "axios";
+import config from "../../config/config.js"
+
 export default {
   props: {
     reload: {
@@ -65,12 +67,13 @@ export default {
       gender: "",
       selected_shift: "",
       errors: null,
+      host: config.config.host
     };
   },
   methods: {
     addNewStaff() {
       axios
-        .post("http://localhost:8000/addStaff", {
+        .post(this.host + "/addStaff", {
           dob: this.dob,
           gender: this.gender,
           shift_shift_id: this.selected_shift,

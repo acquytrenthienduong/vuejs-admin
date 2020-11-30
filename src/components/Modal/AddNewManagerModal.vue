@@ -68,26 +68,27 @@
 
 <script>
 import axios from "axios";
+import config from "../../config/config.js"
 export default {
   props: {
     reload: {
       type: Function,
     },
   },
-  // props: ["dob","gender", "password", "account"],
   data() {
     return {
       account: "",
       dob: "",
       password: "",
       gender: "",
-      errors : null
+      errors : null,
+      host: config.config.host
     };
   },
   methods: {
     addNewManager() {
       axios
-        .post("http://localhost:8000/addManager", {
+        .post(this.host + "/addManager", {
           account: this.account,
           password: this.password,
           dob: this.dob,

@@ -14,12 +14,14 @@
 import Vue from "vue";
 import JsonExcel from "vue-json-excel";
 import axios from "axios";
+import config from "../config/config";
 
 Vue.component("downloadExcel", JsonExcel);
 
 export default {
   data() {
     return {
+      host: config.config.host,
       json_fields: {
         "Date bill ": "date",
         total_money: "total_money",
@@ -45,7 +47,7 @@ export default {
   methods: {
     loadData() {
       axios
-        .get("http://localhost:8000/findAllBill")
+        .get(this.host + "/findAllBill")
         .then((response) => (this.json_data = response.data));
     },
   },

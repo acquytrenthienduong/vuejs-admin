@@ -78,6 +78,7 @@
 
 <script>
 import axios from "axios";
+import config from "../config/config";
 
 import { id } from "date-fns/locale";
 export default {
@@ -87,12 +88,11 @@ export default {
       requests: [],
       request: {},
       isActive: false,
-      
+      host: config.config.host,
     };
   },
   methods: {
     confirm(id, customer_id) {
-
       this.$buefy.dialog.confirm({
         message: "Do you want to accept the request?",
         onConfirm: () => this.acceptRequest(id, customer_id),
@@ -108,23 +108,21 @@ export default {
     loadAllPendingRequests() {
       this.requests = [];
       var stt = 1;
-      axios
-        .get("http://localhost:8000/getAllReservationNotAccess")
-        .then((response) => {
-          // console.log("response", response.data);
-          response.data.forEach((element) => {
-            let request = {};
-            request = element;
-            request.stt = stt++;
-            this.requests.push(request);
-          });
-          // console.log("requests", requests);
+      axios.get(this.host + "/getAllReservationNotAccess").then((response) => {
+        // console.log("response", response.data);
+        response.data.forEach((element) => {
+          let request = {};
+          request = element;
+          request.stt = stt++;
+          this.requests.push(request);
         });
+        // console.log("requests", requests);
+      });
     },
 
     acceptRequest(requestID, customer_id) {
       axios
-        .post("http://localhost:8000/updateReservation/" + requestID, {
+        .post(this.host + "/updateReservation/" + requestID, {
           is_access: 1,
         })
         .then((response) => {
@@ -132,7 +130,7 @@ export default {
           this.loadAllPendingRequests();
 
           axios
-            .post("http://localhost:8000/createNotification/" + customer_id, {
+            .post(this.host + "/createNotification/" + customer_id, {
               content: "Lịch của bạn đã được đặt thành công!",
             })
             .then((response) => {

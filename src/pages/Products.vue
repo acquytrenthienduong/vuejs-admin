@@ -60,6 +60,7 @@
 
 <script>
 import axios from "axios";
+import config from "../config/config";
 
 import { id } from "date-fns/locale";
 export default {
@@ -67,12 +68,13 @@ export default {
   data() {
     return {
       products: [],
+      host: config.config.host,
     };
   },
   methods: {
     loadAllProducts() {
       axios
-        .get("http://localhost:8000/products")
+        .get(this.host + "/products")
         .then((response) => (this.products = response.data));
     },
   },

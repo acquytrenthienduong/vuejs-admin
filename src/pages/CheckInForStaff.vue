@@ -72,22 +72,23 @@
 
 <script>
 import axios from "axios";
-
 import { id } from "date-fns/locale";
+import config from "../config/config"
+
 export default {
   components: {},
   data() {
     return {
       data: [],
       request: {},
-
       isActive: false,
+      host: config.config.host
     };
   },
   methods: {
     loadData() {
       axios
-        .get("http://localhost:8000/getAllStaff")
+        .get(this.host + "/getAllStaff")
         .then((response) => (this.data = response.data));
       // .then((response) => console.log(response));
     },
@@ -95,7 +96,7 @@ export default {
     acceptRequest(requestID) {
       window.alert("Your request is accpeted!");
       axios
-        .post("http://localhost:8000/updateReservation/" + requestID, {
+        .post(this.host +"/updateReservation/" + requestID, {
           is_access: 1,
         })
         .then((response) => {

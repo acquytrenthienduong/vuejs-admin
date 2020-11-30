@@ -109,6 +109,7 @@
 import axios from "axios";
 import AddNewStaffModal from "../Modal/AddNewStaffModal";
 import UpdateStaffModal from "../Modal/UpdateStaffModal";
+import config from "../../config/config.js"
 
 import { id } from "date-fns/locale";
 export default {
@@ -124,26 +125,27 @@ export default {
       //data for modal
       isAddNewModalActive: false,
       isUpdateModalActive: false,
+      host: config.config.host
     };
   },
   methods: {
     deleteStaff(staffID) {
       axios
-        .delete("http://localhost:8000/deleteStaff/" + staffID)
+        .delete(this.host + "/deleteStaff/" + staffID)
         .then((response) => {
           this.loadData();
           // window.location.reload();
         });
     },
     loadShift() {
-      axios.get("http://localhost:8000/shift").then((response) => {
+      axios.get(this.host + "/shift").then((response) => {
         // console.log(response);
         this.shifts = response.data;
       });
     },
     loadData() {
       axios
-        .get("http://localhost:8000/staff")
+        .get(this.host + "/staff")
         .then((response) => (this.staffs = response.data));
       // .then((response) => console.log(response));
     },
@@ -151,7 +153,7 @@ export default {
     loadStaffByID(staffID) {
       this.isUpdateModalActive = true;
       axios
-        .get("http://localhost:8000/findId/" + staffID)
+        .get(this.host + "/findId/" + staffID)
         .then((response) => (this.staff = response.data));
         // .then((response) => console.log(response));
 

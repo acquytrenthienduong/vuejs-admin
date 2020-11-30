@@ -131,27 +131,22 @@ export default {
         min: (v) => v.length >= 3 || "Min 3 characters",
         emailMatch: () => `The email and password you entered don't match`,
       },
+      host: config.config.host,
     };
   },
 
   methods: {
     loginForManager: function() {
-      console.log("host", config.config.host);
-      console.log("port", config.config.port);
       axios
-        .post("http://localhost:8000/loginManager", {
+        .post(this.host + "/loginManager", {
           username: this.username,
           password: this.password,
         })
         .then((response) => {
           if (response.status === 200) {
-            // console.log(response);
             localStorage.setItem("username", response.data.account);
             localStorage.setItem("role", response.data.role);
-
             this.$router.push("/dashboard");
-            // window.location.reload();
-            // window.location.href = 'http://localhost:8080/home'
           }
         })
         .catch((e) => {
@@ -160,10 +155,8 @@ export default {
         });
     },
     loginForReceptionist: function() {
-      // console.log("asdasdas",config.config.host);
-      const url = config.config.host;
       axios
-        .post(url + "/loginReceptionist", {
+        .post(this.host + "/loginReceptionist", {
           username: this.username,
           password: this.password,
         })
@@ -176,8 +169,6 @@ export default {
             console.log("username", localStorage.getItem("username"));
             console.log("role", localStorage.getItem("role"));
             this.$router.push("/dashboard");
-            // window.location.reload();
-            // window.location.href = 'http://localhost:8080/home'
           }
         })
         .catch((e) => {
@@ -187,7 +178,7 @@ export default {
     },
     loginForAdmin: function() {
       axios
-        .post("http://localhost:8000/loginAdmin", {
+        .post(this.host + "/loginAdmin", {
           username: this.username,
           password: this.password,
         })
@@ -199,8 +190,6 @@ export default {
             console.log("username", localStorage.getItem("username"));
             console.log("role", localStorage.getItem("role"));
             this.$router.push("/dashboard");
-            // window.location.reload();
-            // window.location.href = 'http://localhost:8080/home'
           }
         })
         .catch((e) => {

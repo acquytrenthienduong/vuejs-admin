@@ -70,6 +70,8 @@
 
 <script>
 import axios from "axios";
+import config from "../../config/config.js"
+
 export default {
   props: {
     receptionist: {
@@ -83,10 +85,16 @@ export default {
     },
   },
 
+  data() {
+    return {
+      host: config.config.host
+    }
+  },
+
   methods: {
     updateReceptionistByID(id) {
       axios
-        .post("http://localhost:8000/updateReceptionist/" + id, {
+        .post(this.host + "/updateReceptionist/" + id, {
           account: this.receptionist.account,
           password: this.receptionist.password,
           dob: this.receptionist.dob,

@@ -78,6 +78,8 @@
 
 <script>
 import axios from "axios";
+import config from "../../config/config";
+
 export default {
   data() {
     return {
@@ -94,6 +96,7 @@ export default {
       ],
       numberOfNotificationNotSeen: 0,
       notifications: [],
+      host: config.config.host,
     };
   },
 
@@ -106,21 +109,18 @@ export default {
   },
   methods: {
     loadNotification() {
-      axios
-        .get("http://localhost:8000/getNotificationForManager")
-        .then((response) => {
-          if (response.data) {
-            this.numberOfNotificationNotSeen = 0;
-            this.notifications = [];
-            response.data.forEach((element) => {
-              if (element.seen === 0) {
-                this.numberOfNotificationNotSeen++;
-                this.notifications.push(element);
-              }
-            });
-          }
-          // this.notifications = response.data;
-        });
+      axios.get(this.host + "/getNotificationForManager").then((response) => {
+        if (response.data) {
+          this.numberOfNotificationNotSeen = 0;
+          this.notifications = [];
+          response.data.forEach((element) => {
+            if (element.seen === 0) {
+              this.numberOfNotificationNotSeen++;
+              this.notifications.push(element);
+            }
+          });
+        }
+      });
     },
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
@@ -129,10 +129,7 @@ export default {
       if (localStorage.getItem("username")) {
         localStorage.removeItem("username");
         localStorage.removeItem("role");
-        axios
-          .get("http://localhost:8000/logoutCustomer")
-          .then((response) => {});
-
+        axios.get(this.host + "/logoutCustomer").then((response) => {});
         this.$router.push("/login");
       }
     },
@@ -141,7 +138,7 @@ export default {
       console.log(noti);
       noti.seen = 1;
       axios
-        .post("http://localhost:8000/seenNoti/" + noti.notification_id, {
+        .post(this.host + "/seenNoti/" + noti.notification_id, {
           noti,
         })
         .then((response) => {

@@ -110,6 +110,7 @@ import DashboardContent from "./Content.vue";
 import MobileMenu from "@/pages/Layout/MobileMenu.vue";
 import FixedPlugin from "./Extra/FixedPlugin.vue";
 import axios from "axios";
+import config from "../../config/config";
 
 export default {
   components: {
@@ -124,17 +125,16 @@ export default {
       sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
       role: localStorage.getItem("role"),
       numberOfPending: 0,
+      host: config.config.host,
     };
   },
 
   methods: {
     loadAllPendingRequests() {
-      axios
-        .get("http://localhost:8000/getAllReservationNotAccess")
-        .then((response) => {
-          console.log("response.data.length", response.data.length);
-          this.numberOfPending = response.data.length;
-        });
+      axios.get(this.host + "/getAllReservationNotAccess").then((response) => {
+        console.log("response.data.length", response.data.length);
+        this.numberOfPending = response.data.length;
+      });
     },
   },
 

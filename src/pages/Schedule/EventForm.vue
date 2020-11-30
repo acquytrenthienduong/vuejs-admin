@@ -25,17 +25,18 @@
   </form>
 </template>
 
-
 <script>
 import DatePicker from "vuejs-datepicker";
 import format from "date-fns/format";
 import ColorPicker from "./ColorPicker";
 // import axios from "axios";
+import config from "../../config/config.js";
 
 export default {
   name: "EventForm",
   data() {
     return {
+      host: config.config.host,
       event: {
         title: "",
         start: "",
@@ -56,7 +57,7 @@ export default {
         start,
         end,
       };
-      const req = await fetch("http://localhost:8000/schedule", {
+      const req = await fetch(this.host + "/schedule", {
         method: "POST",
         body: JSON.stringify(event),
         headers: {
@@ -90,7 +91,6 @@ export default {
   },
 };
 </script>
-
 
 <style>
 form {

@@ -93,6 +93,7 @@
 
 <script>
 import axios from "axios";
+import config from "../../config/config.js"
 
 export default {
   components: {},
@@ -109,6 +110,7 @@ export default {
     errors: [],
     successdialog: false,
     faildialog: false,
+    host: config.config.host
   }),
   methods: {
     eventload() {
@@ -132,7 +134,7 @@ export default {
       console.log("dt", dt);
 
       axios
-        .post("http://localhost:8000/createBill", {
+        .post(this.host + "/createBill", {
           total_money: this.event.service.money,
           time: time,
           date: date,
@@ -175,7 +177,7 @@ export default {
 
       axios
         .post(
-          "http://localhost:8000/updateReservation/" +
+          this.host + "/updateReservation/" +
             this.event.reservation_id,
           {
             status: 1,

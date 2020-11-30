@@ -132,6 +132,7 @@
 import axios from "axios";
 import AddNewReservationDialog from "../../components/Modal/AddNewReservationDialog";
 import Bill from "../../components/Modal/Bill";
+import config from "../../config/config";
 
 export default {
   components: {
@@ -149,6 +150,7 @@ export default {
     checkbox: false,
     text: "",
     detelefail: false,
+    host: config.config.host,
   }),
   mounted() {
     this.$refs.calendar.checkChange();
@@ -157,7 +159,7 @@ export default {
   methods: {
     loadData() {
       axios
-        .get("http://localhost:8000/getAllReservationAccess")
+        .get(this.host + "/getAllReservationAccess")
         .then((response) => this.transFormData(response.data));
     },
 
@@ -275,8 +277,7 @@ export default {
     Remove() {
       axios
         .delete(
-          "http://localhost:8000/deleteReservation/" +
-            this.selectedEvent.reservation_id
+          this.host + "/deleteReservation/" + this.selectedEvent.reservation_id
         )
         .then((response) => {
           window.location.reload();

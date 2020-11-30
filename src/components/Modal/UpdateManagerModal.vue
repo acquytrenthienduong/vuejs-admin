@@ -62,6 +62,8 @@
 
 <script>
 import axios from "axios";
+import config from "../../config/config.js"
+
 export default {
   props: {
     manager: {
@@ -73,13 +75,15 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      host: config.config.host
+    };
   },
 
   methods: {
     updateManagerByID(managerID) {
       axios
-        .post("http://localhost:8000/updateManager/" + managerID, {
+        .post(this.host + "/updateManager/" + managerID, {
           account: this.manager.account,
           password: this.manager.password,
           dob: this.manager.dob,

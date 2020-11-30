@@ -116,6 +116,7 @@
 import axios from "axios";
 import AddNewManagerModal from "../Modal/AddNewManagerModal";
 import UpdateManagerModal from "../Modal/UpdateManagerModal";
+import config from "../../config/config.js"
 
 import { id } from "date-fns/locale";
 export default {
@@ -130,12 +131,13 @@ export default {
       //data for modal
       isAddNewModalActive: false,
       isUpdateModalActive: false,
+      host: config.config.host
     };
   },
   methods: {
     deleteManager(managerID) {
       axios
-        .delete("http://localhost:8000/manager/" + managerID)
+        .delete(this.host + "/manager/" + managerID)
         .then((response) => {
           this.loadData();
         });
@@ -143,14 +145,14 @@ export default {
 
     loadData() {
       axios
-        .get("http://localhost:8000/manager")
+        .get(this.host + "/manager")
         .then((response) => (this.managers = response.data));
     },
 
     loadDataByID(managerID) {
       this.isUpdateModalActive = true;
       axios
-        .get("http://localhost:8000/getManagerByID/" + managerID)
+        .get(this.host + "/getManagerByID/" + managerID)
         .then((response) => (this.manager = response.data));
     },
   },

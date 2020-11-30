@@ -61,6 +61,8 @@
 
 <script>
 import axios from "axios";
+import config from "../../config/config.js"
+
 export default {
   props: {
     reload: {
@@ -77,19 +79,19 @@ export default {
       dob: "",
       selected_shift: "",
       errors: null,
+      host: config.config.host
     };
   },
   methods: {
     addNewReceptionist() {
       axios
-        .post("http://localhost:8000/addReceptionist", {
+        .post(this.host + "/addReceptionist", {
           account: this.account,  
           password: this.password,
           dob: this.dob,
           shift_shift_id: this.selected_shift,
         })
         .then((response) => {
-        //   console.log(response);
           this.account = "",
           this.password = "",
           this.dob = "";

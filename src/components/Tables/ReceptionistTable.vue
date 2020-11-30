@@ -118,6 +118,7 @@
 import axios from "axios";
 import AddNewReceptionistModal from "../Modal/AddNewReceptionistModal";
 import UpdateReceptionistModal from "../Modal/UpdateReceptionistModal";
+import config from "../../config/config.js"
 
 import { id } from "date-fns/locale";
 export default {
@@ -133,19 +134,20 @@ export default {
       //data for modal
       isAddNewModalActive: false,
       isUpdateModalActive: false,
+      host: config.config.host
     };
   },
   methods: {
     deleteReceptionist(id) {
       axios
-        .delete("http://localhost:8000/deleteReceptionist/" + id)
+        .delete(this.host + "/deleteReceptionist/" + id)
         .then((response) => {
           this.loadData();
         });
     },
 
     loadShift() {
-      axios.get("http://localhost:8000/shift").then((response) => {
+      axios.get(this.host + "/shift").then((response) => {
         // console.log(response);
         this.shifts = response.data;
       });
@@ -153,7 +155,7 @@ export default {
 
     loadData() {
       axios
-        .get("http://localhost:8000/receptionist")
+        .get(this.host + "/receptionist")
         .then((response) => (this.receptionists = response.data));
       // .then((response) => console.log(response));
     },
@@ -161,7 +163,7 @@ export default {
     loadReceptionistByID(receptionist_id) {
       this.isUpdateModalActive = true;
       axios
-        .get("http://localhost:8000/getReceptionistByID/" + receptionist_id)
+        .get(this.host + "/getReceptionistByID/" + receptionist_id)
         .then((response) => (this.receptionist = response.data));
         // .then((response) => console.log(response));
     },

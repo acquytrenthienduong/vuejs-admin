@@ -144,6 +144,7 @@
 import DatePicker from "../../pages/Schedule/DatePicker";
 import Multiselect from "vue-multiselect";
 import axios from "axios";
+import config from "../../config/config.js"
 
 export default {
   components: {
@@ -168,6 +169,7 @@ export default {
     items: [],
     selectType: null,
     overlay: false,
+    host: config.config.host
   }),
 
   mounted() {
@@ -178,7 +180,7 @@ export default {
       if (query != "") {
         this.isLoading = true;
         axios
-          .get("http://localhost:8000/findAllByAccount/" + query)
+          .get(this.host + "/findAllByAccount/" + query)
           .then((response) => {
             // customers = [];
             this.customers = response.data;
@@ -195,7 +197,7 @@ export default {
       // setTimeout(() => (this.isHidden = false), 500);
 
       axios
-        .post("http://localhost:8000/createNewReservation", {
+        .post(this.host + "/createNewReservation", {
           customer_id: this.customer.customer_id,
           checkin_time: this.time,
           reservation_date: this.selectedDate,
@@ -233,7 +235,7 @@ export default {
 
     loadSubService(type) {
       axios
-        .get("http://localhost:8000/getAllSubService/" + type)
+        .get(this.host + "/getAllSubService/" + type)
         .then((res) => {
           this.items = [];
           res.data.forEach((element) => {

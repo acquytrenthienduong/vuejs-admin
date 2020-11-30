@@ -62,6 +62,8 @@
 
 <script>
 import axios from "axios";
+import config from "../../config/config.js"
+
 export default {
   props: {
     staff: {
@@ -75,10 +77,16 @@ export default {
     },
   },
 
+  data() {
+    return {
+      host: config.config.host
+    }
+  },
+
   methods: {
     updateStaffByID(staffID) {
       axios
-        .post("http://localhost:8000/staffUpdate/" + staffID, {
+        .post(this.host + "/staffUpdate/" + staffID, {
             dob: this.staff.dob,
             gender: this.staff.gender,
             shift_shift_id: this.staff.shift_shift_id,

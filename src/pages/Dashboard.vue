@@ -136,6 +136,7 @@
 <script>
 import { StatsCard, ChartCard } from "@/components";
 import axios from "axios";
+import config from "../config/config";
 export default {
   components: {
     StatsCard,
@@ -143,6 +144,7 @@ export default {
   },
   data() {
     return {
+      host: config.config.host,
       dailySalesChart: {
         data: {
           labels: ["M", "T", "W", "T", "F", "S", "S"],
@@ -303,7 +305,7 @@ export default {
       }
 
       axios
-        .get("http://localhost:8000/findReservation/" + from + "/" + to)
+        .get(this.host + "/findReservation/" + from + "/" + to)
         .then((response) => {
           // console.log(response);
           this.totalInWeek = response.data.length;
@@ -369,7 +371,7 @@ export default {
     },
 
     loadTotalBill() {
-      axios.get("http://localhost:8000/findAllBill").then((response) => {
+      axios.get(this.host + "/findAllBill").then((response) => {
         // console.log("getlogin ", response);
         response.data.forEach((data) => {
           this.totalMoney += data.total_money;
@@ -440,13 +442,11 @@ export default {
           to = year + "-" + month + "-" + end;
           break;
       }
-      axios
-        .get("http://localhost:8000/findBill/" + from + "/" + to)
-        .then((response) => {
-          response.data.forEach((data) => {
-            this.moneyInWeek += data.total_money;
-          });
+      axios.get(this.host + "/findBill/" + from + "/" + to).then((response) => {
+        response.data.forEach((data) => {
+          this.moneyInWeek += data.total_money;
         });
+      });
     },
 
     loadMoneyToday() {
@@ -460,7 +460,7 @@ export default {
 
       let today = year + "-" + month + "-" + dt;
 
-      axios.get("http://localhost:8000/findBillToday").then((response) => {
+      axios.get(this.host + "/findBillToday").then((response) => {
         // console.log("today  ", response);
         response.data.forEach((data) => {
           this.moneyToday += data.total_money;
@@ -469,35 +469,20 @@ export default {
     },
 
     loadMoneyMonth() {
-      axios.get("http://localhost:8000/findBillMonth").then((response) => {
+      axios.get(this.host + "/findBillMonth").then((response) => {
         // console.log("today  ", response);
         response.data.forEach((data) => {
           this.moneyMonth += data.total_money;
         });
       });
     },
-
-    // testGetLogin() {
-    //   axios.defaults.withCrendentails = true;
-    //   axios.get("http://localhost:8000/loginReceptionist").then((response) => {
-    //     console.log("getlogin ", response);
-    //   });
-    // },
   },
   mounted() {
     this.loadReservationInWeek();
-    // this.testGetLogin();
-    // this.convertToChartData();
     this.loadTotalBill();
     this.loadMoneyInWeek();
     this.loadMoneyToday();
     this.loadMoneyMonth();
   },
-  // watch: {
-  //   "dailySalesChart.data.series": function(val) {
-  //     console.log("val", val);
-  //     // this.dailySalesChart.data.series = val;
-  //   },
-  // },
 };
 </script>

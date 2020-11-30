@@ -105,12 +105,14 @@
 <script>
 import Multiselect from "vue-multiselect";
 import axios from "axios";
+import config from "../config/config";
 
 export default {
   components: {
     Multiselect,
   },
   data: () => ({
+    host: config.config.host,
     isLoading: false,
     customer: null,
     customers: [],
@@ -118,17 +120,6 @@ export default {
     value: [],
     totalMoney: 0,
     reservations: [],
-    // headers: [
-    //   {
-    //     text: "account",
-    //     align: "start",
-    //     sortable: false,
-    //     value: "account",
-    //   },
-    //   { text: "email", value: "email" },
-    //   { text: "gender", value: "gender" },
-    //   { text: "password", value: "password" },
-    // ],
     headers: [
       {
         text: "Date",
@@ -145,14 +136,12 @@ export default {
     asyncFind(query) {
       if (query != "") {
         this.isLoading = true;
-        axios
-          .get("http://localhost:8000/searchCustomer/" + query)
-          .then((response) => {
-            console.log(response);
-            // customers = [];
-            this.customers = response.data;
-            this.isLoading = false;
-          });
+        axios.get(this.host + "/searchCustomer/" + query).then((response) => {
+          console.log(response);
+          // customers = [];
+          this.customers = response.data;
+          this.isLoading = false;
+        });
       } else {
         this.customers = [];
       }
@@ -161,7 +150,6 @@ export default {
 
   watch: {
     customer: function(val) {
-      console.log("quang", val);
       this.reservations = val.reservations;
       if (val != null) {
         val.reservations.forEach((element) => {

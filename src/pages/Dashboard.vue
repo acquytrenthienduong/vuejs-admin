@@ -247,9 +247,12 @@ export default {
       var last = first + 6; // last day is the first day + 6
       var firstday = new Date(dateRaw.setDate(first));
       var lastday = new Date(dateRaw.setDate(last));
+      console.log("firstday ", firstday);
+      console.log("lastday ", lastday);
       let monthFrom = firstday.getMonth() + 1;
       let monthTo = lastday.getMonth() + 1;
-
+      console.log("monthFrom ", monthFrom);
+      console.log("monthTo ", monthTo);
       // Biến lưu tên của thứ
       let from = "";
       let to = "";
@@ -261,7 +264,6 @@ export default {
       axios
         .get(this.host + "/findReservation/" + from + "/" + to)
         .then((response) => {
-          console.log("dau buoi ", response);
           this.totalInWeek = response.data.length;
           this.convertToChartData(response.data);
         });
@@ -367,7 +369,6 @@ export default {
       let today = year + "-" + month + "-" + dt;
 
       axios.get(this.host + "/findBillToday").then((response) => {
-        // console.log("today  ", response);
         response.data.forEach((data) => {
           this.moneyToday += data.total_money;
         });
@@ -376,7 +377,6 @@ export default {
 
     loadMoneyMonth() {
       axios.get(this.host + "/findBillMonth").then((response) => {
-        // console.log("today  ", response);
         response.data.forEach((data) => {
           this.moneyMonth += data.total_money;
         });

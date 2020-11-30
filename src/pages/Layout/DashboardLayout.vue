@@ -50,12 +50,6 @@
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
-
-      <!-- <sidebar-link to="/lichlamviec">
-        <md-icon>facebook</md-icon>
-        <p>lichlamviec</p>
-      </sidebar-link> -->
-
       <sidebar-link to="/schedule">
         <md-icon>schedule</md-icon>
         <p>Schedule</p>
@@ -67,10 +61,6 @@
         <p v-if="numberOfPending != 0" class="count-noti">
           {{ numberOfPending }}
         </p>
-      </sidebar-link>
-      <sidebar-link to="/account">
-        <md-icon>account_circle</md-icon>
-        <p>Account</p>
       </sidebar-link>
       <sidebar-link to="/report">
         <md-icon>get_app</md-icon>
@@ -128,7 +118,6 @@ export default {
   methods: {
     loadAllPendingRequests() {
       axios.get(this.host + "/getAllReservationNotAccess").then((response) => {
-        console.log("response.data.length", response.data.length);
         this.numberOfPending = response.data.length;
       });
     },

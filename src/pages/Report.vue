@@ -1,13 +1,26 @@
 <template>
-  <download-excel
-    class="btn btn-default"
-    :data="json_data"
-    :fields="json_fields"
-    worksheet="My Worksheet"
-    name="report.xls"
-  >
-    Download Excel (you can customize this with html code!)
-  </download-excel>
+  <div>
+    <v-card-text>
+      <v-card-title>
+        Lastest Visit
+      </v-card-title>
+      <v-data-table
+        :headers="headers"
+        :items="data"
+        :items-per-page="10"
+        class="elevation-1"
+      ></v-data-table>
+    </v-card-text>
+    <download-excel
+      class="btn btn-default"
+      :data="json_data"
+      :fields="json_fields"
+      worksheet="My Worksheet"
+      name="report.xls"
+    >
+      Download Excel (you can customize this with html code!)
+    </download-excel>
+  </div>
 </template>
 
 <script>
@@ -41,6 +54,18 @@ export default {
           },
         ],
       ],
+      headers: [
+        {
+          text: "Date",
+          align: "start",
+          // sortable: false,
+          value: "reservation_date",
+        },
+        { text: "Service", value: "sub_service.name" },
+        { text: "Type", value: "" },
+        { text: "Bill", value: "sub_service.time" },
+      ],
+      data: [],
     };
   },
 
@@ -50,10 +75,17 @@ export default {
         .get(this.host + "/findAllBill")
         .then((response) => (this.json_data = response.data));
     },
+
+    loadData1() {
+      axios
+        .get(this.host + "/findAllBill")
+        .then((response) => console.log("findAllBill", response));
+    },
   },
 
   mounted() {
     this.loadData();
+    this.loadData1();
   },
 };
 </script>

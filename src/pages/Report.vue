@@ -9,7 +9,11 @@
         :items="data"
         :items-per-page="10"
         class="elevation-1"
-      ></v-data-table>
+      >
+        <template v-slot:item.total_money="{ item }">
+          <span>{{ item.total_money | priceVndFormat }}</span>
+        </template>
+      </v-data-table>
     </v-card-text>
     <download-excel
       class="btn btn-default"
@@ -67,7 +71,7 @@ export default {
         },
         { text: "Service", value: "sub_service.name" },
         { text: "Date", value: "date" },
-        { text: "total_money", value: "total_money" },
+        { text: "Money", value: "total_money" },
       ],
       data: [],
     };
@@ -84,7 +88,6 @@ export default {
       axios.get(this.host + "/findAllBill").then((response) => {
         console.log("response.data", response.data);
         this.data = response.data;
-
       });
     },
   },

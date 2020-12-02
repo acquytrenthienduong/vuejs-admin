@@ -26,6 +26,14 @@ const router = new VueRouter({
   linkExactActiveClass: "nav-item active"
 });
 
+Vue.filter("priceVndFormat", function (value) {
+  if (!value) return "";
+  return Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(value);
+});
+
 Vue.prototype.$Chartist = Chartist;
 
 Vue.use(VueRouter);

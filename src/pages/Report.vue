@@ -56,14 +56,18 @@ export default {
       ],
       headers: [
         {
-          text: "Date",
+          text: "Name",
           align: "start",
           // sortable: false,
-          value: "reservation_date",
+          value: "reservation.customer.name",
+        },
+        {
+          text: "Time",
+          value: "sub_service.time ",
         },
         { text: "Service", value: "sub_service.name" },
-        { text: "Type", value: "" },
-        { text: "Bill", value: "sub_service.time" },
+        { text: "Date", value: "date" },
+        { text: "total_money", value: "total_money" },
       ],
       data: [],
     };
@@ -77,9 +81,11 @@ export default {
     },
 
     loadData1() {
-      axios
-        .get(this.host + "/findAllBill")
-        .then((response) => console.log("findAllBill", response));
+      axios.get(this.host + "/findAllBill").then((response) => {
+        console.log("response.data", response.data);
+        this.data = response.data;
+
+      });
     },
   },
 

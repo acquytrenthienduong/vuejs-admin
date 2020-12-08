@@ -30,10 +30,10 @@
       :sidebar-background-image="sidebarBackgroundImage"
     >
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="/dashboard">
+      <!-- <sidebar-link to="/dashboard">
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
-      </sidebar-link>
+      </sidebar-link> -->
       <sidebar-link to="/account">
         <md-icon>account_circle</md-icon>
         <p>Account</p>
@@ -69,10 +69,6 @@
       <sidebar-link to="/customerDetails">
         <md-icon>search</md-icon>
         <p>Search customer</p>
-      </sidebar-link>
-      <sidebar-link to="/products">
-        <md-icon>extension</md-icon>
-        <p>Products</p>
       </sidebar-link>
     </side-bar>
 

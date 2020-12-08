@@ -7,9 +7,6 @@
         <md-card class="md-card-plain">
           <md-card-header data-background-color="dark">
             <h4 class="title">Account List</h4>
-            <p class="category">
-              This is where you can config the Account information
-            </p>
           </md-card-header>
           <md-card-content>
             <!-- <ManagerTable /> -->
@@ -20,7 +17,7 @@
                 </b-tab-item>
 
                 <b-tab-item icon="google-drive" label="Staff">
-                   <StaffTable />
+                  <StaffTable />
                 </b-tab-item>
 
                 <b-tab-item icon="video" label="Receptionist">
@@ -37,16 +34,28 @@
 
 <script>
 import { ManagerTable } from "@/components";
-import StaffTable from '../components/Tables/StaffTable'
-import ReceptionistTable from '../components/Tables/ReceptionistTable'
-
+import StaffTable from "../components/Tables/StaffTable";
+import ReceptionistTable from "../components/Tables/ReceptionistTable";
 
 export default {
   components: {
     ManagerTable,
     StaffTable,
-    ReceptionistTable
+    ReceptionistTable,
   },
-  
 };
 </script>
+
+<style lang="css">
+.buttons .button {
+  margin-left: 30px !important;
+}
+
+.content ul {
+  margin-top: unset;
+}
+
+md-theme-default a:not(.md-button) {
+  color: white !important;
+}
+</style>

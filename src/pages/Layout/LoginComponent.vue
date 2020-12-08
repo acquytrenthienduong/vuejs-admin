@@ -1,121 +1,190 @@
 <template>
   <div>
-    <template>
-      <v-card>
-        <v-toolbar flat color="primary" dark>
-          <v-toolbar-title>Login Navatan</v-toolbar-title>
-        </v-toolbar>
-        <v-tabs vertical>
-          <v-tab>
-            <v-icon left>
-              mdi-account
-            </v-icon>
-            Receptionist
-          </v-tab>
-          <v-tab>
-            <v-icon left>
-              mdi-account
-            </v-icon>
-            Manager
-          </v-tab>
-          <v-tab>
-            <v-icon left>
-              mdi-account
-            </v-icon>
-            Administrator
-          </v-tab>
-
-          <v-tab-item>
-            <v-card flat>
-              <v-form ref="form" lazy-validation>
-                <v-text-field
-                  v-model="username"
-                  :counter="10"
-                  label="Username"
-                  required
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="password"
-                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="[rules.required, rules.min]"
-                  :type="show1 ? 'text' : 'password'"
-                  name="input-10-1"
-                  label="Password"
-                  hint="At least 6 characters"
-                  counter
-                  @click:append="show1 = !show1"
-                ></v-text-field>
-
-                <v-btn class="mr-4" @click="loginForReceptionist">
-                  Login
-                </v-btn>
-              </v-form>
-            </v-card>
-          </v-tab-item>
-          <v-tab-item>
-            <v-card flat>
-              <v-form ref="form" lazy-validation>
-                <v-text-field
-                  v-model="username"
-                  :counter="10"
-                  label="Username"
-                  required
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="password"
-                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="[rules.required, rules.min]"
-                  :type="show1 ? 'text' : 'password'"
-                  name="input-10-1"
-                  label="Password"
-                  hint="At least 6 characters"
-                  counter
-                  @click:append="show1 = !show1"
-                ></v-text-field>
-
-                <v-btn class="mr-4" @click="loginForManager">
-                  LoginManager
-                </v-btn>
-              </v-form>
-            </v-card>
-          </v-tab-item>
-          <v-tab-item>
-            <v-card flat>
-              <v-form ref="form" lazy-validation>
-                <v-text-field
-                  v-model="username"
-                  :counter="10"
-                  label="Username"
-                  required
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="password"
-                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="[rules.required, rules.min]"
-                  :type="show1 ? 'text' : 'password'"
-                  name="input-10-1"
-                  label="Password"
-                  hint="At least 6 characters"
-                  counter
-                  @click:append="show1 = !show1"
-                ></v-text-field>
-
-                <v-btn class="mr-4" @click="loginForAdmin">
-                  LoginAdmin
-                </v-btn>
-              </v-form>
-            </v-card>
-          </v-tab-item>
-        </v-tabs>
-      </v-card>
-    </template>
+    <div id="app">
+      <v-app>
+        <v-dialog
+          v-model="dialog"
+          persistent
+          max-width="600px"
+          min-width="360px"
+        >
+          <div>
+            <v-tabs
+              v-model="tab"
+              show-arrows
+              background-color="deep-purple accent-4"
+              icons-and-text
+              dark
+              grow
+            >
+              <v-tabs-slider color="purple darken-4"></v-tabs-slider>
+              <v-tab v-for="i in tabs" :key="i">
+                <v-icon large>{{ i.icon }}</v-icon>
+                <div class="caption py-1">{{ i.name }}</div>
+              </v-tab>
+              <v-tab-item>
+                <v-card class="px-4">
+                  <v-card-text>
+                    <v-form ref="loginForm" v-model="valid" lazy-validation>
+                      <v-row>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="username"
+                            :rules="[rules.required, rules.min]"
+                            label="Username"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="password"
+                            :append-icon="show1 ? 'eye' : 'eye-off'"
+                            :rules="[rules.required, rules.min]"
+                            :type="show1 ? 'text' : 'password'"
+                            name="input-10-1"
+                            label="Password"
+                            hint="At least 8 characters"
+                            counter
+                            @click:append="show1 = !show1"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col class="d-flex" cols="12" sm="6" xsm="12">
+                        </v-col>
+                        <v-spacer></v-spacer>
+                        <v-col
+                          class="d-flex"
+                          cols="12"
+                          sm="3"
+                          xsm="12"
+                          align-end
+                        >
+                          <v-btn
+                            x-large
+                            block
+                            :disabled="!valid"
+                            color="success"
+                            @click="loginForReceptionist"
+                          >
+                            Login
+                          </v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-form>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+              <v-tab-item>
+                <v-card class="px-4">
+                  <v-card-text>
+                    <v-form ref="loginForm" v-model="valid" lazy-validation>
+                      <v-row>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="username"
+                            :rules="[rules.required, rules.min]"
+                            label="Username"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="password"
+                            :append-icon="show1 ? 'eye' : 'eye-off'"
+                            :rules="[rules.required, rules.min]"
+                            :type="show1 ? 'text' : 'password'"
+                            name="input-10-1"
+                            label="Password"
+                            hint="At least 8 characters"
+                            counter
+                            @click:append="show1 = !show1"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col class="d-flex" cols="12" sm="6" xsm="12">
+                        </v-col>
+                        <v-spacer></v-spacer>
+                        <v-col
+                          class="d-flex"
+                          cols="12"
+                          sm="3"
+                          xsm="12"
+                          align-end
+                        >
+                          <v-btn
+                            x-large
+                            block
+                            :disabled="!valid"
+                            color="success"
+                            @click="loginForManager"
+                          >
+                            Login
+                          </v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-form>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+              <v-tab-item>
+                <v-card class="px-4">
+                  <v-card-text>
+                    <v-form ref="loginForm" v-model="valid" lazy-validation>
+                      <v-row>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="username"
+                            :rules="[rules.required, rules.min]"
+                            label="Username"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="password"
+                            :append-icon="show1 ? 'eye' : 'eye-off'"
+                            :rules="[rules.required, rules.min]"
+                            :type="show1 ? 'text' : 'password'"
+                            name="input-10-1"
+                            label="Password"
+                            hint="At least 8 characters"
+                            counter
+                            @click:append="show1 = !show1"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col class="d-flex" cols="12" sm="6" xsm="12">
+                        </v-col>
+                        <v-spacer></v-spacer>
+                        <v-col
+                          class="d-flex"
+                          cols="12"
+                          sm="3"
+                          xsm="12"
+                          align-end
+                        >
+                          <v-btn
+                            x-large
+                            block
+                            :disabled="!valid"
+                            color="success"
+                            @click="loginForAdmin"
+                          >
+                            Login
+                          </v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-form>
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+            </v-tabs>
+          </div>
+        </v-dialog>
+      </v-app>
+    </div>
   </div>
 </template>
 
 <script>
+/* eslint-disable */
 import axios from "axios";
 import config from "../../config/config.js";
 export default {
@@ -132,6 +201,32 @@ export default {
         emailMatch: () => `The email and password you entered don't match`,
       },
       host: config.config.host,
+
+      dialog: true,
+      tab: 0,
+      tabs: [
+        { name: "Receptionist", icon: "mdi-account" },
+        { name: "Manager", icon: "mdi-account-outline" },
+        { name: "Administrator", icon: "mdi-account-outline" },
+      ],
+      valid: true,
+
+      firstName: "",
+      lastName: "",
+      email: "",
+      verify: "",
+      loginPassword: "",
+      loginEmail: "",
+      loginEmailRules: [
+        (v) => !!v || "Required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
+      emailRules: [
+        (v) => !!v || "Required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
+
+      show1: false,
     };
   },
 
@@ -189,13 +284,25 @@ export default {
 
             console.log("username", localStorage.getItem("username"));
             console.log("role", localStorage.getItem("role"));
-            this.$router.push("/dashboard");
+            this.$router.push("/account");
           }
         })
         .catch((e) => {
           alert("SAI TAI KHOAN HOAC MAT KHAU");
           this.errors.push(e);
         });
+    },
+
+    validate() {
+      if (this.$refs.loginForm.validate()) {
+        // submit form to server/API here...
+      }
+    },
+    reset() {
+      this.$refs.form.reset();
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation();
     },
   },
 };

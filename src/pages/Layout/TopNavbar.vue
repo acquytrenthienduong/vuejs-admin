@@ -17,7 +17,7 @@
 
         <div class="md-collapse">
           <md-list>
-            <md-list-item href="#/dashboard">
+            <md-list-item v-if="role == 'manager'" href="#/dashboard">
               <i class="material-icons">dashboard</i>
               <p class="hidden-lg hidden-md">Dashboard</p>
             </md-list-item>
@@ -26,7 +26,7 @@
               <a
                 class="md-list-item-router md-list-item-container md-button-clean dropdown"
               >
-                <div class="md-list-item-content">
+                <div v-if="role == 'manager' || role == 'receptionist'" class="md-list-item-content">
                   <drop-down>
                     <md-button
                       slot="title"
@@ -64,7 +64,7 @@
                   <i class="material-icons">person</i>
                   <p class="hidden-lg hidden-md">Profile</p>
                 </md-button>
-                <ul class="dropdown-menu dropdown-menu-right">
+                <ul class="dropdown-menu dropdown-menu-right center">
                   <md-button @click="logout"> Logout</md-button>
                 </ul>
               </drop-down>
@@ -77,6 +77,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import axios from "axios";
 import config from "../../config/config";
 
@@ -97,6 +98,7 @@ export default {
       numberOfNotificationNotSeen: 0,
       notifications: [],
       host: config.config.host,
+      role: localStorage.getItem("role"),
     };
   },
 
@@ -165,5 +167,10 @@ export default {
 .md-title {
   font-family: ui-monospace;
   font-size: x-large !important;
+}
+
+.center {
+  display: flex !important;
+  justify-content: center !important;
 }
 </style>

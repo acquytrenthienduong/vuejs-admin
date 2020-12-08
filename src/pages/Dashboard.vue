@@ -75,7 +75,7 @@
           </template>
 
           <template slot="content">
-            <p class="category">Total Money</p>
+            <h2 class="category">Total Money</h2>
             <h3 class="title">${{ totalMoney | priceVndFormat }}</h3>
           </template>
         </stats-card>
@@ -89,7 +89,8 @@
           </template>
 
           <template slot="content">
-            <p class="category">This Month</p>
+            <h2 class="category">This Month</h2>
+
             <h3 class="title">${{ moneyMonth | priceVndFormat }}</h3>
           </template>
         </stats-card>
@@ -103,7 +104,8 @@
           </template>
 
           <template slot="content">
-            <p class="category">This Week</p>
+            <h2 class="category">This Week</h2>
+
             <h3 class="title">${{ moneyInWeek | priceVndFormat }}</h3>
           </template>
         </stats-card>
@@ -117,16 +119,9 @@
           </template>
 
           <template slot="content">
-            <p class="category">Today</p>
+            <h2 class="category">Today</h2>
             <h3 class="title">${{ moneyToday | priceVndFormat }}</h3>
           </template>
-          <!-- 
-          <template slot="footer">
-            <div class="stats">
-              <md-icon>update</md-icon>
-              Just Updated
-            </div>
-          </template> -->
         </stats-card>
       </div>
     </div>

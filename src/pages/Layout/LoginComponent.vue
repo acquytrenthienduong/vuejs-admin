@@ -18,7 +18,7 @@
               grow
             >
               <v-tabs-slider color="purple darken-4"></v-tabs-slider>
-              <v-tab v-for="i in tabs" :key="i">
+              <v-tab v-for="i in tabs" :key="i.key">
                 <v-icon large>{{ i.icon }}</v-icon>
                 <div class="caption py-1">{{ i.name }}</div>
               </v-tab>
@@ -205,9 +205,9 @@ export default {
       dialog: true,
       tab: 0,
       tabs: [
-        { name: "Receptionist", icon: "mdi-account" },
-        { name: "Manager", icon: "mdi-account-outline" },
-        { name: "Administrator", icon: "mdi-account-outline" },
+        { name: "Receptionist", icon: "mdi-account", key: 1 },
+        { name: "Manager", icon: "mdi-account-outline", key: 2 },
+        { name: "Administrator", icon: "mdi-account-outline", key: 3 },
       ],
       valid: true,
 
@@ -263,7 +263,7 @@ export default {
 
             console.log("username", localStorage.getItem("username"));
             console.log("role", localStorage.getItem("role"));
-            this.$router.push("/dashboard");
+            this.$router.push("/schedule");
           }
         })
         .catch((e) => {

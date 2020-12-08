@@ -54,7 +54,8 @@
               @click="
                 confirm(
                   props.row.reservation_id,
-                  props.row.customer.customer_id
+                  props.row.customer.customer_id,
+                  props.row
                 )
               "
             >
@@ -89,13 +90,14 @@ export default {
       request: {},
       isActive: false,
       host: config.config.host,
+      role: localStorage.getItem("username"),
     };
   },
   methods: {
-    confirm(id, customer_id) {
+    confirm(id, customer_id, customer) {
       this.$buefy.dialog.confirm({
         message: "Do you want to accept the request?",
-        onConfirm: () => this.acceptRequest(id, customer_id),
+        onConfirm: () => this.acceptRequest(id, customer_id, customer),
       });
     },
     success() {
@@ -120,7 +122,8 @@ export default {
       });
     },
 
-    acceptRequest(requestID, customer_id) {
+    acceptRequest(requestID, customer_id, customer) {
+      console.log("customer", customer);
       axios
         .post(this.host + "/updateReservation/" + requestID, {
           is_access: 1,
@@ -136,7 +139,19 @@ export default {
             .then((response) => {
               console.log(response);
             });
-          // console.log(response);
+
+          axios
+            .post(this.host + "/createActivity", {
+              content:
+                this.role +
+                " chấp nhận lịch hẹn của khách hàng " +
+                customer.customer.name +
+                "vào lúc " +
+                customer.reservation_date +
+                " " +
+                customer.checkin_time,
+            })
+            .then(() => {});
         });
     },
   },

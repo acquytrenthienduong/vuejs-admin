@@ -51,45 +51,30 @@
             >
               <v-card color="grey lighten-4" min-width="350px" flat>
                 <v-toolbar :color="selectedEvent.color" dark>
-                  <v-btn icon>
-                    <v-icon>mdi-pencil</v-icon>
-                  </v-btn>
                   <v-toolbar-title
                     v-html="selectedEvent.name"
                   ></v-toolbar-title>
-                  <v-spacer></v-spacer>
-                  <v-btn icon>
-                    <v-icon>mdi-heart</v-icon>
-                  </v-btn>
-                  <v-btn icon>
-                    <v-icon>mdi-dots-vertical</v-icon>
-                  </v-btn>
                 </v-toolbar>
                 <v-card-text>
-                  Service: <span v-html="selectedEvent.serviceName"></span
-                  ><br />
+                  <h3>Service: {{ selectedEvent.serviceName }}</h3>
                 </v-card-text>
                 <v-card-text>
-                  Start: <span v-html="selectedEvent.start"></span><br />
-                  End: <span v-html="selectedEvent.checkout_time"></span>
+                  <h4>Start: {{ selectedEvent.start }}</h4>
+                  <h4>End: {{ selectedEvent.checkout_time }}</h4>
                 </v-card-text>
-                <v-checkbox
-                  v-if="selectedEvent.isPassed"
-                  disabled
-                  v-model="selectedEvent.isCheck"
-                  :label="`Trạng Thái: ${selectedEvent.text}`"
-                ></v-checkbox>
-                <v-checkbox
-                  disabled
-                  v-if="!selectedEvent.isPassed"
-                  v-model="selectedEvent.isCheck"
-                  :label="`Trạng Thái: ${selectedEvent.text}`"
-                ></v-checkbox>
                 <v-card-actions
                   v-if="selectedEvent.isPassed"
                   class="footer-card"
                 >
-                  <Bill :event="selectedEvent"></Bill>
+                  <Bill
+                    v-if="!selectedEvent.isPassed"
+                    :event="selectedEvent"
+                  ></Bill>
+                  <Bill
+                    v-if="selectedEvent.isPassed"
+                    :event="selectedEvent"
+                    :isPassed="selectedEvent.isPassed"
+                  ></Bill>
                   <v-btn disabled text color="secondary" @click="Remove">
                     Remove
                   </v-btn>
@@ -129,6 +114,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import axios from "axios";
 import AddNewReservationDialog from "../../components/Modal/AddNewReservationDialog";
 import Bill from "../../components/Modal/Bill";

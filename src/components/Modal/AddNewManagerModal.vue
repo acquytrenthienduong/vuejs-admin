@@ -1,7 +1,7 @@
 <template>
   <div>
     <form action="">
-      <div class="modal-card" style="width: 600px;  height: 500px">
+      <div class="modal-card" style="width: 600px; height: 500px">
         <header class="modal-card-head">
           <p class="modal-card-title">Add New Manager</p>
           <button type="button" class="delete" @click="$emit('close')" />
@@ -32,13 +32,7 @@
           </b-field>
 
           <b-field label="DoB">
-            <b-input
-              type="date"
-              v-model="dob"
-              :value="dob"
-              required
-            >
-            </b-input>
+            <b-input type="date" v-model="dob" :value="dob" required> </b-input>
           </b-field>
 
           <b-field label="Gender">
@@ -81,7 +75,7 @@ export default {
       dob: "",
       password: "",
       gender: "",
-      errors : null,
+      errors: null,
       host: config.config.host
     };
   },

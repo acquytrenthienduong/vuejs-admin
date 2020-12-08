@@ -20,51 +20,16 @@
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
-        <chart-card
-          :chart-data="emailsSubscriptionChart.data"
-          :chart-options="emailsSubscriptionChart.options"
-          :chart-responsive-options="emailsSubscriptionChart.responsiveOptions"
-          :chart-type="'Bar'"
-          data-background-color="red"
-        >
-          <template slot="content">
-            <h4 class="title">Email Subscription</h4>
-            <p class="category">
-              Last Campaign Performance
-            </p>
-          </template>
-
-          <template slot="footer">
-            <div class="stats">
-              <md-icon>access_time</md-icon>
-              updated 10 days ago
-            </div>
-          </template>
-        </chart-card>
+        <highcharts :options="chartOptions"> </highcharts>
       </div>
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
-        <chart-card
-          :chart-data="dataCompletedTasksChart.data"
-          :chart-options="dataCompletedTasksChart.options"
-          :chart-type="'Line'"
-          data-background-color="green"
-        >
+        <newchart-card :chartOptions="chartOptions">
           <template slot="content">
-            <h4 class="title">Completed Tasks</h4>
-            <p class="category">
-              Last Campaign Performance
-            </p>
+            <h4>Total: {{ totalInWeek }}</h4>
           </template>
-
-          <template slot="footer">
-            <div class="stats">
-              <md-icon>access_time</md-icon>
-              campaign sent 26 minutes ago
-            </div>
-          </template>
-        </chart-card>
+        </newchart-card>
       </div>
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
@@ -132,10 +97,12 @@
 import { StatsCard, ChartCard } from "@/components";
 import axios from "axios";
 import config from "../config/config";
+import { Chart } from 'highcharts-vue';
 export default {
   components: {
     StatsCard,
     ChartCard,
+    highcharts: Chart,
   },
   data() {
     return {
@@ -218,7 +185,7 @@ export default {
             {
               seriesBarDistance: 5,
               axisX: {
-                labelInterpolationFnc: function(value) {
+                labelInterpolationFnc: function (value) {
                   return value[0];
                 },
               },
@@ -226,7 +193,34 @@ export default {
           ],
         ],
       },
-
+      chartOptions: {
+        chart: {
+          type: 'line',
+          height: 200,
+        },
+        title: {
+          text: 'Reservation in this week'
+        },
+        //colors: ['#ffffff'],
+        series: [{
+          name: 'Reservation',
+          data: [1, 3, 2, 4, 10, 6, 7,] // sample data
+        }],
+        xAxis: {
+          categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+          title: {
+            text: ''
+          },
+        },
+        credits: {
+          enabled: false
+        },
+        legend: {
+          enabled: false
+        }
+      },
       totalMoney: 0,
       moneyInWeek: 0,
       totalInWeek: 0,

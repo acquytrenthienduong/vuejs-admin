@@ -20,6 +20,8 @@
     "google-maps": "4.2.3",
     "moment": "^2.29.1",
     "pusher-js": "^7.0.0",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^10.12.3",
     "v-calendar": "^1.0.8",
     "v-col": "^1.0.0",
     "v-row": "^1.0.7",

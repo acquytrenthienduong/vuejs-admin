@@ -8,10 +8,6 @@
       :sidebar-background-image="sidebarBackgroundImage"
     >
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="/dashboard">
-        <md-icon>dashboard</md-icon>
-        <p>Dashboard</p>
-      </sidebar-link>
 
       <sidebar-link to="/schedule">
         <md-icon>schedule</md-icon>
@@ -21,6 +17,11 @@
       <sidebar-link to="/pendingRequest">
         <md-icon>pending</md-icon>
         <p>Pending Request</p>
+      </sidebar-link>
+
+      <sidebar-link to="/customerDetails">
+        <md-icon>search</md-icon>
+        <p>Search customer</p>
       </sidebar-link>
     </side-bar>
 
@@ -87,6 +88,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import TopNavbar from "./TopNavbar.vue";
 import DashboardContent from "./Content.vue";
 import MobileMenu from "@/pages/Layout/MobileMenu.vue";
@@ -134,7 +136,8 @@ export default {
   border-radius: 50%;
   background-color: red;
   /* padding: 7px; */
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: bold;
 }
 </style>

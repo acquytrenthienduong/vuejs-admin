@@ -76,7 +76,7 @@
 
           <template slot="content">
             <h2 class="category">Total Money</h2>
-            <h3 class="title">${{ totalMoney | priceVndFormat }}</h3>
+            <h3 class="title">{{ totalMoney | priceVndFormat }}</h3>
           </template>
         </stats-card>
       </div>
@@ -91,7 +91,7 @@
           <template slot="content">
             <h2 class="category">This Month</h2>
 
-            <h3 class="title">${{ moneyMonth | priceVndFormat }}</h3>
+            <h3 class="title">{{ moneyMonth | priceVndFormat }}</h3>
           </template>
         </stats-card>
       </div>
@@ -106,7 +106,7 @@
           <template slot="content">
             <h2 class="category">This Week</h2>
 
-            <h3 class="title">${{ moneyInWeek | priceVndFormat }}</h3>
+            <h3 class="title">{{ moneyInWeek | priceVndFormat }}</h3>
           </template>
         </stats-card>
       </div>
@@ -120,7 +120,8 @@
 
           <template slot="content">
             <h2 class="category">Today</h2>
-            <h3 class="title">${{ moneyToday | priceVndFormat }}</h3>
+            <h3 v-if="moneyToday > 0" class="title">{{ moneyToday | priceVndFormat }}</h3>
+            <h3 v-if="moneyToday === 0" class="title">0 ₫</h3>
           </template>
         </stats-card>
       </div>

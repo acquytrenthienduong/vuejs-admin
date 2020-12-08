@@ -89,7 +89,8 @@
                   v-if="selectedEvent.isPassed"
                   class="footer-card"
                 >
-                  <Bill :event="selectedEvent"></Bill>
+                  <Bill v-if="!selectedEvent.isPassed" :event="selectedEvent"></Bill>
+                  <Bill v-if="selectedEvent.isPassed" :event="selectedEvent" :isPassed="selectedEvent.isPassed"></Bill>
                   <v-btn disabled text color="secondary" @click="Remove">
                     Remove
                   </v-btn>
@@ -129,6 +130,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import axios from "axios";
 import AddNewReservationDialog from "../../components/Modal/AddNewReservationDialog";
 import Bill from "../../components/Modal/Bill";

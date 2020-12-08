@@ -1,6 +1,14 @@
 <template>
   <v-row>
-    <v-btn @click.stop="dialog = true">
+    <v-btn v-if="!isPassed" @click.stop="dialog = true">
+      Payment
+    </v-btn>
+    <v-btn
+      style="background-color='#f5f5f5'"
+      v-if="isPassed"
+      disabled
+      @click.stop="dialog = true"
+    >
       Payment
     </v-btn>
     <v-dialog v-model="dialog" persistent max-width="600px">
@@ -17,6 +25,7 @@
                   v-model="event.name"
                 ></v-text-field>
               </v-col>
+              <!-- <h3>Customer Name: {{event.name}}</h3> -->
               <v-col cols="12">
                 <v-text-field
                   label="Service Name"
@@ -93,8 +102,10 @@
 
 <script>
 import axios from "axios";
-import config from "../../config/config.js"
-
+import config from "../../config/config.js";
+import swal from "sweetalert";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 export default {
   components: {},
   props: {
@@ -104,13 +115,17 @@ export default {
     event: {
       type: Object,
     },
+    isPassed: {
+      type: Boolean,
+    },
   },
   data: () => ({
     dialog: false,
     errors: [],
     successdialog: false,
     faildialog: false,
-    host: config.config.host
+    host: config.config.host,
+    role: localStorage.getItem("username"),
   }),
   methods: {
     eventload() {
@@ -147,22 +162,33 @@ export default {
           day: dt,
         })
         .then((response) => {
-          console.log("res", response);
           if (response.status === 200) {
-            this.successdialog = true;
             this.updateReservation();
-            setTimeout(() => {
-              this.successdialog = false;
-            }, 2000);
+            axios
+              .post(this.host + "/createActivity", {
+                content:
+                  this.role +
+                  " đã tạo bill cho khách hàng " +
+                  this.event.name +
+                  " cuộc hẹn vào lúc " +
+                  this.event.start,
+              })
+              .then(() => {});
+            Swal.fire("Thành công!", "Tạo bill thành công!", "success");
           } else {
-            this.faildialog = true;
-            // setTimeout(() => {
-            //   this.faildialog = false;
-            // }, 2000);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Bill đã được tạo rồi!",
+            });
           }
         })
         .catch((e) => {
-          this.faildialog = true;
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Bill đã được tạo rồi!",
+          });
         });
     },
 
@@ -176,14 +202,10 @@ export default {
       let second = dateRaw.getSeconds();
 
       axios
-        .post(
-          this.host + "/updateReservation/" +
-            this.event.reservation_id,
-          {
-            status: 1,
-            checkout_time: hour + ":" + minute + ":" + second,
-          }
-        )
+        .post(this.host + "/updateReservation/" + this.event.reservation_id, {
+          status: 1,
+          checkout_time: hour + ":" + minute + ":" + second,
+        })
         .then((response) => {
           // this.selectedOpen = false;
           this.reload();
@@ -204,5 +226,9 @@ export default {
 
 .md-icon {
   margin: 0 !important;
+}
+
+.disable {
+  background-color: #f5f5f5 !important;
 }
 </style>

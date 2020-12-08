@@ -144,8 +144,9 @@
 import DatePicker from "../../pages/Schedule/DatePicker";
 import Multiselect from "vue-multiselect";
 import axios from "axios";
-import config from "../../config/config.js"
-
+import config from "../../config/config.js";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 export default {
   components: {
     DatePicker,
@@ -169,7 +170,7 @@ export default {
     items: [],
     selectType: null,
     overlay: false,
-    host: config.config.host
+    host: config.config.host,
   }),
 
   mounted() {
@@ -179,44 +180,54 @@ export default {
     asyncFind(query) {
       if (query != "") {
         this.isLoading = true;
-        axios
-          .get(this.host + "/findAllByAccount/" + query)
-          .then((response) => {
-            // customers = [];
-            this.customers = response.data;
-            this.isLoading = false;
-          });
+        axios.get(this.host + "/findAllByAccount/" + query).then((response) => {
+          // customers = [];
+          this.customers = response.data;
+          this.isLoading = false;
+        });
       } else {
         this.customers = [];
       }
     },
 
     createNewReservation() {
-      console.log(this.selectSubService.value);
-      this.overlay = true;
-      // setTimeout(() => (this.isHidden = false), 500);
+      if (
+        this.selectSubService != null &&
+        this.customer != null &&
+        this.time != null
+      ) {
+        console.log(this.selectSubService.value);
+        this.overlay = true;
+        // setTimeout(() => (this.isHidden = false), 500);
 
-      axios
-        .post(this.host + "/createNewReservation", {
-          customer_id: this.customer.customer_id,
-          checkin_time: this.time,
-          reservation_date: this.selectedDate,
-          status: 0,
-          sub_service_sub_service_id: this.selectSubService.value,
-          is_access: 1,
-        })
-        .then((response) => {
-          // console.log('res', response);
-          setTimeout(() => {
-            this.dialog = false;
-            this.reload();
-            this.overlay = false;
-            this.closeDialog();
-          }, 1000);
-        })
-        .catch((e) => {
-          this.errors.push(e);
+        axios
+          .post(this.host + "/createNewReservation", {
+            customer_id: this.customer.customer_id,
+            checkin_time: this.time,
+            reservation_date: this.selectedDate,
+            status: 0,
+            sub_service_sub_service_id: this.selectSubService.value,
+            is_access: 1,
+          })
+          .then((response) => {
+            // console.log('res', response);
+            setTimeout(() => {
+              this.dialog = false;
+              this.reload();
+              this.overlay = false;
+              this.closeDialog();
+            }, 1000);
+          })
+          .catch((e) => {
+            this.errors.push(e);
+          });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Hãy chọn hết cách trường bắt buộc đã nhé!",
         });
+      }
     },
 
     closeDialog() {
@@ -241,7 +252,10 @@ export default {
           res.data.forEach((element) => {
             let selectItem = {};
             if (element.type === 1) {
-              selectItem.name = element.time.replace(/(?:0)?(\d+):(?:0)?(\d+).*/,'$1h $2m');
+              selectItem.name = element.time.replace(
+                /(?:0)?(\d+):(?:0)?(\d+).*/,
+                "$1h $2m"
+              );
               selectItem.value = element.sub_service_id;
             } else {
               selectItem.name = element.session;

@@ -151,11 +151,16 @@ export default {
 
     transFormData(data) {
       if (data) {
+        this.events = [];
         data.forEach((element) => {
           let event = {};
           event.name = element.customer.name;
           event.reservation_id = element.reservation_id;
           event.start = element.reservation_date + " " + element.checkin_time;
+          let x = element.checkin_time.split(":");
+          let b = parseInt(x[1], 10) + 1;
+          event.end =
+            element.reservation_date + " " + x[0] + ":" + b + ":" + x[2];
           event.checkout_time = element.reservation_date;
           event.isPassed = this.compareDate(element.reservation_date);
           if (element.checkout_time != null) {

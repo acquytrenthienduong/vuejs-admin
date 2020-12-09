@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login1">
     <div id="app">
       <v-app>
         <v-dialog
@@ -187,6 +187,8 @@
 /* eslint-disable */
 import axios from "axios";
 import config from "../../config/config.js";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 export default {
   data() {
     return {
@@ -245,7 +247,11 @@ export default {
           }
         })
         .catch((e) => {
-          alert("SAI TAI KHOAN HOAC MAT KHAU");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Sai tài khoản hoặc mật khẩu!",
+          });
           this.errors.push(e);
         });
     },
@@ -267,7 +273,11 @@ export default {
           }
         })
         .catch((e) => {
-          alert("SAI TAI KHOAN HOAC MAT KHAU");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Sai tài khoản hoặc mật khẩu!",
+          });
           this.errors.push(e);
         });
     },
@@ -288,7 +298,11 @@ export default {
           }
         })
         .catch((e) => {
-          alert("SAI TAI KHOAN HOAC MAT KHAU");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Sai tài khoản hoặc mật khẩu!",
+          });
           this.errors.push(e);
         });
     },
@@ -315,4 +329,13 @@ export default {
   align-items: center;
   justify-content: center;
 } */
+
+.login1 {
+  background-image: url("https://image.freepik.com/free-photo/wall-wallpaper-concrete-colored-painted-textured-concept_53876-31799.jpg");
+  background-color: #cccccc;
+}
+
+.v-slide-group__wrapper {
+  background-color: #617ae8 !important;
+}
 </style>

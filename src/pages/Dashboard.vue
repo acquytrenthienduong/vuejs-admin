@@ -16,6 +16,12 @@
             <h4>Total: {{ totalInWeek }}</h4>
           </template>
         </chart-card>
+<!-- 
+        <newchart-card :chartOptions="chartOptions">
+          <template slot="content">
+            <h4>Total: {{ totalInWeek }}</h4>
+          </template>
+        </newchart-card> -->
       </div>
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
@@ -237,20 +243,20 @@ export default {
       var last = first + 6; // last day is the first day + 6
       var firstday = new Date(dateRaw.setDate(first));
       var lastday = new Date(dateRaw.setDate(last));
-      console.log("firstday ", firstday);
-      console.log("lastday ", lastday);
+      // console.log("firstday ", firstday);
+      // console.log("lastday ", lastday);
       let monthFrom = firstday.getMonth() + 1;
       let monthTo = lastday.getMonth() + 1;
-      console.log("monthFrom ", monthFrom);
-      console.log("monthTo ", monthTo);
+      // console.log("monthFrom ", monthFrom);
+      // console.log("monthTo ", monthTo);
       // Biến lưu tên của thứ
       let from = "";
       let to = "";
       from =
         firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
       to = lastday.getFullYear() + "-" + monthTo + "-" + lastday.getDate();
-      console.log("from ", from);
-      console.log("to ", to);
+      // console.log("from ", from);
+      // console.log("to ", to);
       axios
         .get(this.host + "/findReservation/" + from + "/" + to)
         .then((response) => {
@@ -313,6 +319,7 @@ export default {
         }
       });
       this.dailySalesChart.data.series = x;
+      this.chartOptions.series.data = x;
       // console.log(this.dailySalesChart.data.series);
     },
 

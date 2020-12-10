@@ -191,13 +191,16 @@ export default {
     },
 
     createNewReservation() {
+      let dateRaw = new Date(this.selectedDate);
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
       if (
         this.selectSubService != null &&
         this.customer != null &&
         this.time != null
       ) {
         console.log(this.selectSubService.value);
-        this.overlay = true;
         // setTimeout(() => (this.isHidden = false), 500);
 
         axios
@@ -208,15 +211,27 @@ export default {
             status: 0,
             sub_service_sub_service_id: this.selectSubService.value,
             is_access: 1,
+            year: year,
+            month: month,
+            day: dt,
           })
           .then((response) => {
-            // console.log('res', response);
-            setTimeout(() => {
-              this.dialog = false;
-              this.reload();
-              this.overlay = false;
-              this.closeDialog();
-            }, 1000);
+            console.log("res", response);
+            if (response.status === 200) {
+              this.overlay = true;
+              setTimeout(() => {
+                this.dialog = false;
+                this.reload();
+                this.overlay = false;
+                this.closeDialog();
+              }, 1000);
+            } else {
+              Swal.fire({
+                icon: "warning",
+                title: "Oops...",
+                text: "Hệ thống đã có tối đa lịch vào giờ này!",
+              });
+            }
           })
           .catch((e) => {
             this.errors.push(e);

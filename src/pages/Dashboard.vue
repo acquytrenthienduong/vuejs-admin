@@ -4,34 +4,25 @@
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
-        <chart-card
-          :chart-data="dailySalesChart.data"
-          :chart-options="dailySalesChart.options"
-          :chart-type="'Line'"
-          data-background-color="blue"
-        >
-          <template slot="content">
-            <h4 class="title">Reservation in week</h4>
-            <p class="category"></p>
-            <h4>Total: {{ totalInWeek }}</h4>
-          </template>
-        </chart-card>
-<!-- 
         <newchart-card :chartOptions="chartOptions">
           <template slot="content">
             <h4>Total: {{ totalInWeek }}</h4>
           </template>
-        </newchart-card> -->
+        </newchart-card>
       </div>
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
-        <highcharts :options="chartOptions"> </highcharts>
+        <newchart-card :chartOptions="chartOptions1">
+          <template slot="content">
+            <h4>Total: 123</h4>
+          </template>
+        </newchart-card>
       </div>
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
-        <newchart-card :chartOptions="chartOptions">
+        <newchart-card :chartOptions="chartOptions2">
           <template slot="content">
             <h4>Total: {{ totalInWeek }}</h4>
           </template>
@@ -76,8 +67,10 @@
 
           <template slot="content">
             <h2 class="category">This Week</h2>
-
-            <h3 class="title">{{ moneyInWeek | priceVndFormat }}</h3>
+            <h3 v-if="moneyInWeek > 0" class="title">
+              {{ moneyInWeek | priceVndFormat }}
+            </h3>
+            <h3 v-if="moneyToday === 0" class="title">0 ₫</h3>
           </template>
         </stats-card>
       </div>
@@ -91,7 +84,9 @@
 
           <template slot="content">
             <h2 class="category">Today</h2>
-            <h3 v-if="moneyToday > 0" class="title">{{ moneyToday | priceVndFormat }}</h3>
+            <h3 v-if="moneyToday > 0" class="title">
+              {{ moneyToday | priceVndFormat }}
+            </h3>
             <h3 v-if="moneyToday === 0" class="title">0 ₫</h3>
           </template>
         </stats-card>
@@ -101,15 +96,12 @@
 </template>
 
 <script>
-import { StatsCard, ChartCard } from "@/components";
+import { StatsCard } from "@/components";
 import axios from "axios";
 import config from "../config/config";
-import { Chart } from 'highcharts-vue';
 export default {
   components: {
     StatsCard,
-    ChartCard,
-    highcharts: Chart,
   },
   data() {
     return {
@@ -192,7 +184,7 @@ export default {
             {
               seriesBarDistance: 5,
               axisX: {
-                labelInterpolationFnc: function (value) {
+                labelInterpolationFnc: function(value) {
                   return value[0];
                 },
               },
@@ -202,31 +194,95 @@ export default {
       },
       chartOptions: {
         chart: {
-          type: 'line',
+          type: "line",
           height: 200,
         },
         title: {
-          text: 'Reservation in this week'
+          text: "Reservation in this week",
         },
         //colors: ['#ffffff'],
-        series: [{
-          name: 'Reservation',
-          data: [1, 3, 2, 4, 10, 6, 7,] // sample data
-        }],
+        series: [
+          {
+            name: "Reservation",
+            data: [1, 3, 2, 4, 10, 6, 7], // sample data
+          },
+        ],
         xAxis: {
-          categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         },
         yAxis: {
           title: {
-            text: ''
+            text: "",
           },
         },
         credits: {
-          enabled: false
+          enabled: false,
         },
         legend: {
-          enabled: false
-        }
+          enabled: false,
+        },
+      },
+
+      chartOptions1: {
+        chart: {
+          type: "line",
+          height: 200,
+        },
+        title: {
+          text: "Reservation in this year",
+        },
+        //colors: ['#ffffff'],
+        series: [
+          {
+            name: "Reservation",
+            data: [1, 3, 2, 4, 10, 6, 7, 10, 6, 7, 4, 6, 7], // sample data
+          },
+        ],
+        xAxis: {
+          // categories: ["1", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        },
+        yAxis: {
+          title: {
+            text: "",
+          },
+        },
+        credits: {
+          enabled: false,
+        },
+        legend: {
+          enabled: false,
+        },
+      },
+
+      chartOptions2: {
+        chart: {
+          type: "line",
+          height: 200,
+        },
+        title: {
+          text: "Register in week",
+        },
+        //colors: ['#ffffff'],
+        series: [
+          {
+            name: "Reservation",
+            data: [1, 3, 2, 4, 10, 6, 7], // sample data
+          },
+        ],
+        xAxis: {
+          categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        },
+        yAxis: {
+          title: {
+            text: "",
+          },
+        },
+        credits: {
+          enabled: false,
+        },
+        legend: {
+          enabled: false,
+        },
       },
       totalMoney: 0,
       moneyInWeek: 0,
@@ -243,23 +299,21 @@ export default {
       var last = first + 6; // last day is the first day + 6
       var firstday = new Date(dateRaw.setDate(first));
       var lastday = new Date(dateRaw.setDate(last));
-      // console.log("firstday ", firstday);
-      // console.log("lastday ", lastday);
+
       let monthFrom = firstday.getMonth() + 1;
       let monthTo = lastday.getMonth() + 1;
-      // console.log("monthFrom ", monthFrom);
-      // console.log("monthTo ", monthTo);
-      // Biến lưu tên của thứ
+
       let from = "";
       let to = "";
       from =
         firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
       to = lastday.getFullYear() + "-" + monthTo + "-" + lastday.getDate();
-      // console.log("from ", from);
-      // console.log("to ", to);
+      console.log("from ", from);
+      console.log("to ", to);
       axios
         .get(this.host + "/findReservation/" + from + "/" + to)
         .then((response) => {
+          console.log(response);
           this.totalInWeek = response.data.length;
           this.convertToChartData(response.data);
         });
@@ -282,44 +336,52 @@ export default {
       ];
 
       // var day = days[now.getDay()];
-      let x = [[0, 0, 0, 0, 0, 0, 0]];
+      let x = [
+        {
+          name: "Reservation",
+          data: [0, 0, 0, 0, 0, 0, 0],
+        },
+      ];
 
       array.forEach((element) => {
         let day = new Date(element.reservation_date);
         let thutrongtuan = days[day.getDay()];
+
         switch (thutrongtuan) {
           case "Sunday":
             // this.dailySalesChart.data.series[0][0]++;
-            x[0][6]++;
+            x[0].data[6]++;
             break;
           case "Monday":
             // this.dailySalesChart.data.series[0][1]++;
-            x[0][0]++;
+            x[0].data[0]++;
             break;
           case "Tuesday":
             // this.dailySalesChart.data.series[0][2]++;
-            x[0][1]++;
+            x[0].data[1]++;
             break;
           case "Wednesday":
             // this.dailySalesChart.data.series[0][3]++;
-            x[0][2]++;
+            x[0].data[2]++;
             break;
           case "Thursday":
             // this.dailySalesChart.data.series[0][4]++;
-            x[0][3]++;
+            x[0].data[3]++;
             break;
           case "Friday":
             // this.dailySalesChart.data.series[0][5]++;
-            x[0][4]++;
+            x[0].data[4]++;
             break;
           case "Saturday":
             // this.dailySalesChart.data.series[0][6]++;
-            x[0][5]++;
+            x[0].data[5]++;
             break;
         }
       });
-      this.dailySalesChart.data.series = x;
-      this.chartOptions.series.data = x;
+      // this.dailySalesChart.data.series = x;
+      console.log("x", x);
+      console.log("chartOptions", x);
+      this.chartOptions.series = x;
       // console.log(this.dailySalesChart.data.series);
     },
 
@@ -345,8 +407,8 @@ export default {
       from =
         firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
       to = lastday.getFullYear() + "-" + monthTo + "-" + lastday.getDate();
-      console.log("from ", from);
-      console.log("to ", to);
+      // console.log("from ", from);
+      // console.log("to ", to);
       axios.get(this.host + "/findBill/" + from + "/" + to).then((response) => {
         response.data.forEach((data) => {
           this.moneyInWeek += data.total_money;

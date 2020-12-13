@@ -57,6 +57,7 @@
                 </v-toolbar>
                 <v-card-text>
                   <h3>Service: {{ selectedEvent.serviceName }}</h3>
+                  <h3>Time: {{ selectedEvent.serviceTime }}</h3>
                 </v-card-text>
                 <v-card-text>
                   <h4>Start: {{ selectedEvent.start }}</h4>
@@ -119,7 +120,8 @@ import axios from "axios";
 import AddNewReservationDialog from "../../components/Modal/AddNewReservationDialog";
 import Bill from "../../components/Modal/Bill";
 import config from "../../config/config";
-
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 export default {
   components: {
     AddNewReservationDialog,
@@ -151,6 +153,7 @@ export default {
 
     transFormData(data) {
       if (data) {
+        console.log(data);
         this.events = [];
         data.forEach((element) => {
           let event = {};
@@ -173,7 +176,7 @@ export default {
           event.status = 0;
           event.service = element.sub_service;
           event.serviceName = element.sub_service.name;
-          event.serviceTime = element.sub_service.time;
+          event.serviceTime = this.transform(element.sub_service.time);
           event.text = "Chưa Thanh Toán";
           if (element.status === 1) {
             event.color = "green";
@@ -231,6 +234,15 @@ export default {
       // return today.getTime() === dateRaw.getTime();
     },
 
+    transform(time) {
+      // var hms = "02:04:33";
+      var a = time.split(":");
+
+      // Hours are worth 60 minutes.
+      var minutes = +a[0] * 60 + +a[1] + " phút";
+      return minutes;
+    },
+
     viewDay({ date }) {
       this.focus = date;
       this.type = "day";
@@ -274,7 +286,11 @@ export default {
           window.location.reload();
         })
         .catch((e) => {
-          this.detelefail = true;
+          Swal.fire({
+            icon: "warning",
+            title: "Oops...",
+            text: "Không xóa được cuộc hẹn này vì đã thanh toán rồi!",
+          });
         });
     },
   },

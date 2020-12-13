@@ -26,7 +26,10 @@
               <a
                 class="md-list-item-router md-list-item-container md-button-clean dropdown"
               >
-                <div v-if="role == 'manager' || role == 'receptionist'" class="md-list-item-content">
+                <div
+                  v-if="role == 'manager' || role == 'receptionist'"
+                  class="md-list-item-content"
+                >
                   <drop-down>
                     <md-button
                       slot="title"
@@ -107,7 +110,7 @@ export default {
 
     setInterval(() => {
       this.loadNotification();
-    }, 10000);
+    }, 5000);
   },
   methods: {
     loadNotification() {
@@ -137,6 +140,7 @@ export default {
     },
 
     seenNoti(noti) {
+      this.numberOfNotificationNotSeen--;
       console.log(noti);
       noti.seen = 1;
       axios

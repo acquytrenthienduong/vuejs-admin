@@ -16,13 +16,17 @@
       </v-data-table>
     </v-card-text>
     <download-excel
-      class="btn btn-default"
+      class="btn btn-default floatright"
       :data="json_data"
       :fields="json_fields"
       worksheet="My Worksheet"
       name="report.xls"
     >
-      Download Excel (you can customize this with html code!)
+      <!-- Download Excel (you can customize this with html code!) -->
+
+      <v-btn color="grey darken-2" dark>
+        Download Excel
+      </v-btn>
     </download-excel>
   </div>
 </template>
@@ -41,13 +45,10 @@ export default {
       host: config.config.host,
       json_fields: {
         "Date bill ": "date",
-        total_money: "total_money",
-        // "Telephone 2": {
-        //   field: "phone.landline",
-        //   callback: (value) => {
-        //     return `Landline Phone - ${value}`;
-        //   },
-        // },
+        total_money: "reservation.sub_service.money",
+        Name: "reservation.customer.name",
+        Time: "reservation.sub_service.time",
+        Service: "reservation.sub_service.name",
       },
       json_data: [],
       json_meta: [
@@ -67,11 +68,11 @@ export default {
         },
         {
           text: "Time",
-          value: "sub_service.time ",
+          value: "reservation.sub_service.time",
         },
-        { text: "Service", value: "sub_service.name" },
+        { text: "Service", value: "reservation.sub_service.name" },
         { text: "Date", value: "date" },
-        { text: "Money", value: "total_money" },
+        { text: "Money", value: "reservation.sub_service.money" },
       ],
       data: [],
     };
@@ -98,3 +99,8 @@ export default {
   },
 };
 </script>
+<style>
+.floatright {
+  float: right;
+}
+</style>

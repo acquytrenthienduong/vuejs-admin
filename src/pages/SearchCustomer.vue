@@ -41,20 +41,10 @@
 
                 <div>
                   <p>
-                    Total Visit: <span>{{ items.length }}</span>
+                    Total Visit: <span>{{ reservations.length }}</span>
                   </p>
-                  <p>Total Money:</p>
+                  <p>Total Money: {{ totalMoney | priceVndFormat }}</p>
                   <p>Favourite Service:</p>
-                  <!-- <v-col cols="12">
-                  <v-select
-                    v-model="items"
-                    :items="value"
-                    attach
-                    chips
-                    label="Used Services"
-                    multiple
-                  ></v-select>
-                </v-col> -->
                 </div>
               </v-card-text>
             </v-container>
@@ -128,8 +118,8 @@ export default {
         value: "reservation_date",
       },
       { text: "Service", value: "sub_service.name" },
-      { text: "Type", value: "" },
-      { text: "Bill", value: "sub_service.time" },
+      { text: "Time", value: "sub_service.time" },
+      { text: "Bill", value: "bills[0].total_money" },
     ],
   }),
   methods: {
@@ -137,7 +127,7 @@ export default {
       if (query != "") {
         this.isLoading = true;
         axios.get(this.host + "/searchCustomer/" + query).then((response) => {
-          console.log(response);
+          // console.log(response);
           // customers = [];
           this.customers = response.data;
           this.isLoading = false;
@@ -150,8 +140,11 @@ export default {
 
   watch: {
     customer: function(val) {
-      this.reservations = val.reservations;
+      let array = ["Stand up", "Lay Down", "Spray"];
       if (val != null) {
+        console.log(val);
+        this.reservations = val.reservations;
+        this.totalMoney = 0;
         val.reservations.forEach((element) => {
           let x = element.sub_service.name + " " + element.sub_service.time;
 
@@ -160,6 +153,11 @@ export default {
           }
           this.items.push(x);
           this.value.push(x);
+
+          // console.log("eveveve", element.bills[0].total_money);
+          if (element.bills.length > 0) {
+            this.totalMoney += element.bills[0].total_money;
+          }
         });
       } else {
         this.items = [];

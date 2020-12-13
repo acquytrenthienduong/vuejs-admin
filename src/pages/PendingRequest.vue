@@ -123,7 +123,7 @@ export default {
     },
 
     acceptRequest(requestID, customer_id, customer) {
-      console.log("customer", customer);
+      let dateRaw = new Date();
       axios
         .post(this.host + "/updateReservation/" + requestID, {
           is_access: 1,
@@ -146,7 +146,7 @@ export default {
                 this.role +
                 " chấp nhận lịch hẹn của khách hàng " +
                 customer.customer.name +
-                "vào lúc " +
+                "lúc " +
                 customer.reservation_date +
                 " " +
                 customer.checkin_time,

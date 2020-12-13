@@ -31,10 +31,6 @@
       :sidebar-background-image="sidebarBackgroundImage"
     >
       <mobile-menu slot="content"></mobile-menu>
-      <!-- <sidebar-link to="/dashboard">
-        <md-icon>dashboard</md-icon>
-        <p>Dashboard</p>
-      </sidebar-link> -->
       <sidebar-link to="/account">
         <md-icon>account_circle</md-icon>
         <p>Account</p>
@@ -65,11 +61,15 @@
       </sidebar-link>
       <sidebar-link to="/report">
         <md-icon>get_app</md-icon>
-        <p>Export report</p>
+        <p>Report</p>
       </sidebar-link>
       <sidebar-link to="/customerDetails">
         <md-icon>search</md-icon>
         <p>Search customer</p>
+      </sidebar-link>
+      <sidebar-link to="/activity">
+        <md-icon>history</md-icon>
+        <p>Activity</p>
       </sidebar-link>
     </side-bar>
 

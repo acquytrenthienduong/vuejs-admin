@@ -5,6 +5,7 @@ import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import AccountManager from "@/pages/AccountManager.vue";
 import PendingRequest from "@/pages/PendingRequest.vue";
+import Activity from "@/pages/Activity.vue";
 import CheckInForStaff from "@/pages/CheckInForStaff.vue";
 import SearchCustomer from "@/pages/SearchCustomer.vue";
 import Report from "@/pages/Report.vue";
@@ -83,6 +84,11 @@ const routes = [
         path: "products",
         name: "Products",
         component: Products
+      },
+      {
+        path: "activity",
+        name: "Activity",
+        component: Activity
       }
     ],
     beforeEnter: (to, from, next) => {

@@ -154,7 +154,20 @@ export default {
           },
         ],
         xAxis: {
-          // categories: ["1", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          categories: [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ],
         },
         yAxis: {
           title: {

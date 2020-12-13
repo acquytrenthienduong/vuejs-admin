@@ -67,7 +67,7 @@
               class="md-just-icon md-simple md-danger"
             >
               <md-icon>delete</md-icon>
-              <md-tooltip md-direction="top">delete</md-tooltip>
+              <md-tooltip md-direction="top">Reject</md-tooltip>
             </md-button>
           </template>
         </b-table-column>

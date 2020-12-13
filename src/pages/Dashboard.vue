@@ -15,7 +15,7 @@
       >
         <newchart-card :chartOptions="chartOptions1">
           <template slot="content">
-            <h4>Total: 123</h4>
+            <h4>Total: {{ totalInYear }}</h4>
           </template>
         </newchart-card>
       </div>
@@ -24,7 +24,7 @@
       >
         <newchart-card :chartOptions="chartOptions2">
           <template slot="content">
-            <h4>Total: {{ totalInWeek }}</h4>
+            <h4>Total: {{ totalRegister }}</h4>
           </template>
         </newchart-card>
       </div>
@@ -106,92 +106,7 @@ export default {
   data() {
     return {
       host: config.config.host,
-      dailySalesChart: {
-        data: {
-          labels: ["M", "T", "W", "T", "F", "S", "S"],
-          series: [[0, 0, 0, 0, 0, 0, 0]],
-        },
-        options: {
-          lineSmooth: this.$Chartist.Interpolation.cardinal({
-            tension: 0,
-          }),
-          low: 0,
-          high: 8, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          },
-        },
-      },
-      dataCompletedTasksChart: {
-        data: {
-          labels: ["12am", "3pm", "6pm", "9pm", "12pm", "3am", "6am", "9am"],
-          series: [[230, 750, 450, 300, 280, 240, 200, 190]],
-        },
 
-        options: {
-          lineSmooth: this.$Chartist.Interpolation.cardinal({
-            tension: 0,
-          }),
-          low: 0,
-          high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          },
-        },
-      },
-      emailsSubscriptionChart: {
-        data: {
-          labels: [
-            "Ja",
-            "Fe",
-            "Ma",
-            "Ap",
-            "Mai",
-            "Ju",
-            "Jul",
-            "Au",
-            "Se",
-            "Oc",
-            "No",
-            "De",
-          ],
-          series: [
-            [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-          ],
-        },
-        options: {
-          axisX: {
-            showGrid: false,
-          },
-          low: 0,
-          high: 1000,
-          chartPadding: {
-            top: 0,
-            right: 5,
-            bottom: 0,
-            left: 0,
-          },
-        },
-        responsiveOptions: [
-          [
-            "screen and (max-width: 640px)",
-            {
-              seriesBarDistance: 5,
-              axisX: {
-                labelInterpolationFnc: function(value) {
-                  return value[0];
-                },
-              },
-            },
-          ],
-        ],
-      },
       chartOptions: {
         chart: {
           type: "line",
@@ -289,6 +204,8 @@ export default {
       totalInWeek: 0,
       moneyToday: 0,
       moneyMonth: 0,
+      totalRegister: 0,
+      totalInYear: 0,
     };
   },
   methods: {
@@ -308,15 +225,49 @@ export default {
       from =
         firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
       to = lastday.getFullYear() + "-" + monthTo + "-" + lastday.getDate();
-      console.log("from ", from);
-      console.log("to ", to);
+      // console.log("from ", from);
+      // console.log("to ", to);
       axios
         .get(this.host + "/findReservation/" + from + "/" + to)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           this.totalInWeek = response.data.length;
           this.convertToChartData(response.data);
         });
+    },
+    loadRegisterInWeek() {
+      let dateRaw = new Date();
+      // let month = dateRaw.getMonth() + 1;
+      var first = dateRaw.getDate() - dateRaw.getDay(); // First day is the day of the month - the day of the week
+      var last = first + 6; // last day is the first day + 6
+      var firstday = new Date(dateRaw.setDate(first));
+      var lastday = new Date(dateRaw.setDate(last));
+
+      let monthFrom = firstday.getMonth() + 1;
+      let monthTo = lastday.getMonth() + 1;
+
+      let from = "";
+      let to = "";
+      from =
+        firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
+      to = lastday.getFullYear() + "-" + monthTo + "-" + lastday.getDate();
+      // console.log("from ", from);
+      // console.log("to ", to);
+      axios
+        .get(this.host + "/findRegister/" + from + "/" + to)
+        .then((response) => {
+          // console.log("register", response);
+          this.totalRegister = response.data.length;
+          this.convertToChartData2(response.data);
+        });
+    },
+
+    loadReservationInYear() {
+      axios.get(this.host + "/getAllReservationAccess").then((response) => {
+        console.log("response", response);
+        this.totalInYear = response.data.length;
+        this.convertToChartData1(response.data);
+      });
     },
 
     convertToChartData(array) {
@@ -379,9 +330,134 @@ export default {
         }
       });
       // this.dailySalesChart.data.series = x;
-      console.log("x", x);
-      console.log("chartOptions", x);
+      // console.log("x", x);
+      // console.log("chartOptions", x);
       this.chartOptions.series = x;
+      // console.log(this.dailySalesChart.data.series);
+    },
+
+    convertToChartData1(array) {
+      var months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+      let x = [
+        {
+          name: "Reservation",
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        },
+      ];
+
+      array.forEach((element) => {
+        let month = new Date(element.reservation_date);
+        // console.log(month.getMonth());
+        let thutrongtuan = months[month.getMonth()];
+        console.log("thutrongtuan", thutrongtuan);
+        switch (thutrongtuan) {
+          case 1:
+            x[0].data[0]++;
+            break;
+          case 2:
+            x[0].data[1]++;
+            break;
+          case 3:
+            x[0].data[2]++;
+            break;
+          case 4:
+            x[0].data[3]++;
+            break;
+          case 5:
+            x[0].data[4]++;
+            break;
+          case 6:
+            x[0].data[5]++;
+            break;
+          case 7:
+            x[0].data[6]++;
+            break;
+          case 8:
+            x[0].data[7]++;
+            break;
+          case 9:
+            x[0].data[8]++;
+            break;
+          case 10:
+            x[0].data[9]++;
+            break;
+          case 11:
+            // console.log("thang 11");
+            x[0].data[10]++;
+            break;
+          case 12:
+            // console.log("thang 12");
+            x[0].data[11]++;
+            break;
+        }
+      });
+
+      this.chartOptions1.series = x;
+    },
+
+    convertToChartData2(array) {
+      // console.log("array", array);
+
+      let week = [];
+      var now = new Date();
+      var current_day = now.getDay();
+      var days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+
+      // var day = days[now.getDay()];
+      let x = [
+        {
+          name: "Register",
+          data: [0, 0, 0, 0, 0, 0, 0],
+        },
+      ];
+
+      array.forEach((element) => {
+        let day = new Date(element.createAt);
+        let thutrongtuan = days[day.getDay()];
+
+        switch (thutrongtuan) {
+          case "Sunday":
+            // this.dailySalesChart.data.series[0][0]++;
+            x[0].data[6]++;
+            break;
+          case "Monday":
+            // this.dailySalesChart.data.series[0][1]++;
+            x[0].data[0]++;
+            break;
+          case "Tuesday":
+            // this.dailySalesChart.data.series[0][2]++;
+            x[0].data[1]++;
+            break;
+          case "Wednesday":
+            // this.dailySalesChart.data.series[0][3]++;
+            x[0].data[2]++;
+            break;
+          case "Thursday":
+            // this.dailySalesChart.data.series[0][4]++;
+            x[0].data[3]++;
+            break;
+          case "Friday":
+            // this.dailySalesChart.data.series[0][5]++;
+            x[0].data[4]++;
+            break;
+          case "Saturday":
+            // this.dailySalesChart.data.series[0][6]++;
+            x[0].data[5]++;
+            break;
+        }
+      });
+      // this.dailySalesChart.data.series = x;
+      // console.log("x", x);
+      // console.log("chartOptions", x);
+      this.chartOptions2.series = x;
       // console.log(this.dailySalesChart.data.series);
     },
 
@@ -448,6 +524,8 @@ export default {
     this.loadMoneyInWeek();
     this.loadMoneyToday();
     this.loadMoneyMonth();
+    this.loadRegisterInWeek();
+    this.loadReservationInYear();
   },
 };
 </script>

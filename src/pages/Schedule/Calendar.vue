@@ -176,8 +176,15 @@ export default {
           let x = element.checkin_time.split(":");
           let b = parseInt(x[1], 10) + 1;
           event.end =
-            element.reservation_date + " " + x[0] + ":" + b + ":" + x[2];
+            element.reservation_date +
+            " " +
+            this.addMinutes(
+              element.checkin_time,
+              this.transform1(element.sub_service.time)
+            ) +
+            ":00";
           event.checkout_time = element.reservation_date;
+
           event.isPassed = this.compareDate(element.reservation_date);
           if (element.checkout_time != null) {
             event.checkout_time =
@@ -194,9 +201,6 @@ export default {
           if (element.status === 1) {
             event.color = "green";
             event.isCheck = true;
-            // if (this.compareDate(element.reservation_date)) {
-            //   event.color = "gray";
-            // }
             event.text = "Đã Thanh Toán";
             event.status = 1;
           }
@@ -204,6 +208,16 @@ export default {
           this.events.push(event);
         });
       }
+    },
+
+    addMinutes(time, minsToAdd) {
+      function D(J) {
+        return (J < 10 ? "0" : "") + J;
+      }
+      var piece = time.split(":");
+      var mins = piece[0] * 60 + +piece[1] + +minsToAdd;
+
+      return D(((mins % (24 * 60)) / 60) | 0) + ":" + D(mins % 60);
     },
 
     convertDate(date) {
@@ -250,6 +264,15 @@ export default {
 
       // Hours are worth 60 minutes.
       var minutes = +a[0] * 60 + +a[1] + " phút";
+      return minutes;
+    },
+
+    transform1(time) {
+      // var hms = "02:04:33";
+      var a = time.split(":");
+
+      // Hours are worth 60 minutes.
+      var minutes = +a[0] * 60 + +a[1];
       return minutes;
     },
 

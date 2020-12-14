@@ -119,12 +119,20 @@ export default {
         this.numberOfPending = response.data.length;
       });
     },
+
+    loadAllPendingChange() {
+      axios.get(this.host + "/getAllReservationChange").then((response) => {
+        this.numberOfPending += response.data.length;
+      });
+    },
   },
 
   mounted() {
     this.loadAllPendingRequests();
+    this.loadAllPendingChange();
     setInterval(() => {
       this.loadAllPendingRequests();
+      this.loadAllPendingChange();
     }, 5000);
   },
 };

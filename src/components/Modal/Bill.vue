@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-btn v-if="!isPassed" @click.stop="dialog = true">
-      Payment
+      Thanh toán
     </v-btn>
     <v-btn
       style="background-color='#f5f5f5'"
@@ -9,7 +9,7 @@
       disabled
       @click.stop="dialog = true"
     >
-      Payment
+      Thanh toán
     </v-btn>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>

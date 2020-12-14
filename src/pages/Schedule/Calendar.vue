@@ -68,13 +68,13 @@
                   ></v-checkbox>
                 </v-toolbar>
                 <v-card-text>
-                  <h3>Service: {{ selectedEvent.serviceName }}</h3>
-                  <h3>Time: {{ selectedEvent.serviceTime }}</h3>
+                  <h3>Dịch vụ: {{ selectedEvent.serviceName }}</h3>
+                  <h3>Thời gian: {{ selectedEvent.serviceTime }}</h3>
                 </v-card-text>
                 <v-card-text>
-                  <h4>Check in : {{ selectedEvent.reservation_time }}</h4>
-                  <h4>Start: {{ selectedEvent.start }}</h4>
-                  <h4>End: {{ selectedEvent.checkout_time }}</h4>
+                  <h4>Giờ đến : {{ selectedEvent.reservation_time }}</h4>
+                  <h4>Bắt đầu: {{ selectedEvent.start }}</h4>
+                  <h4>Kết thúc: {{ selectedEvent.checkout_time }}</h4>
                 </v-card-text>
                 <v-card-actions
                   v-if="selectedEvent.isPassed"
@@ -90,7 +90,7 @@
                     :isPassed="selectedEvent.isPassed"
                   ></Bill>
                   <v-btn disabled text color="secondary" @click="Remove">
-                    Remove
+                    Xóa Lịch
                   </v-btn>
                 </v-card-actions>
                 <v-card-actions
@@ -103,7 +103,7 @@
                   <Bill :event="selectedEvent" :reload="loadData"></Bill>
 
                   <v-btn text color="secondary" @click="Remove">
-                    Remove
+                    Xóa Lịch
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -116,7 +116,7 @@
               </v-card-title>
               <v-card-actions>
                 <v-btn color="primary" text @click="detelefail = false">
-                  Close
+                  Đóng
                 </v-btn>
               </v-card-actions>
             </v-card>

@@ -331,10 +331,19 @@ export default {
 } */
 
 .login1 {
-  background-image: url("https://image.freepik.com/free-photo/wall-wallpaper-concrete-colored-painted-textured-concept_53876-31799.jpg");
-  background-color: #cccccc;
+  background-image: url("~@/assets/img/cover.jpg");
+  background-size: cover;
+  background-position: center center;
+  
 }
 
+.v-window-item {
+  background-color: beige !important;
+}
+
+.theme--light {
+  background: none !important;
+}
 .v-slide-group__wrapper {
   background-color: #617ae8 !important;
 }

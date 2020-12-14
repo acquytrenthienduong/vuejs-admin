@@ -44,37 +44,24 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-radio-group v-model="selectType" row>
-                  <v-radio
-                    label="Tanning"
-                    class="alignContent"
-                    :value="1"
-                  ></v-radio>
-                  <v-radio
-                    label="Massage"
-                    class="alignContent"
-                    :value="2"
-                  ></v-radio>
-                </v-radio-group>
+                <v-select
+                  :items="chooseServices"
+                  item-text="name"
+                  item-value="value"
+                  label="Service"
+                  class="duration-selector"
+                  single-line
+                  v-model="selectType"
+                ></v-select>
               </v-col>
-              <v-col v-if="selectType == 1" cols="12">
+
+              <v-col cols="12">
                 <v-select
                   v-model="selectSubService"
                   :items="items"
                   item-text="name"
                   item-value="value"
                   label="Duration"
-                  return-object
-                  single-line
-                ></v-select>
-              </v-col>
-              <v-col v-if="selectType == 2" cols="12">
-                <v-select
-                  v-model="selectSubService"
-                  :items="items"
-                  item-text="name"
-                  item-value="value"
-                  label="Package"
                   return-object
                   single-line
                 ></v-select>
@@ -158,6 +145,11 @@ export default {
     },
   },
   data: () => ({
+    chooseServices: [
+      { value: 1, name: "Stand Up" },
+      { value: 2, name: "Lay Down" },
+      { value: 3, name: "Spray" },
+    ],
     dialog: false,
     selectedDate: new Date().toISOString().substr(0, 10),
     customer: null,
@@ -177,6 +169,14 @@ export default {
     this.loadSubService(this.selectType);
   },
   methods: {
+    transform(time) {
+      // var hms = "02:04:33";
+      var a = time.split(":");
+
+      // Hours are worth 60 minutes.
+      var minutes = +a[0] * 60 + +a[1] + " phút";
+      return minutes;
+    },
     asyncFind(query) {
       if (query != "") {
         this.isLoading = true;
@@ -200,7 +200,7 @@ export default {
         this.customer != null &&
         this.time != null
       ) {
-        console.log(this.selectSubService.value);
+        console.log("hahha" + this.selectSubService.value);
         // setTimeout(() => (this.isHidden = false), 500);
 
         axios
@@ -267,12 +267,14 @@ export default {
           res.data.forEach((element) => {
             let selectItem = {};
             if (element.type === 1) {
-              selectItem.name = element.time.replace(
-                /(?:0)?(\d+):(?:0)?(\d+).*/,
-                "$1h $2m"
-              );
+              selectItem.name = this.transform(element.time);
               selectItem.value = element.sub_service_id;
-            } else {
+            }
+            if (element.type === 2) {
+              selectItem.name = this.transform(element.time);
+              selectItem.value = element.sub_service_id;
+            }
+            if (element.type === 3) {
               selectItem.name = element.session;
               selectItem.value = element.sub_service_id;
             }

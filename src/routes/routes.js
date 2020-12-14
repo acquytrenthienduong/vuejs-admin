@@ -20,7 +20,7 @@ const routes = [
     component: () => import("@/pages/Layout/LoginComponent.vue"),
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('username')) {
-        next({ name: 'dashboard' });
+        next({ name: 'Dashboard' });
       }
       else {
         next();

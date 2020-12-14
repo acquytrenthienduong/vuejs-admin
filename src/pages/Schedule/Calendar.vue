@@ -54,12 +54,25 @@
                   <v-toolbar-title
                     v-html="selectedEvent.name"
                   ></v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-checkbox
+                    v-if="selectedEvent.isPassed || selectedEvent.status === 1"
+                    disabled
+                    class="margin-top"
+                    v-model="selectedEvent.isCheck"
+                  ></v-checkbox>
+                  <v-checkbox
+                    v-if="!selectedEvent.isPassed && selectedEvent.status === 0"
+                    class="margin-top"
+                    v-model="selectedEvent.isCheck"
+                  ></v-checkbox>
                 </v-toolbar>
                 <v-card-text>
                   <h3>Service: {{ selectedEvent.serviceName }}</h3>
                   <h3>Time: {{ selectedEvent.serviceTime }}</h3>
                 </v-card-text>
                 <v-card-text>
+                  <h4>Check in : {{ selectedEvent.reservation_time }}</h4>
                   <h4>Start: {{ selectedEvent.start }}</h4>
                   <h4>End: {{ selectedEvent.checkout_time }}</h4>
                 </v-card-text>
@@ -171,7 +184,7 @@ export default {
               element.reservation_date + " " + element.checkout_time;
           }
           event.color = "red";
-
+          event.reservation_time = element.reservation_time;
           event.isCheck = false;
           event.status = 0;
           event.service = element.sub_service;
@@ -213,9 +226,6 @@ export default {
     compareDate(date) {
       let today = new Date();
       let dateRaw = new Date(date);
-      // console.log("today", today.getFullYear() === dateRaw.getFullYear());
-      // console.log("return ", today.getMonth() > dateRaw.getMonth());
-      // console.log("dateRaw", dateRaw);
 
       if (today.getFullYear() > dateRaw.getFullYear()) {
         return true;
@@ -293,17 +303,45 @@ export default {
           });
         });
     },
+
+    updateReservation() {
+      let dateRaw = new Date();
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
+      console.log("asdasdasd");
+      axios
+        .post(
+          this.host + "/updateReservation/" + this.selectedEvent.reservation_id,
+          {
+            reservation_time: hour + ":" + minute + ":" + second,
+          }
+        )
+        .then((response) => {
+          // this.selectedOpen = false;
+          this.loadData();
+        });
+    },
   },
   watch: {
     "selectedEvent.isCheck": function(val) {
+      let dateRaw = new Date();
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
       if (val) {
-        this.selectedEvent.color = "green";
-        this.selectedEvent.text = "Đã Thanh Toán";
-        this.selectedEvent.status = 1;
+        this.updateReservation();
+        this.selectedEvent.reservation_time =
+          hour + ":" + minute + ":" + second;
       } else {
-        this.selectedEvent.color = "red";
-        this.selectedEvent.text = "Chưa Thanh Toán";
-        this.selectedEvent.status = 0;
+        // this.updateReservation();
+        this.selectedEvent.reservation_time = null;
       }
       this.checkbox = val;
     },
@@ -328,5 +366,9 @@ export default {
 
 .v-btn--contained {
   box-shadow: none !important;
+}
+
+.margin-top {
+  margin-top: 20px !important;
 }
 </style>

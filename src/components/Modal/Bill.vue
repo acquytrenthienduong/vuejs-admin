@@ -62,10 +62,10 @@
         </v-card-text>
         <v-card-actions class="footer-card">
           <v-btn color="blue darken-1" text @click="dialog = false">
-            Close
+            Đóng
           </v-btn>
           <v-btn color="blue darken-1" text @click="createBill">
-            Create Bill
+            Tạo hóa đơn
           </v-btn>
         </v-card-actions>
       </v-card>

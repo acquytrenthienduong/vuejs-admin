@@ -73,8 +73,8 @@
                 </v-card-text>
                 <v-card-text>
                   <h4>Giờ đến : {{ selectedEvent.reservation_time }}</h4>
-                  <h4>Bắt đầu: {{ selectedEvent.start }}</h4>
-                  <h4>Kết thúc: {{ selectedEvent.checkout_time }}</h4>
+                  <h4>Ngày giờ hẹn: {{ selectedEvent.start }}</h4>
+                  <h4>Ngày giờ kết thúc: {{ selectedEvent.checkout_time }}</h4>
                 </v-card-text>
                 <v-card-actions
                   v-if="selectedEvent.isPassed"

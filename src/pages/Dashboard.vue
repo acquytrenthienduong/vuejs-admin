@@ -70,7 +70,7 @@
             <h3 v-if="moneyInWeek > 0" class="title">
               {{ moneyInWeek | priceVndFormat }}
             </h3>
-            <h3 v-if="moneyToday === 0" class="title">0 ₫</h3>
+            <h3 v-if="moneyInWeek === 0" class="title">0 ₫</h3>
           </template>
         </stats-card>
       </div>

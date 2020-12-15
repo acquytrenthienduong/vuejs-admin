@@ -59,12 +59,12 @@
                     v-if="selectedEvent.isPassed || selectedEvent.status === 1"
                     disabled
                     class="margin-top"
-                    v-model="selectedEvent.isCheck"
+                    v-model="selectedEvent.isCheckIn"
                   ></v-checkbox>
                   <v-checkbox
                     v-if="!selectedEvent.isPassed && selectedEvent.status === 0"
                     class="margin-top"
-                    v-model="selectedEvent.isCheck"
+                    v-model="selectedEvent.isCheckIn"
                   ></v-checkbox>
                 </v-toolbar>
                 <v-card-text>
@@ -192,6 +192,12 @@ export default {
           }
           event.color = "red";
           event.reservation_time = element.reservation_time;
+          if (event.reservation_time != null) {
+            event.isCheckIn = true;
+          } else {
+            event.isCheckIn = false;
+          }
+
           event.isCheck = false;
           event.status = 0;
           event.service = element.sub_service;
@@ -345,12 +351,13 @@ export default {
         )
         .then((response) => {
           // this.selectedOpen = false;
+          console.log(response);
           this.loadData();
         });
     },
   },
   watch: {
-    "selectedEvent.isCheck": function(val) {
+    "selectedEvent.isCheckIn": function(val) {
       let dateRaw = new Date();
       let year = dateRaw.getFullYear();
       let month = dateRaw.getMonth() + 1;
@@ -365,6 +372,20 @@ export default {
       } else {
         // this.updateReservation();
         this.selectedEvent.reservation_time = null;
+        axios
+          .post(
+            this.host +
+              "/updateReservation/" +
+              this.selectedEvent.reservation_id,
+            {
+              reservation_time: null,
+            }
+          )
+          .then((response) => {
+            // this.selectedOpen = false;
+            console.log(response);
+            this.loadData();
+          });
       }
       this.checkbox = val;
     },

@@ -208,8 +208,8 @@ export default {
       tab: 0,
       tabs: [
         { name: "Receptionist", icon: "mdi-account", key: 1 },
-        { name: "Manager", icon: "mdi-account-outline", key: 2 },
-        { name: "Administrator", icon: "mdi-account-outline", key: 3 },
+        { name: "Manager", icon: "mdi-account-tie", key: 2 },
+        { name: "Administrator", icon: "mdi-shield-account", key: 3 },
       ],
       valid: true,
 

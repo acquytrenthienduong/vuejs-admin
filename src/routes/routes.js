@@ -10,7 +10,8 @@ import CheckInForStaff from "@/pages/CheckInForStaff.vue";
 import SearchCustomer from "@/pages/SearchCustomer.vue";
 import Report from "@/pages/Report.vue";
 import Notifications from "@/pages/Notifications.vue";
-import Products from "@/pages/Products.vue";
+import Services from "@/pages/Services.vue";
+
 
 
 const routes = [
@@ -36,6 +37,11 @@ const routes = [
         path: "dashboard",
         name: "Dashboard",
         component: Dashboard
+      },
+      {
+        path: "services",
+        name: "Services",
+        component: Services
       },
       {
         path: "schedule",
@@ -79,11 +85,6 @@ const routes = [
         path: "checkintaff",
         name: "CheckInForStaff",
         component: CheckInForStaff
-      },
-      {
-        path: "products",
-        name: "Products",
-        component: Products
       },
       {
         path: "activity",

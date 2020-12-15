@@ -17,19 +17,19 @@
           </template>
         </b-table-column>
 
-        <b-table-column label="Product Name">
+        <b-table-column label="Services">
           <template v-slot="props">
             {{ props.row.productName }}
           </template>
         </b-table-column>
 
-        <b-table-column label="URL">
+        <b-table-column label="Details">
           <template v-slot="props">
             {{ props.row.img_url }}
           </template>
         </b-table-column>
 
-        <b-table-column label="Service">
+        <b-table-column label="Money">
           <template v-slot="props">
             {{ props.row.sub_service_sub_service_id }}
           </template>

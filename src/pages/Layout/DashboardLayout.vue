@@ -13,6 +13,11 @@
         <md-icon>schedule</md-icon>
         <p>Schedule</p>
       </sidebar-link>
+      
+      <sidebar-link to="/services">
+        <md-icon>settings</md-icon>
+        <p>Services</p>
+      </sidebar-link>
 
       <sidebar-link to="/pendingRequest">
         <md-icon>pending</md-icon>

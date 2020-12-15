@@ -322,7 +322,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* .container {
   height: 100%%;
   display: flex;
@@ -344,7 +344,11 @@ export default {
 .theme--light {
   background: none !important;
 }
-.v-slide-group__wrapper {
+.v-slide-group__content {
   background-color: #617ae8 !important;
 }
+.v-slide-group__wrapper{
+    background-color: #617ae8 !important;
+}
 </style>
+

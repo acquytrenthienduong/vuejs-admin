@@ -13,7 +13,7 @@
         </template>
       </v-data-table>
     </v-card-text>
-    <v-row data-app align="center">
+    <v-row data-app align="center" class="centerx">
       <v-col class="d-flex" cols="12" sm="8">
         <!-- <v-select :items="items"></v-select> -->
       </v-col>
@@ -144,5 +144,10 @@ export default {
 <style scoped>
 .floatright {
   float: right;
+}
+
+.centerx {
+  display: flex !important;
+  align-items: center !important;
 }
 </style>

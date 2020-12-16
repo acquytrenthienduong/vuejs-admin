@@ -40,6 +40,7 @@
               </v-col>
             </v-row>
           </v-container>
+          <small class="left">*mật khẩu mặc định là 12345678</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -128,3 +129,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.left {
+  padding-left: 30px;
+}
+</style>

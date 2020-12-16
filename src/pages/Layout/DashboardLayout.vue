@@ -14,14 +14,12 @@
         <p>Schedule</p>
       </sidebar-link>
 
-      <sidebar-link to="/services">
-        <md-icon>settings</md-icon>
-        <p>Services</p>
-      </sidebar-link>
-
       <sidebar-link to="/pendingRequest">
         <md-icon>pending</md-icon>
         <p>Pending Request</p>
+        <p v-if="numberOfPending != 0" class="count-noti">
+          {{ numberOfPending }}
+        </p>
       </sidebar-link>
 
       <sidebar-link to="/customerDetails">
@@ -54,11 +52,6 @@
         <p>Dashboard</p>
       </sidebar-link>
 
-      <sidebar-link to="/services">
-        <md-icon>settings</md-icon>
-        <p>Services</p>
-      </sidebar-link>
-
       <sidebar-link to="/schedule">
         <md-icon>schedule</md-icon>
         <p>Schedule</p>
@@ -82,6 +75,11 @@
       <sidebar-link to="/activity">
         <md-icon>history</md-icon>
         <p>Activity</p>
+      </sidebar-link>
+
+      <sidebar-link to="/services">
+        <md-icon>settings</md-icon>
+        <p>Services</p>
       </sidebar-link>
     </side-bar>
 

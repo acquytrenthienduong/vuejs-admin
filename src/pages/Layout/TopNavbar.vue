@@ -17,7 +17,10 @@
 
         <div class="md-collapse">
           <md-list>
-            <AddNewCustomerDialog />
+            <div v-if="role == 'manager' || role == 'receptionist'">
+              <AddNewCustomerDialog />
+            </div>
+
             <md-list-item v-if="role == 'manager'" href="#/dashboard">
               <i class="material-icons">dashboard</i>
               <p class="hidden-lg hidden-md">Dashboard</p>

@@ -72,14 +72,9 @@
                     :event="selectedEvent"
                   ></Bill>
                   <Bill
-                    v-if="selectedEvent.isPassed"
+                    v-if="selectedEvent.isPassed || !selectedEvent.isCheckIn"
                     :event="selectedEvent"
                     :isPassed="selectedEvent.isPassed"
-                  ></Bill>
-                  <Bill
-                    v-if="!selectedEvent.isCheckIn"
-                    :event="selectedEvent"
-                    :isCheckIn="selectedEvent.isCheckIn"
                   ></Bill>
                   <v-btn text color="secondary" @click="Remove"> Xóa Lịch </v-btn>
                 </v-card-actions>

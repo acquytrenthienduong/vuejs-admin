@@ -1,9 +1,7 @@
 <template>
   <div>
     <v-card-text>
-      <v-card-title>
-        Lastest Visit
-      </v-card-title>
+      <v-card-title> Lastest Visit </v-card-title>
       <v-data-table
         :headers="headers"
         :items="data"
@@ -15,19 +13,33 @@
         </template>
       </v-data-table>
     </v-card-text>
-    <download-excel
-      class="btn btn-default floatright"
-      :data="json_data"
-      :fields="json_fields"
-      worksheet="My Worksheet"
-      name="report.xls"
-    >
-      <!-- Download Excel (you can customize this with html code!) -->
-
-      <v-btn color="grey darken-2" dark>
-        Download Excel
-      </v-btn>
-    </download-excel>
+    <v-row data-app align="center">
+      <v-col class="d-flex" cols="12" sm="8">
+        <!-- <v-select :items="items"></v-select> -->
+      </v-col>
+      <v-col class="d-flex" cols="12" sm="2">
+        <v-select
+          :items="items"
+          item-text="name"
+          item-value="value"
+          label="Filter"
+          single-line
+          v-model="selectedFilter"
+        ></v-select>
+      </v-col>
+      <v-col cols="12" sm="2">
+        <download-excel
+          class="btn btn-default floatright"
+          :data="json_data"
+          :fields="json_fields"
+          worksheet="My Worksheet"
+          name="report.xls"
+        >
+          <!-- Download Excel (you can customize this with html code!) -->
+          <v-btn color="grey darken-2" dark> Download Excel </v-btn>
+        </download-excel>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -43,6 +55,12 @@ export default {
   data() {
     return {
       host: config.config.host,
+      items: [
+        { name: "Ngày", value: 1 },
+        { name: "Tháng", value: 2 },
+        { name: "Tất cả", value: 3 },
+      ],
+      selectedFilter: 3,
       json_fields: {
         "Date bill ": "date",
         total_money: "reservation.sub_service.money",
@@ -91,15 +109,39 @@ export default {
         this.data = response.data;
       });
     },
+    loadDataToDay() {
+      axios.get(this.host + "/findBillToday").then((response) => {
+        console.log("response.data", response.data);
+        this.data = response.data;
+      });
+    },
+    loadDataMonth() {
+      axios.get(this.host + "/findBillMonth").then((response) => {
+        console.log("response.data", response.data);
+        this.data = response.data;
+      });
+    },
   },
 
   mounted() {
     this.loadData();
     this.loadData1();
   },
+
+  watch: {
+    selectedFilter: function (val) {
+      if (val === 1) {
+        this.loadDataToDay();
+      } else if (val === 2) {
+        this.loadDataMonth();
+      } else {
+        this.loadData1();
+      }
+    },
+  },
 };
 </script>
-<style>
+<style scoped>
 .floatright {
   float: right;
 }

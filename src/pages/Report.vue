@@ -105,19 +105,16 @@ export default {
 
     loadData1() {
       axios.get(this.host + "/findAllBill").then((response) => {
-        console.log("response.data", response.data);
         this.data = response.data;
       });
     },
     loadDataToDay() {
       axios.get(this.host + "/findBillToday").then((response) => {
-        console.log("response.data", response.data);
         this.data = response.data;
       });
     },
     loadDataMonth() {
       axios.get(this.host + "/findBillMonth").then((response) => {
-        console.log("response.data", response.data);
         this.data = response.data;
       });
     },

@@ -107,12 +107,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="createNewReservation">
-            Create
-          </v-btn>
-          <v-btn color="blue darken-1" text @click="closeDialog">
-            Close
-          </v-btn>
+          <v-btn color="blue darken-1" text @click="createNewReservation"> Create </v-btn>
+          <v-btn color="blue darken-1" text @click="closeDialog"> Close </v-btn>
         </v-card-actions>
         <v-overlay :z-index="0" :value="overlay">
           <v-progress-circular
@@ -195,14 +191,7 @@ export default {
       let year = dateRaw.getFullYear();
       let month = dateRaw.getMonth() + 1;
       let dt = dateRaw.getDate();
-      if (
-        this.selectSubService != null &&
-        this.customer != null &&
-        this.time != null
-      ) {
-        console.log("hahha" + this.selectSubService.value);
-        // setTimeout(() => (this.isHidden = false), 500);
-
+      if (this.selectSubService != null && this.customer != null && this.time != null) {
         axios
           .post(this.host + "/createNewReservation", {
             customer_id: this.customer.customer_id,
@@ -216,7 +205,6 @@ export default {
             day: dt,
           })
           .then((response) => {
-            console.log("res", response);
             if (response.status === 200) {
               this.overlay = true;
               setTimeout(() => {
@@ -288,7 +276,7 @@ export default {
   },
 
   watch: {
-    selectType: function(val) {
+    selectType: function (val) {
       this.loadSubService(val);
     },
   },

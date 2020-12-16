@@ -144,6 +144,7 @@ export default {
     text: "",
     detelefail: false,
     host: config.config.host,
+    role: localStorage.getItem("username"),
   }),
   mounted() {
     this.$refs.calendar.checkChange();
@@ -358,6 +359,26 @@ export default {
       if (val) {
         this.updateReservation();
         this.selectedEvent.reservation_time = hour + ":" + minute + ":" + second;
+        axios
+          .post(this.host + "/createActivity", {
+            content:
+              this.role +
+              " đã tạo checkin cho khách hàng " +
+              this.selectedEvent.name +
+              " cuộc hẹn vào lúc " +
+              hour +
+              ":" +
+              minute +
+              ":" +
+              second +
+              " ngày " +
+              dt +
+              "-" +
+              month +
+              "-" +
+              year,
+          })
+          .then(() => {});
       } else {
         // this.updateReservation();
         this.selectedEvent.reservation_time = null;

@@ -74,9 +74,7 @@
                 </md-button>
               </template>
             </b-table-column>
-            <h3 class="empty" v-if="requests.length == 0">
-              No request Pending
-            </h3>
+            <h3 class="empty" v-if="requests.length == 0">No request Pending</h3>
           </b-table>
         </b-tab-item>
 
@@ -139,11 +137,7 @@
                       <md-icon>create</md-icon>
                       <md-tooltip md-direction="top">Accept</md-tooltip>
                     </md-button>
-                    <b-modal
-                      v-model="isCardModalActive"
-                      :width="640"
-                      scroll="keep"
-                    >
+                    <b-modal v-model="isCardModalActive" :width="640" scroll="keep">
                       <div class="card">
                         <div class="card-content">
                           <div class="media">
@@ -173,17 +167,16 @@
                                   v-for="item in items"
                                   :key="item.value"
                                   :value="item.value"
-                                  >{{ item.name }}</option
                                 >
+                                  {{ item.name }}
+                                </option>
                               </b-select>
                             </b-field>
                             <b-field label="Ngày">
-                              <b-input v-model="date" type="date" required>
-                              </b-input>
+                              <b-input v-model="date" type="date" required> </b-input>
                             </b-field>
                             <b-field label="Giờ">
-                              <b-input v-model="time" type="time" required>
-                              </b-input>
+                              <b-input v-model="time" type="time" required> </b-input>
                             </b-field>
                           </div>
                           <button
@@ -193,10 +186,7 @@
                           >
                             Không thay đổi
                           </button>
-                          <button
-                            class="button is-primary"
-                            @click="OK(props.row)"
-                          >
+                          <button class="button is-primary" @click="OK(props.row)">
                             Thay đổi
                           </button>
                         </div>
@@ -204,12 +194,7 @@
                     </b-modal>
                   </section>
                   <md-button
-                    @click="
-                      rejectChange(
-                        props.row.reservation_id,
-                        props.row.customer_id
-                      )
-                    "
+                    @click="rejectChange(props.row.reservation_id, props.row.customer_id)"
                     class="md-just-icon md-simple md-danger"
                   >
                     <md-icon>delete</md-icon>
@@ -218,9 +203,7 @@
                 </div>
               </template>
             </b-table-column>
-            <h3 class="empty" v-if="requests1.length == 0">
-              No request Pending
-            </h3>
+            <h3 class="empty" v-if="requests1.length == 0">No request Pending</h3>
           </b-table>
         </b-tab-item>
       </b-tabs>
@@ -393,18 +376,24 @@ export default {
         .then(() => {
           Swal.fire("Thành công!", "Update lịch thành công.", "success");
           axios
-            .post(
-              this.host + "/createNotification/" + row.customer.customer_id,
-              {
-                content:
-                  "Lịch của bạn đã đổi sang ngày " +
-                  this.date +
-                  " vào lúc " +
-                  this.time,
-              }
-            )
+            .post(this.host + "/createNotification/" + row.customer.customer_id, {
+              content:
+                "Lịch của bạn đã đổi sang ngày " + this.date + " vào lúc " + this.time,
+            })
             .then((response) => {
               console.log(response);
+              axios
+                .post(this.host + "/createActivity", {
+                  content:
+                    this.role +
+                    " đã tạo thay đổi lịch cho khách hàng " +
+                    row.customer.name +
+                    " sang ngày " +
+                    this.date +
+                    " vào lúc " +
+                    this.time,
+                })
+                .then(() => {});
             });
           this.isCardModalActive = false;
           this.loadAllPendingChange();
@@ -443,7 +432,7 @@ export default {
   },
 
   watch: {
-    selectedType: function(val) {
+    selectedType: function (val) {
       console.log(val);
       this.loadSubService(val);
     },

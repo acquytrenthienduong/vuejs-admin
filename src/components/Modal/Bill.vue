@@ -1,11 +1,9 @@
 <template>
   <v-row>
-    <v-btn v-if="!isPassed" @click.stop="dialog = true">
-      Thanh toán
-    </v-btn>
+    <v-btn v-if="!isPassed && isCheckIn" @click.stop="dialog = true"> Thanh toán </v-btn>
     <v-btn
       style="background-color='#f5f5f5'"
-      v-if="isPassed"
+      v-if="isPassed || !isCheckIn"
       disabled
       @click.stop="dialog = true"
     >
@@ -21,6 +19,8 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field
+                  disabled
+                  class="color"
                   label="Customer Name"
                   v-model="event.name"
                 ></v-text-field>
@@ -28,12 +28,14 @@
               <!-- <h3>Customer Name: {{event.name}}</h3> -->
               <v-col cols="12">
                 <v-text-field
+                  disabled
                   label="Service Name"
                   v-model="event.service.name"
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
+                  disabled
                   label="Money"
                   v-model="event.service.money"
                   prefix="$"
@@ -41,18 +43,21 @@
               </v-col>
               <v-col cols="12">
                 <v-text-field
+                  disabled
                   label="Time"
                   v-model="event.service.time"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field
+                  disabled
                   label="Checkin Time"
-                  v-model="event.start"
+                  v-model="event.reservation_time"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field
+                  disabled
                   label="Checkout Time"
                   v-model="event.checkout_time"
                 ></v-text-field>
@@ -61,12 +66,8 @@
           </v-container>
         </v-card-text>
         <v-card-actions class="footer-card">
-          <v-btn color="blue darken-1" text @click="dialog = false">
-            Đóng
-          </v-btn>
-          <v-btn color="blue darken-1" text @click="createBill">
-            Tạo hóa đơn
-          </v-btn>
+          <v-btn color="blue darken-1" text @click="dialog = false"> Đóng </v-btn>
+          <v-btn color="blue darken-1" text @click="createBill"> Tạo hóa đơn </v-btn>
         </v-card-actions>
       </v-card>
 
@@ -77,9 +78,7 @@
             <span>Create Bill Success</span>
           </v-card-title>
           <v-card-actions>
-            <v-btn color="primary" text @click="successdialog = false">
-              Close
-            </v-btn>
+            <v-btn color="primary" text @click="successdialog = false"> Close </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -90,9 +89,7 @@
             <span>Bill has been created already</span>
           </v-card-title>
           <v-card-actions>
-            <v-btn color="primary" text @click="faildialog = false">
-              Close
-            </v-btn>
+            <v-btn color="primary" text @click="faildialog = false"> Close </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -116,6 +113,9 @@ export default {
       type: Object,
     },
     isPassed: {
+      type: Boolean,
+    },
+    isCheckIn: {
       type: Boolean,
     },
   },
@@ -173,7 +173,9 @@ export default {
                   " cuộc hẹn vào lúc " +
                   this.event.start,
               })
-              .then(() => {});
+              .then(() => {
+                this.createBillSuccess();
+              });
             Swal.fire("Thành công!", "Tạo bill thành công!", "success");
           } else {
             Swal.fire({
@@ -191,7 +193,9 @@ export default {
           });
         });
     },
-
+    createBillSuccess() {
+      this.$emit("clicked", "green");
+    },
     updateReservation() {
       let dateRaw = new Date();
       let year = dateRaw.getFullYear();
@@ -230,5 +234,11 @@ export default {
 
 .disable {
   background-color: #f5f5f5 !important;
+}
+
+.theme--light.v-input--is-disabled,
+.theme--light.v-input--is-disabled input,
+.theme--light.v-input--is-disabled textarea {
+  color: rgba(0, 0, 0, 0.87) !important;
 }
 </style>

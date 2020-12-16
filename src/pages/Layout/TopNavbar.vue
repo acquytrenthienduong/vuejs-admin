@@ -17,6 +17,7 @@
 
         <div class="md-collapse">
           <md-list>
+            <AddNewCustomerDialog />
             <md-list-item v-if="role == 'manager'" href="#/dashboard">
               <i class="material-icons">dashboard</i>
               <p class="hidden-lg hidden-md">Dashboard</p>
@@ -37,9 +38,7 @@
                       data-toggle="dropdown"
                     >
                       <md-icon>notifications</md-icon>
-                      <span class="notification">{{
-                        numberOfNotificationNotSeen
-                      }}</span>
+                      <span class="notification">{{ numberOfNotificationNotSeen }}</span>
                       <p class="hidden-lg hidden-md">Notifications</p>
                     </md-button>
                     <ul class="dropdown-menu dropdown-menu-right">
@@ -83,8 +82,12 @@
 /* eslint-disable */
 import axios from "axios";
 import config from "../../config/config";
+import AddNewCustomerDialog from "../../components/Modal/AddNewCustomerDialog";
 
 export default {
+  components: {
+    AddNewCustomerDialog,
+  },
   data() {
     return {
       selectedEmployee: null,
@@ -130,7 +133,7 @@ export default {
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
     },
-    logout: function() {
+    logout: function () {
       if (localStorage.getItem("username")) {
         localStorage.removeItem("username");
         localStorage.removeItem("role");

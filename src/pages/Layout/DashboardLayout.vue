@@ -13,7 +13,7 @@
         <md-icon>schedule</md-icon>
         <p>Schedule</p>
       </sidebar-link>
-      
+
       <sidebar-link to="/services">
         <md-icon>settings</md-icon>
         <p>Services</p>
@@ -81,10 +81,7 @@
     <div class="main-panel">
       <top-navbar></top-navbar>
 
-      <fixed-plugin
-        :color.sync="sidebarBackground"
-        :image.sync="sidebarBackgroundImage"
-      >
+      <fixed-plugin :color.sync="sidebarBackground" :image.sync="sidebarBackgroundImage">
       </fixed-plugin>
 
       <dashboard-content> </dashboard-content>

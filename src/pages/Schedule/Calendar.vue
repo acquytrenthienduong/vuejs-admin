@@ -5,26 +5,15 @@
         <v-col>
           <v-sheet height="64" class="display-flex">
             <v-toolbar flat>
-              <v-btn
-                outlined
-                class="mr-4"
-                color="grey darken-2"
-                @click="setToday"
-              >
+              <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
                 Today
               </v-btn>
-              <AddNewReservationDialog
-                :reload="loadData"
-              ></AddNewReservationDialog>
+              <AddNewReservationDialog :reload="loadData"></AddNewReservationDialog>
               <v-btn fab text small color="grey darken-2" @click="prev">
-                <v-icon small>
-                  mdi-chevron-left
-                </v-icon>
+                <v-icon small> mdi-chevron-left </v-icon>
               </v-btn>
               <v-btn fab text small color="grey darken-2" @click="next">
-                <v-icon small>
-                  mdi-chevron-right
-                </v-icon>
+                <v-icon small> mdi-chevron-right </v-icon>
               </v-btn>
               <v-toolbar-title v-if="$refs.calendar">
                 {{ $refs.calendar.title }}
@@ -51,9 +40,7 @@
             >
               <v-card color="grey lighten-4" min-width="350px" flat>
                 <v-toolbar :color="selectedEvent.color" dark>
-                  <v-toolbar-title
-                    v-html="selectedEvent.name"
-                  ></v-toolbar-title>
+                  <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                   <v-spacer></v-spacer>
                   <v-checkbox
                     v-if="selectedEvent.isPassed || selectedEvent.status === 1"
@@ -72,16 +59,16 @@
                   <h3>Thời gian: {{ selectedEvent.serviceTime }}</h3>
                 </v-card-text>
                 <v-card-text>
-                  <h4>Giờ đến : {{ selectedEvent.reservation_time }}</h4>
                   <h4>Ngày giờ hẹn: {{ selectedEvent.start }}</h4>
-                  <h4>Ngày giờ kết thúc: {{ selectedEvent.checkout_time }}</h4>
+                  <h4>Giờ đến : {{ selectedEvent.reservation_time }}</h4>
+                  <h4>Giờ kết thúc: {{ selectedEvent.checkout_time }}</h4>
                 </v-card-text>
                 <v-card-actions
-                  v-if="selectedEvent.isPassed"
+                  v-if="selectedEvent.isPassed || !selectedEvent.isCheckIn"
                   class="footer-card"
                 >
                   <Bill
-                    v-if="!selectedEvent.isPassed"
+                    v-if="!selectedEvent.isPassed && selectedEvent.isCheckIn"
                     :event="selectedEvent"
                   ></Bill>
                   <Bill
@@ -89,22 +76,29 @@
                     :event="selectedEvent"
                     :isPassed="selectedEvent.isPassed"
                   ></Bill>
-                  <v-btn disabled text color="secondary" @click="Remove">
-                    Xóa Lịch
-                  </v-btn>
+                  <Bill
+                    v-if="!selectedEvent.isCheckIn"
+                    :event="selectedEvent"
+                    :isCheckIn="selectedEvent.isCheckIn"
+                  ></Bill>
+                  <v-btn text color="secondary" @click="Remove"> Xóa Lịch </v-btn>
                 </v-card-actions>
                 <v-card-actions
-                  v-if="!selectedEvent.isPassed"
+                  v-if="!selectedEvent.isPassed && selectedEvent.isCheckIn"
                   class="footer-card"
                 >
                   <!-- <v-btn text color="secondary" @click="updateReservation">
                     Update
                   </v-btn> -->
-                  <Bill :event="selectedEvent" :reload="loadData"></Bill>
+                  <Bill
+                    :event="selectedEvent"
+                    :reload="loadData"
+                    :isPassed="selectedEvent.isPassed"
+                    :isCheckIn="selectedEvent.isCheckIn"
+                    @clicked="onClickChild"
+                  ></Bill>
 
-                  <v-btn text color="secondary" @click="Remove">
-                    Xóa Lịch
-                  </v-btn>
+                  <v-btn text color="secondary" @click="Remove"> Xóa Lịch </v-btn>
                 </v-card-actions>
               </v-card>
             </v-menu>
@@ -115,9 +109,7 @@
                 <span>Khong The Xoa Cuoc Hen Nay Vi Ban Da Tao Bill</span>
               </v-card-title>
               <v-card-actions>
-                <v-btn color="primary" text @click="detelefail = false">
-                  Đóng
-                </v-btn>
+                <v-btn color="primary" text @click="detelefail = false"> Đóng </v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -164,6 +156,10 @@ export default {
         .then((response) => this.transFormData(response.data));
     },
 
+    onClickChild(value) {
+      this.selectedEvent.color = value;
+    },
+
     transFormData(data) {
       if (data) {
         console.log(data);
@@ -187,8 +183,7 @@ export default {
 
           event.isPassed = this.compareDate(element.reservation_date);
           if (element.checkout_time != null) {
-            event.checkout_time =
-              element.reservation_date + " " + element.checkout_time;
+            event.checkout_time = element.checkout_time;
           }
           event.color = "red";
           event.reservation_time = element.reservation_time;
@@ -318,9 +313,7 @@ export default {
     },
     Remove() {
       axios
-        .delete(
-          this.host + "/deleteReservation/" + this.selectedEvent.reservation_id
-        )
+        .delete(this.host + "/deleteReservation/" + this.selectedEvent.reservation_id)
         .then((response) => {
           window.location.reload();
         })
@@ -343,12 +336,9 @@ export default {
       let second = dateRaw.getSeconds();
       console.log("asdasdasd");
       axios
-        .post(
-          this.host + "/updateReservation/" + this.selectedEvent.reservation_id,
-          {
-            reservation_time: hour + ":" + minute + ":" + second,
-          }
-        )
+        .post(this.host + "/updateReservation/" + this.selectedEvent.reservation_id, {
+          reservation_time: hour + ":" + minute + ":" + second,
+        })
         .then((response) => {
           // this.selectedOpen = false;
           console.log(response);
@@ -357,7 +347,7 @@ export default {
     },
   },
   watch: {
-    "selectedEvent.isCheckIn": function(val) {
+    "selectedEvent.isCheckIn": function (val) {
       let dateRaw = new Date();
       let year = dateRaw.getFullYear();
       let month = dateRaw.getMonth() + 1;
@@ -367,20 +357,14 @@ export default {
       let second = dateRaw.getSeconds();
       if (val) {
         this.updateReservation();
-        this.selectedEvent.reservation_time =
-          hour + ":" + minute + ":" + second;
+        this.selectedEvent.reservation_time = hour + ":" + minute + ":" + second;
       } else {
         // this.updateReservation();
         this.selectedEvent.reservation_time = null;
         axios
-          .post(
-            this.host +
-              "/updateReservation/" +
-              this.selectedEvent.reservation_id,
-            {
-              reservation_time: null,
-            }
-          )
+          .post(this.host + "/updateReservation/" + this.selectedEvent.reservation_id, {
+            reservation_time: null,
+          })
           .then((response) => {
             // this.selectedOpen = false;
             console.log(response);

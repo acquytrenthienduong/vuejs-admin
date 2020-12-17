@@ -17,8 +17,8 @@
       <sidebar-link to="/pendingRequest">
         <md-icon>pending</md-icon>
         <p>Pending Request</p>
-        <p v-if="numberOfPending != 0" class="count-noti">
-          {{ numberOfPending }}
+        <p v-if="numberOfPending != 0 || numberOfChange != 0" class="count-noti">
+          {{ numberOfPending + numberOfChange }}
         </p>
       </sidebar-link>
 
@@ -60,8 +60,8 @@
         <md-icon>pending</md-icon>
         <p>Pending Request</p>
 
-        <p v-if="numberOfPending != 0" class="count-noti">
-          {{ numberOfPending }}
+        <p v-if="numberOfPending != 0 || numberOfChange != 0" class="count-noti">
+          {{ numberOfPending + numberOfChange }}
         </p>
       </sidebar-link>
       <sidebar-link to="/report">
@@ -116,6 +116,7 @@ export default {
       sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg"),
       role: localStorage.getItem("role"),
       numberOfPending: 0,
+      numberOfChange: 0,
       host: config.config.host,
     };
   },
@@ -129,7 +130,9 @@ export default {
 
     loadAllPendingChange() {
       axios.get(this.host + "/getAllReservationChange").then((response) => {
-        this.numberOfPending += response.data.length;
+        if (this.numberOfPending == 0) {
+          this.numberOfChange = response.data.length;
+        }
       });
     },
   },

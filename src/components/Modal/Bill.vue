@@ -144,9 +144,6 @@ export default {
       let time = hour + ":" + minute + ":" + second;
 
       let date = year + "-" + month + "-" + dt;
-      console.log("year", year);
-      console.log("month", month);
-      console.log("dt", dt);
 
       axios
         .post(this.host + "/createBill", {
@@ -175,6 +172,7 @@ export default {
               })
               .then(() => {
                 this.createBillSuccess();
+                this.createBillSuccess1();
               });
             Swal.fire("Thành công!", "Tạo bill thành công!", "success");
           } else {
@@ -196,6 +194,14 @@ export default {
     createBillSuccess() {
       this.$emit("clicked", "green");
     },
+    createBillSuccess1() {
+      let dateRaw = new Date();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
+      let checkout = hour + ":" + minute + ":" + second;
+      this.$emit("clicked1", checkout);
+    },
     updateReservation() {
       let dateRaw = new Date();
       let year = dateRaw.getFullYear();
@@ -204,11 +210,12 @@ export default {
       let hour = dateRaw.getHours();
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
-
+      console.log("checkout  ", hour + ":" + minute + ":" + second);
+      let checkout = hour + ":" + minute + ":" + second;
       axios
         .post(this.host + "/updateReservation/" + this.event.reservation_id, {
           status: 1,
-          checkout_time: hour + ":" + minute + ":" + second,
+          checkout_time: checkout,
         })
         .then((response) => {
           // this.selectedOpen = false;

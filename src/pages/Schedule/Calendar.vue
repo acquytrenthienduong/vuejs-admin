@@ -91,6 +91,7 @@
                     :isPassed="selectedEvent.isPassed"
                     :isCheckIn="selectedEvent.isCheckIn"
                     @clicked="onClickChild"
+                    @clicked1="onClickChild1"
                   ></Bill>
 
                   <v-btn text color="secondary" @click="Remove"> Xóa Lịch </v-btn>
@@ -155,6 +156,9 @@ export default {
     onClickChild(value) {
       this.selectedEvent.color = value;
     },
+    onClickChild1(value) {
+      this.selectedEvent.checkout_time = value;
+    },
 
     transFormData(data) {
       if (data) {
@@ -175,7 +179,7 @@ export default {
               this.transform1(element.sub_service.time)
             ) +
             ":00";
-          event.checkout_time = element.reservation_date;
+          // event.checkout_time = element.reservation_date;
 
           event.isPassed = this.compareDate(element.reservation_date);
           if (element.checkout_time != null) {
@@ -330,10 +334,12 @@ export default {
       let hour = dateRaw.getHours();
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
-      console.log("asdasdasd");
+      console.log("checkin ", hour + ":" + minute + ":" + second);
+      let checkin = hour + ":" + minute + ":" + second;
+
       axios
         .post(this.host + "/updateReservation/" + this.selectedEvent.reservation_id, {
-          reservation_time: hour + ":" + minute + ":" + second,
+          reservation_time: checkin,
         })
         .then((response) => {
           // this.selectedOpen = false;

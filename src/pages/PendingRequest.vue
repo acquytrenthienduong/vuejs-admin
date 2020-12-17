@@ -154,8 +154,8 @@
                                 placeholder="Chọn loại dịch vụ"
                                 rounded
                               >
-                                <option value="1">Laydown</option>
-                                <option value="2">Stand up</option>
+                                <option value="1">Stand up</option>
+                                <option value="2">Lay Down</option>
                                 <option value="3">Spray</option>
                               </b-select>
                               <b-select
@@ -236,7 +236,7 @@ export default {
       selectedType: 1,
       selectSubService: null,
       chooseServices: [
-        { value: 1, name: "Stand Up" },
+        { value: 1, name: "Stand up" },
         { value: 2, name: "Lay Down" },
         { value: 3, name: "Spray" },
       ],
@@ -351,12 +351,20 @@ export default {
 
     updateInfor(row) {
       this.isCardModalActive = true;
-      console.log("rowrowrw", row);
-      this.selectedType = this.chooseServices[row.sub_service.name];
-      // console.log(this.selectedType);
       this.chooseServices.forEach((element) => {
         if (element.name === row.sub_service.name) {
-          this.selectedType = element.value;
+          switch (element.name) {
+            case "Stand up":
+              this.selectedType = 1;
+              break;
+            case "Lay Down":
+              this.selectedType = 2;
+              break;
+            case "Spray":
+              this.selectedType = 3;
+              break;
+          }
+          console.log("this.selectedType", this.selectedType);
           this.selectSubService = row.sub_service.sub_service_id;
           this.date = row.reservation_date;
           this.time = row.checkin_time;

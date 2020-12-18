@@ -190,38 +190,46 @@ export default {
       let month = dateRaw.getMonth() + 1;
       let dt = dateRaw.getDate();
       if (this.selectSubService != null && this.customer != null && this.time != null) {
-        axios
-          .post(this.host + "/createNewReservation", {
-            customer_id: this.customer.customer_id,
-            checkin_time: this.time,
-            reservation_date: this.selectedDate,
-            status: 0,
-            sub_service_sub_service_id: this.selectSubService.value,
-            is_access: 1,
-            year: year,
-            month: month,
-            day: dt,
-          })
-          .then((response) => {
-            if (response.status === 200) {
-              this.overlay = true;
-              setTimeout(() => {
-                this.dialog = false;
-                this.reload();
-                this.overlay = false;
-                this.closeDialog();
-              }, 1000);
-            } else {
-              Swal.fire({
-                icon: "warning",
-                title: "Oops...",
-                text: "Hệ thống đã có tối đa lịch vào giờ này!",
-              });
-            }
-          })
-          .catch((e) => {
-            this.errors.push(e);
+        if (this.compareDate(this.selectedDate)) {
+          axios
+            .post(this.host + "/createNewReservation", {
+              customer_id: this.customer.customer_id,
+              checkin_time: this.time,
+              reservation_date: this.selectedDate,
+              status: 0,
+              sub_service_sub_service_id: this.selectSubService.value,
+              is_access: 1,
+              year: year,
+              month: month,
+              day: dt,
+            })
+            .then((response) => {
+              if (response.status === 200) {
+                this.overlay = true;
+                setTimeout(() => {
+                  this.dialog = false;
+                  this.reload();
+                  this.overlay = false;
+                  this.closeDialog();
+                }, 1000);
+              } else {
+                Swal.fire({
+                  icon: "warning",
+                  title: "Oops...",
+                  text: "Hệ thống đã có tối đa lịch vào giờ này!",
+                });
+              }
+            })
+            .catch((e) => {
+              this.errors.push(e);
+            });
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: "Oops...",
+            text: "Hãy chọn 1 ngày trong tương lai!",
           });
+        }
       } else {
         Swal.fire({
           icon: "error",
@@ -270,6 +278,16 @@ export default {
         .catch((e) => {
           this.errors.push(e);
         });
+    },
+
+    compareDate(date) {
+      let today = new Date();
+      let dateRaw = new Date(date);
+      if (today > dateRaw) {
+        return false;
+      } else {
+        return true;
+      }
     },
   },
 

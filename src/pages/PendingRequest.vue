@@ -204,7 +204,7 @@
                 </div>
               </template>
             </b-table-column>
-            <h3 class="empty" v-if="requests1.length == 0">No request Pending</h3>
+            <h3 class="empty" v-if="requests1.length == 0">Không có cuộc hẹn nào đang chờ duyệt</h3>
           </b-table>
         </b-tab-item>
       </b-tabs>

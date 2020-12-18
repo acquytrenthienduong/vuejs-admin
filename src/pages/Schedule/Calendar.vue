@@ -312,18 +312,31 @@ export default {
       nativeEvent.stopPropagation();
     },
     Remove() {
-      axios
-        .delete(this.host + "/deleteReservation/" + this.selectedEvent.reservation_id)
-        .then((response) => {
-          window.location.reload();
-        })
-        .catch((e) => {
-          Swal.fire({
-            icon: "warning",
-            title: "Oops...",
-            text: "Không xóa được cuộc hẹn này vì đã thanh toán rồi!",
-          });
-        });
+      Swal.fire({
+        title: "Xóa cuộc hẹn?",
+        text: "Chắc chắn muốn xóa!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Không",
+        confirmButtonText: "Đúng vậy!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(this.host + "/deleteReservation/" + this.selectedEvent.reservation_id)
+            .then((response) => {
+              window.location.reload();
+            })
+            .catch((e) => {
+              Swal.fire({
+                icon: "warning",
+                title: "Oops...",
+                text: "Không xóa được cuộc hẹn này vì đã thanh toán rồi!",
+              });
+            });
+        }
+      });
     },
 
     updateReservation() {

@@ -3,7 +3,7 @@
     <div id="app">
       <v-app>
         <div class="titleText">
-          <h2>Welcome To Navatan Portal</h2>
+          <h2>Chào mừng đến với trang quản lí của NAVATAN</h2>
         </div>
         <v-dialog
           v-model="dialog"
@@ -34,7 +34,7 @@
                           <v-text-field
                             v-model="username"
                             :rules="[rules.required, rules.min]"
-                            label="Username"
+                            label="Tài khoản"
                             required
                           ></v-text-field>
                         </v-col>
@@ -45,8 +45,7 @@
                             :rules="[rules.required, rules.min]"
                             :type="show1 ? 'text' : 'password'"
                             name="input-10-1"
-                            label="Password"
-                            hint="At least 8 characters"
+                            label="Mật khẩu"
                             counter
                             @click:append="show1 = !show1"
                           ></v-text-field>
@@ -58,7 +57,7 @@
                         <v-col
                           class="d-flex"
                           cols="12"
-                          sm="3"
+                          sm="4"
                           xsm="12"
                           align-end
                         >
@@ -69,7 +68,7 @@
                             color="success"
                             @click="loginForReceptionist"
                           >
-                            Login
+                            Đăng nhập
                           </v-btn>
                         </v-col>
                       </v-row>
@@ -86,7 +85,7 @@
                           <v-text-field
                             v-model="username"
                             :rules="[rules.required, rules.min]"
-                            label="Username"
+                            label="Tài khoản"
                             required
                           ></v-text-field>
                         </v-col>
@@ -97,8 +96,7 @@
                             :rules="[rules.required, rules.min]"
                             :type="show1 ? 'text' : 'password'"
                             name="input-10-1"
-                            label="Password"
-                            hint="At least 8 characters"
+                            label="Mật khẩu"
                             counter
                             @click:append="show1 = !show1"
                           ></v-text-field>
@@ -109,7 +107,7 @@
                         <v-col
                           class="d-flex"
                           cols="12"
-                          sm="3"
+                          sm="4"
                           xsm="12"
                           align-end
                         >
@@ -120,7 +118,7 @@
                             color="success"
                             @click="loginForManager"
                           >
-                            Login
+                            Đăng nhập
                           </v-btn>
                         </v-col>
                       </v-row>
@@ -137,7 +135,7 @@
                           <v-text-field
                             v-model="username"
                             :rules="[rules.required, rules.min]"
-                            label="Username"
+                            label="Tài khoản"
                             required
                           ></v-text-field>
                         </v-col>
@@ -148,8 +146,7 @@
                             :rules="[rules.required, rules.min]"
                             :type="show1 ? 'text' : 'password'"
                             name="input-10-1"
-                            label="Password"
-                            hint="At least 8 characters"
+                            label="Mật khẩu"
                             counter
                             @click:append="show1 = !show1"
                           ></v-text-field>
@@ -160,7 +157,7 @@
                         <v-col
                           class="d-flex"
                           cols="12"
-                          sm="3"
+                          sm="4"
                           xsm="12"
                           align-end
                         >
@@ -171,7 +168,7 @@
                             color="success"
                             @click="loginForAdmin"
                           >
-                            Login
+                            Đăng nhập
                           </v-btn>
                         </v-col>
                       </v-row>
@@ -211,8 +208,8 @@ export default {
       dialog: true,
       tab: 0,
       tabs: [
-        { name: "Receptionist", icon: "mdi-account", key: 1 },
-        { name: "Manager", icon: "mdi-account-tie", key: 2 },
+        { name: "Lễ tân", icon: "mdi-account", key: 1 },
+        { name: "Quản lí", icon: "mdi-account-tie", key: 2 },
         { name: "Administrator", icon: "mdi-shield-account", key: 3 },
       ],
       valid: true,

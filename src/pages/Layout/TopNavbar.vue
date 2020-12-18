@@ -154,6 +154,7 @@ export default {
           noti,
         })
         .then((response) => {
+          this.loadNotification();
           if (this.$route.name != "PendingRequest") {
             this.$router.push("/pendingRequest");
           }

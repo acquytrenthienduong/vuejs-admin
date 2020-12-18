@@ -179,15 +179,15 @@
                               <b-input v-model="time" type="time" required> </b-input>
                             </b-field>
                           </div>
+                          <button class="button is-primary" @click="OK(props.row)">
+                            Thay đổi
+                          </button>
                           <button
                             class="button"
                             type="button"
                             @click="isCardModalActive = false"
                           >
                             Không thay đổi
-                          </button>
-                          <button class="button is-primary" @click="OK(props.row)">
-                            Thay đổi
                           </button>
                         </div>
                       </div>

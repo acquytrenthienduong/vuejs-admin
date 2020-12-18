@@ -183,5 +183,6 @@ export default {
 .center {
   display: flex !important;
   justify-content: center !important;
+  padding-right: 20px !important;
 }
 </style>

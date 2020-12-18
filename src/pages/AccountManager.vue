@@ -1,9 +1,7 @@
 <template>
   <div class="content">
     <div class="md-layout">
-      <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
-      >
+      <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
         <md-card class="md-card-plain">
           <md-card-header data-background-color="dark">
             <h4 class="title">Account List</h4>
@@ -14,10 +12,6 @@
               <b-tabs>
                 <b-tab-item icon="google-photos" label="Manager">
                   <ManagerTable />
-                </b-tab-item>
-
-                <b-tab-item icon="google-drive" label="Staff">
-                  <StaffTable />
                 </b-tab-item>
 
                 <b-tab-item icon="video" label="Receptionist">
@@ -34,13 +28,11 @@
 
 <script>
 import { ManagerTable } from "@/components";
-import StaffTable from "../components/Tables/StaffTable";
 import ReceptionistTable from "../components/Tables/ReceptionistTable";
 
 export default {
   components: {
     ManagerTable,
-    StaffTable,
     ReceptionistTable,
   },
 };

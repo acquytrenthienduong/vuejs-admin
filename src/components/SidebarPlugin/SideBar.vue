@@ -12,11 +12,7 @@
         </div>
       </a>
 
-      <a
-        href="https://www.creative-tim.com/product/vue-material-dashboard"
-        target="_blank"
-        class="simple-text logo-normal"
-      >
+      <a class="simple-text logo-normal">
         {{ title }}
       </a>
     </div>
@@ -42,50 +38,50 @@ import SidebarLink from "./SidebarLink.vue";
 
 export default {
   components: {
-    SidebarLink
+    SidebarLink,
   },
   props: {
     title: {
       type: String,
-      default: "Navatan"
+      default: "Navatan",
     },
     sidebarBackgroundImage: {
       type: String,
-      default: require("@/assets/img/sidebar-2.jpg")
+      default: require("@/assets/img/sidebar-2.jpg"),
     },
     imgLogo: {
       type: String,
-      default: require("@/assets/img/navatan_logo.png")
+      default: require("@/assets/img/navatan_logo.png"),
     },
     sidebarItemColor: {
       type: String,
       default: "green",
-      validator: value => {
+      validator: (value) => {
         let acceptedValues = ["", "purple", "blue", "green", "orange", "red"];
         return acceptedValues.indexOf(value) !== -1;
-      }
+      },
     },
     sidebarLinks: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     autoClose: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   provide() {
     return {
-      autoClose: this.autoClose
+      autoClose: this.autoClose,
     };
   },
   computed: {
     sidebarStyle() {
       return {
-        backgroundImage: `url(${this.sidebarBackgroundImage})`
+        backgroundImage: `url(${this.sidebarBackgroundImage})`,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

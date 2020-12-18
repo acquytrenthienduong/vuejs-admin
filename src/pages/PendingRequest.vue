@@ -2,8 +2,7 @@
   <div>
     <section>
       <b-tabs>
-        <b-tab-item icon="google-photos" label="New Request">
-          <h3>New Request</h3>
+        <b-tab-item icon="google-photos" label="Tạo mới">
           <b-table
             :data="requests"
             ref="table"
@@ -14,43 +13,43 @@
             aria-page-label="Page"
             aria-current-label="Current page"
           >
-            <b-table-column label="Stt" width="40" numeric>
+            <b-table-column label="STT" width="40" numeric>
               <template v-slot="props">
                 {{ props.row.stt }}
               </template>
             </b-table-column>
 
-            <b-table-column label="Customer">
+            <b-table-column label="SĐT">
               <template v-slot="props">
                 {{ props.row.customer.account }}
               </template>
             </b-table-column>
 
-            <b-table-column label="Name">
+            <b-table-column label="Tên">
               <template v-slot="props">
                 {{ props.row.customer.name }}
               </template>
             </b-table-column>
 
-            <b-table-column label="Time">
+            <b-table-column label="Thời gian">
               <template v-slot="props">
                 {{ props.row.checkin_time }}
               </template>
             </b-table-column>
 
-            <b-table-column label="Date">
+            <b-table-column label="Ngày">
               <template v-slot="props">
                 {{ props.row.reservation_date }}
               </template>
             </b-table-column>
 
-            <b-table-column label="Service">
+            <b-table-column label="Dịch vụ">
               <template v-slot="props">
                 {{ props.row.sub_service.name }}
               </template>
             </b-table-column>
 
-            <b-table-column label="Action">
+            <b-table-column label="Hành động">
               <template class="displayflex" v-slot="props">
                 <md-button
                   class="md-just-icon md-simple md-primary"
@@ -63,23 +62,25 @@
                   "
                 >
                   <md-icon>done</md-icon>
-                  <md-tooltip md-direction="top">Accept</md-tooltip>
+                  <md-tooltip md-direction="top">Chấp nhận</md-tooltip>
                 </md-button>
                 <md-button
                   @click="deleteManager(props.row.manager_id)"
                   class="md-just-icon md-simple md-danger"
                 >
                   <md-icon>delete</md-icon>
-                  <md-tooltip md-direction="top">Reject</md-tooltip>
+                  <md-tooltip md-direction="top">Không chấp nhận</md-tooltip>
                 </md-button>
               </template>
             </b-table-column>
-            <h3 class="empty" v-if="requests.length == 0">No request Pending</h3>
+            <h3 class="empty" v-if="requests.length == 0">
+              Không có cuộc hẹn nào đang chờ được duyệt
+            </h3>
           </b-table>
         </b-tab-item>
 
-        <b-tab-item icon="google-drive" label="Change Request">
-          <h3>Change Request</h3>
+        <b-tab-item icon="google-drive" label="Thay đổi">
+          <h3>Thay đổi ngày</h3>
           <b-table
             :data="requests1"
             ref="table"
@@ -90,43 +91,43 @@
             aria-page-label="Page"
             aria-current-label="Current page"
           >
-            <b-table-column label="Stt" width="40" numeric>
+            <b-table-column label="STT" width="40" numeric>
               <template v-slot="props">
                 {{ props.row.stt }}
               </template>
             </b-table-column>
 
-            <b-table-column label="Customer">
+            <b-table-column label="SĐT">
               <template v-slot="props">
                 {{ props.row.customer.account }}
               </template>
             </b-table-column>
 
-            <b-table-column label="Name">
+            <b-table-column label="Tên">
               <template v-slot="props">
                 {{ props.row.customer.name }}
               </template>
             </b-table-column>
 
-            <b-table-column label="Time">
+            <b-table-column label="Thời gian">
               <template v-slot="props">
                 {{ props.row.checkin_time }}
               </template>
             </b-table-column>
 
-            <b-table-column label="Date">
+            <b-table-column label="Ngày">
               <template v-slot="props">
                 {{ props.row.reservation_date }}
               </template>
             </b-table-column>
 
-            <b-table-column label="Service">
+            <b-table-column label="Dịch vụ">
               <template v-slot="props">
                 {{ props.row.sub_service.name }}
               </template>
             </b-table-column>
 
-            <b-table-column label="Action">
+            <b-table-column label="Hành động">
               <template v-slot="props">
                 <div class="displayflex">
                   <section>

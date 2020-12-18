@@ -4,21 +4,21 @@
       <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33">
         <newchart-card :chartOptions="chartOptions">
           <template slot="content">
-            <h4>Total: {{ totalInWeek }}</h4>
+            <h4>Tổng số: {{ totalInWeek }}</h4>
           </template>
         </newchart-card>
       </div>
       <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33">
         <newchart-card :chartOptions="chartOptions1">
           <template slot="content">
-            <h4>Total: {{ totalInYear }}</h4>
+            <h4>Tổng số: {{ totalInYear }}</h4>
           </template>
         </newchart-card>
       </div>
       <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33">
         <newchart-card :chartOptions="chartOptions2">
           <template slot="content">
-            <h4>Total: {{ totalRegister }}</h4>
+            <h4>Tổng số: {{ totalRegister }}</h4>
           </template>
         </newchart-card>
       </div>
@@ -29,7 +29,7 @@
           </template>
 
           <template slot="content">
-            <h2 class="category">Total Money</h2>
+            <h2 class="category">Tất cả</h2>
             <h3 class="title">{{ totalMoney | priceVndFormat }}</h3>
           </template>
         </stats-card>
@@ -41,7 +41,7 @@
           </template>
 
           <template slot="content">
-            <h2 class="category">This Month</h2>
+            <h2 class="category">Trong tháng</h2>
 
             <h3 class="title">{{ moneyMonth | priceVndFormat }}</h3>
           </template>
@@ -54,7 +54,7 @@
           </template>
 
           <template slot="content">
-            <h2 class="category">This Week</h2>
+            <h2 class="category">Trong tuần</h2>
             <h3 v-if="moneyInWeek > 0" class="title">
               {{ moneyInWeek | priceVndFormat }}
             </h3>
@@ -69,7 +69,7 @@
           </template>
 
           <template slot="content">
-            <h2 class="category">Today</h2>
+            <h2 class="category">Hôm nay</h2>
             <h3 v-if="moneyToday > 0" class="title">
               {{ moneyToday | priceVndFormat }}
             </h3>
@@ -99,7 +99,7 @@ export default {
           height: 200,
         },
         title: {
-          text: "Reservation in this week",
+          text: "Lượt đặt trong tuần",
         },
         //colors: ['#ffffff'],
         series: [
@@ -109,7 +109,7 @@ export default {
           },
         ],
         xAxis: {
-          categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          categories: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
         },
         yAxis: {
           title: {
@@ -130,7 +130,7 @@ export default {
           height: 200,
         },
         title: {
-          text: "Reservation in this year",
+          text: "Lượt đặt cả năm",
         },
         //colors: ['#ffffff'],
         series: [
@@ -141,18 +141,18 @@ export default {
         ],
         xAxis: {
           categories: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
+            "T1",
+            "T2",
+            "T3",
+            "T4",
+            "T5",
+            "T6",
+            "T7",
+            "T8",
+            "T9",
+            "T10",
+            "T11",
+            "T12",
           ],
         },
         yAxis: {
@@ -174,7 +174,7 @@ export default {
           height: 200,
         },
         title: {
-          text: "Register in week",
+          text: "Lượt tạo tài khoản mới trong tuần",
         },
         //colors: ['#ffffff'],
         series: [
@@ -184,7 +184,7 @@ export default {
           },
         ],
         xAxis: {
-          categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          categories: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
         },
         yAxis: {
           title: {

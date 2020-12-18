@@ -2,13 +2,13 @@
   <div>
     <v-row class="searchCustomer">
       <v-col cols="12" sm="3">
-        <h4>Enter Phone Number:</h4>
+        <h4>Nhập số điện thoại của KH:</h4>
       </v-col>
       <v-col cols="12" sm="9">
         <multiselect
           v-model="customer"
           id="ajax"
-          placeholder="Type to search"
+          placeholder="Nhập số điện thoại KH"
           open-direction="bottom"
           :options="customers"
           :multiple="false"
@@ -35,15 +35,13 @@
           <v-card v-if="customer != null" class="pa-2" outlined tile>
             <v-container>
               <v-card-text>
-                <v-card-title>
-                  Data Services
-                </v-card-title>
+                <v-card-title> Thông tin dịch vụ </v-card-title>
 
                 <div>
                   <p>
-                    Total Visit: <span>{{ reservations.length }}</span>
+                    Số lần đặt: <span>{{ reservations.length }}</span>
                   </p>
-                  <p>Total Money: {{ totalMoney | priceVndFormat }}</p>
+                  <p>Tổng số tiền thu được: {{ totalMoney | priceVndFormat }}</p>
                   <p>Favourite Service:</p>
                 </div>
               </v-card-text>
@@ -51,9 +49,7 @@
             <hr />
             <v-container>
               <v-card-text>
-                <v-card-title>
-                  Lastest Visit
-                </v-card-title>
+                <v-card-title> Lịch sử đặt chỗ </v-card-title>
                 <v-data-table
                   :headers="headers"
                   :items="reservations"
@@ -68,16 +64,14 @@
           <v-card v-if="customer != null" class="pa-2" outlined tile>
             <v-container>
               <v-card-text>
-                <v-card-title>
-                  Profile
-                </v-card-title>
+                <v-card-title> Thông tin cá nhân </v-card-title>
 
                 <div class="text--primary">
                   <p>
-                    Name: <span>{{ customer.name }}</span>
+                    Tên: <span>{{ customer.name }}</span>
                   </p>
                   <p>
-                    Account: <span>{{ customer.account }}</span>
+                    SĐT: <span>{{ customer.account }}</span>
                   </p>
                   <p>
                     Email: <span>{{ customer.email }}</span>
@@ -112,14 +106,14 @@ export default {
     reservations: [],
     headers: [
       {
-        text: "Date",
+        text: "Ngày",
         align: "start",
         // sortable: false,
         value: "reservation_date",
       },
-      { text: "Service", value: "sub_service.name" },
-      { text: "Time", value: "sub_service.time" },
-      { text: "Bill", value: "bills[0].total_money" },
+      { text: "Dịch vụ", value: "sub_service.name" },
+      { text: "Thời gian", value: "sub_service.time" },
+      { text: "Hóa đơn", value: "bills[0].total_money" },
     ],
   }),
   methods: {
@@ -139,7 +133,7 @@ export default {
   },
 
   watch: {
-    customer: function(val) {
+    customer: function (val) {
       let array = ["Stand up", "Lay Down", "Spray"];
       if (val != null) {
         console.log(val);

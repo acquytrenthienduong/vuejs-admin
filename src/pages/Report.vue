@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-card-text>
-      <v-card-title> Lastest Visit </v-card-title>
       <v-data-table
         :headers="headers"
         :items="data"
@@ -36,7 +35,7 @@
           name="report.xls"
         >
           <!-- Download Excel (you can customize this with html code!) -->
-          <v-btn color="grey darken-2" dark> Download Excel </v-btn>
+          <v-btn color="grey darken-2" dark> Tải về </v-btn>
         </download-excel>
       </v-col>
     </v-row>
@@ -79,18 +78,21 @@ export default {
       ],
       headers: [
         {
-          text: "Name",
+          text: "Tên KH",
           align: "start",
-          // sortable: false,
           value: "reservation.customer.name",
         },
         {
-          text: "Time",
+          text: "SĐT",
+          value: "reservation.customer.account",
+        },
+        {
+          text: "Thời gian",
           value: "reservation.sub_service.time",
         },
-        { text: "Service", value: "reservation.sub_service.name" },
-        { text: "Date", value: "date" },
-        { text: "Money", value: "reservation.sub_service.money" },
+        { text: "Dịch vụ", value: "reservation.sub_service.name" },
+        { text: "Ngày", value: "date" },
+        { text: "Số tiền", value: "reservation.sub_service.money" },
       ],
       data: [],
     };

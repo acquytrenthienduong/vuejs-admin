@@ -11,12 +11,12 @@
 
       <sidebar-link to="/schedule">
         <md-icon>schedule</md-icon>
-        <p>Schedule</p>
+        <p>Lịch hẹn</p>
       </sidebar-link>
 
       <sidebar-link to="/pendingRequest">
         <md-icon>pending</md-icon>
-        <p>Pending Request</p>
+        <p>Đang chờ duyệt</p>
         <p v-if="numberOfPending != 0 || numberOfChange != 0" class="count-noti">
           {{ numberOfPending + numberOfChange }}
         </p>
@@ -24,7 +24,7 @@
 
       <sidebar-link to="/customerDetails">
         <md-icon>search</md-icon>
-        <p>Search customer</p>
+        <p>Kiểm tra thông tin KH</p>
       </sidebar-link>
     </side-bar>
 
@@ -37,7 +37,7 @@
 
       <sidebar-link to="/account">
         <md-icon>account_circle</md-icon>
-        <p>Account</p>
+        <p>Tài Khoản</p>
       </sidebar-link>
     </side-bar>
 
@@ -54,11 +54,11 @@
 
       <sidebar-link to="/schedule">
         <md-icon>schedule</md-icon>
-        <p>Schedule</p>
+        <p>Lịch hẹn</p>
       </sidebar-link>
       <sidebar-link to="/pendingRequest">
         <md-icon>pending</md-icon>
-        <p>Pending Request</p>
+        <p>Đang chờ duyệt</p>
 
         <p v-if="numberOfPending != 0 || numberOfChange != 0" class="count-noti">
           {{ numberOfPending + numberOfChange }}
@@ -66,15 +66,15 @@
       </sidebar-link>
       <sidebar-link to="/report">
         <md-icon>get_app</md-icon>
-        <p>Report</p>
+        <p>Thống kê</p>
       </sidebar-link>
       <sidebar-link to="/customerDetails">
         <md-icon>search</md-icon>
-        <p>Search customer</p>
+        <p>Kiểm tra thông tin KH</p>
       </sidebar-link>
       <sidebar-link to="/activity">
         <md-icon>history</md-icon>
-        <p>Activity</p>
+        <p>Lịch sử hoạt động</p>
       </sidebar-link>
 
       <sidebar-link to="/services">

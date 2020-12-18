@@ -6,7 +6,7 @@
           <v-sheet height="64" class="display-flex">
             <v-toolbar flat>
               <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
-                Today
+                Hôm Nay
               </v-btn>
               <AddNewReservationDialog :reload="loadData"></AddNewReservationDialog>
               <v-btn fab text small color="grey darken-2" @click="prev">

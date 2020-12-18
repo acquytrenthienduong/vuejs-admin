@@ -86,7 +86,15 @@ export default {
       let hour = dateRaw.getHours();
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
-      if (this.account != "" && this.name != "" && this.email != "") {
+      if (
+        this.phone != "" &&
+        this.phone.length <= 12 &&
+        this.phone.length >= 10 &&
+        this.phone.startsWith("+84") &&
+        this.name != "" &&
+        this.email != "" &&
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.email)
+      ) {
         axios.get(this.host + "/findOne/" + this.phone).then((response) => {
           if (response.status === 201) {
             axios
@@ -117,7 +125,11 @@ export default {
           }
         });
       } else {
-        Swal.fire("Oops ...!", "Hãy điền hết các trường bắt buộc", "warning");
+        Swal.fire(
+          "Oops ...!",
+          "Hãy điền hết các trường bắt buộc, sđt việt nam, email hợp lệ",
+          "warning"
+        );
       }
     },
 

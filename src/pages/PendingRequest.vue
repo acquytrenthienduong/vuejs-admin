@@ -374,38 +374,42 @@ export default {
 
     OK(row) {
       console.log(row);
-      axios
-        .post(this.host + "/updateReservation/" + row.reservation_id, {
-          is_access: 1,
-          reservation_date: this.date,
-          checkin_time: this.time,
-          sub_service_sub_service_id: this.selectSubService,
-        })
-        .then(() => {
-          Swal.fire("Thành công!", "Update lịch thành công.", "success");
-          axios
-            .post(this.host + "/createNotification/" + row.customer.customer_id, {
-              content:
-                "Lịch của bạn đã đổi sang ngày " + this.date + " vào lúc " + this.time,
-            })
-            .then((response) => {
-              console.log(response);
-              axios
-                .post(this.host + "/createActivity", {
-                  content:
-                    this.role +
-                    " đã tạo thay đổi lịch cho khách hàng " +
-                    row.customer.name +
-                    " sang ngày " +
-                    this.date +
-                    " vào lúc " +
-                    this.time,
-                })
-                .then(() => {});
-            });
-          this.isCardModalActive = false;
-          this.loadAllPendingChange();
-        });
+      if (this.compareDate(this.date)) {
+        axios
+          .post(this.host + "/updateReservation/" + row.reservation_id, {
+            is_access: 1,
+            reservation_date: this.date,
+            checkin_time: this.time,
+            sub_service_sub_service_id: this.selectSubService,
+          })
+          .then(() => {
+            Swal.fire("Thành công!", "Update lịch thành công.", "success");
+            axios
+              .post(this.host + "/createNotification/" + row.customer.customer_id, {
+                content:
+                  "Lịch của bạn đã đổi sang ngày " + this.date + " vào lúc " + this.time,
+              })
+              .then((response) => {
+                console.log(response);
+                axios
+                  .post(this.host + "/createActivity", {
+                    content:
+                      this.role +
+                      " đã tạo thay đổi lịch cho khách hàng " +
+                      row.customer.name +
+                      " sang ngày " +
+                      this.date +
+                      " vào lúc " +
+                      this.time,
+                  })
+                  .then(() => {});
+              });
+            this.isCardModalActive = false;
+            this.loadAllPendingChange();
+          });
+      } else {
+        Swal.fire("Không thành công!", "Hãy chọn 1 ngày trong tương lai.", "warning");
+      }
     },
 
     loadSubService(type) {
@@ -421,16 +425,33 @@ export default {
                 "$1h $2m"
               );
               selectItem.value = element.sub_service_id;
+            } else if (element.type === 2) {
+              selectItem.name = element.time.replace(
+                /(?:0)?(\d+):(?:0)?(\d+).*/,
+                "$1h $2m"
+              );
+              selectItem.value = element.sub_service_id;
             } else {
               selectItem.name = element.session;
               selectItem.value = element.sub_service_id;
             }
+            console.log("selected item");
             this.items.push(selectItem);
           });
         })
         .catch((e) => {
           this.errors.push(e);
         });
+    },
+
+    compareDate(date) {
+      let today = new Date();
+      let dateRaw = new Date(date);
+      if (today > dateRaw) {
+        return false;
+      } else {
+        return true;
+      }
     },
   },
   mounted() {

@@ -49,7 +49,7 @@
                       <li
                         class="notification-item"
                         v-for="noti in notifications"
-                        :key="noti.content"
+                        :key="noti.notification_id"
                       >
                         <a @click="seenNoti(noti)">{{ noti.content }}</a>
                       </li>

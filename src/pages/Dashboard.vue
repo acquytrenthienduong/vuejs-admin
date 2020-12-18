@@ -1,36 +1,28 @@
 <template>
   <div class="content">
     <div class="md-layout">
-      <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
-      >
+      <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33">
         <newchart-card :chartOptions="chartOptions">
           <template slot="content">
             <h4>Total: {{ totalInWeek }}</h4>
           </template>
         </newchart-card>
       </div>
-      <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
-      >
+      <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33">
         <newchart-card :chartOptions="chartOptions1">
           <template slot="content">
             <h4>Total: {{ totalInYear }}</h4>
           </template>
         </newchart-card>
       </div>
-      <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
-      >
+      <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33">
         <newchart-card :chartOptions="chartOptions2">
           <template slot="content">
             <h4>Total: {{ totalRegister }}</h4>
           </template>
         </newchart-card>
       </div>
-      <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
-      >
+      <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
         <stats-card data-background-color="green">
           <template slot="header">
             <md-icon>attach_money</md-icon>
@@ -42,9 +34,7 @@
           </template>
         </stats-card>
       </div>
-      <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
-      >
+      <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
         <stats-card data-background-color="orange">
           <template slot="header">
             <md-icon>attach_money</md-icon>
@@ -57,9 +47,7 @@
           </template>
         </stats-card>
       </div>
-      <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
-      >
+      <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
         <stats-card data-background-color="red">
           <template slot="header">
             <md-icon>attach_money</md-icon>
@@ -74,9 +62,7 @@
           </template>
         </stats-card>
       </div>
-      <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
-      >
+      <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
         <stats-card data-background-color="blue">
           <template slot="header">
             <md-icon>attach_money</md-icon>
@@ -235,18 +221,12 @@ export default {
 
       let from = "";
       let to = "";
-      from =
-        firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
+      from = firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
       to = lastday.getFullYear() + "-" + monthTo + "-" + lastday.getDate();
-      // console.log("from ", from);
-      // console.log("to ", to);
-      axios
-        .get(this.host + "/findReservation/" + from + "/" + to)
-        .then((response) => {
-          // console.log(response);
-          this.totalInWeek = response.data.length;
-          this.convertToChartData(response.data);
-        });
+      axios.get(this.host + "/findReservation/" + from + "/" + to).then((response) => {
+        this.totalInWeek = response.data.length;
+        this.convertToChartData(response.data);
+      });
     },
     loadRegisterInWeek() {
       let dateRaw = new Date();
@@ -261,31 +241,22 @@ export default {
 
       let from = "";
       let to = "";
-      from =
-        firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
+      from = firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
       to = lastday.getFullYear() + "-" + monthTo + "-" + lastday.getDate();
-      // console.log("from ", from);
-      // console.log("to ", to);
-      axios
-        .get(this.host + "/findRegister/" + from + "/" + to)
-        .then((response) => {
-          // console.log("register", response);
-          this.totalRegister = response.data.length;
-          this.convertToChartData2(response.data);
-        });
+      axios.get(this.host + "/findRegister/" + from + "/" + to).then((response) => {
+        this.totalRegister = response.data.length;
+        this.convertToChartData2(response.data);
+      });
     },
 
     loadReservationInYear() {
       axios.get(this.host + "/getAllReservationAccess").then((response) => {
-        console.log("response", response);
         this.totalInYear = response.data.length;
         this.convertToChartData1(response.data);
       });
     },
 
     convertToChartData(array) {
-      // console.log("array", array);
-
       let week = [];
       var now = new Date();
       var current_day = now.getDay();
@@ -343,10 +314,7 @@ export default {
         }
       });
       // this.dailySalesChart.data.series = x;
-      // console.log("x", x);
-      // console.log("chartOptions", x);
       this.chartOptions.series = x;
-      // console.log(this.dailySalesChart.data.series);
     },
 
     convertToChartData1(array) {
@@ -360,9 +328,7 @@ export default {
 
       array.forEach((element) => {
         let month = new Date(element.reservation_date);
-        // console.log(month.getMonth());
         let thutrongtuan = months[month.getMonth()];
-        console.log("thutrongtuan", thutrongtuan);
         switch (thutrongtuan) {
           case 1:
             x[0].data[0]++;
@@ -395,11 +361,9 @@ export default {
             x[0].data[9]++;
             break;
           case 11:
-            // console.log("thang 11");
             x[0].data[10]++;
             break;
           case 12:
-            // console.log("thang 12");
             x[0].data[11]++;
             break;
         }
@@ -409,8 +373,6 @@ export default {
     },
 
     convertToChartData2(array) {
-      // console.log("array", array);
-
       let week = [];
       var now = new Date();
       var current_day = now.getDay();
@@ -467,16 +429,11 @@ export default {
             break;
         }
       });
-      // this.dailySalesChart.data.series = x;
-      // console.log("x", x);
-      // console.log("chartOptions", x);
       this.chartOptions2.series = x;
-      // console.log(this.dailySalesChart.data.series);
     },
 
     loadTotalBill() {
       axios.get(this.host + "/findAllBill").then((response) => {
-        // console.log("getlogin ", response);
         response.data.forEach((data) => {
           this.totalMoney += data.total_money;
         });
@@ -493,11 +450,8 @@ export default {
       let monthTo = lastday.getMonth() + 1;
       let from = "";
       let to = "";
-      from =
-        firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
+      from = firstday.getFullYear() + "-" + monthFrom + "-" + firstday.getDate();
       to = lastday.getFullYear() + "-" + monthTo + "-" + lastday.getDate();
-      // console.log("from ", from);
-      // console.log("to ", to);
       axios.get(this.host + "/findBill/" + from + "/" + to).then((response) => {
         response.data.forEach((data) => {
           this.moneyInWeek += data.total_money;

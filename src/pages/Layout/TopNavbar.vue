@@ -70,7 +70,7 @@
                   <p class="hidden-lg hidden-md">Profile</p>
                 </md-button>
                 <ul class="dropdown-menu dropdown-menu-right center">
-                  <md-button @click="logout"> Logout</md-button>
+                  <md-button @click="logout"> Đăng xuất</md-button>
                 </ul>
               </drop-down>
             </div>

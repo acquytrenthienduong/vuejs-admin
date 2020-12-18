@@ -79,7 +79,7 @@
 
       <sidebar-link to="/services">
         <md-icon>settings</md-icon>
-        <p>Services</p>
+        <p>Dịch vụ</p>
       </sidebar-link>
     </side-bar>
 

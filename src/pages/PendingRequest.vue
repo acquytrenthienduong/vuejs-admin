@@ -259,12 +259,6 @@ export default {
     };
   },
   methods: {
-    confirm(id, customer_id, customer) {
-      this.$buefy.dialog.confirm({
-        message: "Do you want to accept the request?",
-        onConfirm: () => this.acceptRequest(id, customer_id, customer),
-      });
-    },
     success() {
       this.$buefy.toast.open({
         message: "Request Accepted!",
@@ -336,24 +330,20 @@ export default {
                 .post(this.host + "/createNotification/" + customer_id, {
                   content: "Lịch của bạn đã được đặt thành công!",
                 })
-                .then((response) => {
-                  console.log(response);
+                .then(() => {
+                  axios.post(this.host + "/createActivity", {
+                    content:
+                      logTime +
+                      " " +
+                      this.role +
+                      " chấp nhận lịch hẹn của khách hàng " +
+                      customer.customer.name +
+                      " lúc " +
+                      customer.reservation_date +
+                      " " +
+                      customer.checkin_time,
+                  });
                 });
-
-              axios
-                .post(this.host + "/createActivity", {
-                  content:
-                    logTime +
-                    " " +
-                    this.role +
-                    " chấp nhận lịch hẹn của khách hàng " +
-                    customer.customer.name +
-                    " lúc " +
-                    customer.reservation_date +
-                    " " +
-                    customer.checkin_time,
-                })
-                .then(() => {});
             });
         }
       });
@@ -392,16 +382,16 @@ export default {
                   content: "Lịch của bạn vẫn giữ nguyên như cũ",
                 })
                 .then((response) => {
-                  console.log(response);
+                  axios.post(this.host + "/createActivity", {
+                    content:
+                      logTime +
+                      " " +
+                      this.role +
+                      " đã từ chối thay đổi cuộc hẹn của khách hàng " +
+                      name,
+                  });
                 });
-              axios.post(this.host + "/createActivity", {
-                content:
-                  logTime +
-                  " " +
-                  this.role +
-                  " đã từ chối thay đổi cuộc hẹn của khách hàng " +
-                  name,
-              });
+
               this.loadAllPendingChange();
             });
         }
@@ -436,12 +426,17 @@ export default {
               .post(this.host + "/createNotification/" + customer_id, {
                 content: "Chúng tôi rất tiếc khi không nhận được cuộc hẹn của bạn",
               })
-              .then((response) => {});
+              .then((response) => {
+                axios.post(this.host + "/createActivity", {
+                  content:
+                    logTime +
+                    " " +
+                    this.role +
+                    " đã từ chối cuộc hẹn của khách hàng " +
+                    name,
+                });
+              });
 
-            axios.post(this.host + "/createActivity", {
-              content:
-                logTime + " " + this.role + " đã từ chối cuộc hẹn của khách hàng " + name,
-            });
             this.loadAllPendingRequests();
           });
         }
@@ -498,7 +493,6 @@ export default {
                   "Lịch của bạn đã đổi sang ngày " + this.date + " vào lúc " + this.time,
               })
               .then((response) => {
-                console.log(response);
                 axios
                   .post(this.host + "/createActivity", {
                     content:

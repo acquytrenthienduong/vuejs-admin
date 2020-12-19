@@ -45,7 +45,7 @@
                       <p class="hidden-lg hidden-md">Notifications</p>
                     </md-button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                      <li v-if="notifications.length == 0"><a>Nothing</a></li>
+                      <li v-if="notifications.length == 0"><a>Không có gì mới cả</a></li>
                       <li
                         class="notification-item"
                         v-for="noti in notifications"

@@ -411,7 +411,7 @@ export default {
               logTime +
               " " +
               this.role +
-              " đã tạo checkin cho khách hàng " +
+              " đã checkin cho khách hàng " +
               this.selectedEvent.name +
               " cuộc hẹn vào lúc " +
               hour +

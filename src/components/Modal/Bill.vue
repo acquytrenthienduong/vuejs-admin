@@ -168,9 +168,9 @@ export default {
               .post(this.host + "/createActivity", {
                 content:
                   logTime +
-                  "" +
+                  " " +
                   this.role +
-                  " đã tạo bill cho khách hàng " +
+                  " đã tạo hóa đơn cho khách hàng " +
                   this.event.name +
                   " cuộc hẹn vào lúc " +
                   this.event.start,

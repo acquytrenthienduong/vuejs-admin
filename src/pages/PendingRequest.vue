@@ -348,7 +348,7 @@ export default {
                     this.role +
                     " chấp nhận lịch hẹn của khách hàng " +
                     customer.customer.name +
-                    "lúc " +
+                    " lúc " +
                     customer.reservation_date +
                     " " +
                     customer.checkin_time,

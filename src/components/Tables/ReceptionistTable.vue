@@ -140,7 +140,7 @@ export default {
     deleteReceptionist(id) {
       Swal.fire({
         title: "Xóa?",
-        text: "Chắc chắn muốn xóa!",
+        text: "Chắc chắn muốn xóa tài khoản này!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

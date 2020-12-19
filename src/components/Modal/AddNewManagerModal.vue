@@ -48,12 +48,8 @@
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$emit('close')">
-            Close
-          </button>
-          <button @click="addNewManager" class="button is-primary">
-            Submit
-          </button>
+          <button class="button" type="button" @click="$emit('close')">Đóng</button>
+          <button @click="addNewManager" class="button is-primary">Xác nhận</button>
         </footer>
       </div>
     </form>
@@ -62,7 +58,7 @@
 
 <script>
 import axios from "axios";
-import config from "../../config/config.js"
+import config from "../../config/config.js";
 export default {
   props: {
     reload: {
@@ -76,7 +72,7 @@ export default {
       password: "",
       gender: "",
       errors: null,
-      host: config.config.host
+      host: config.config.host,
     };
   },
   methods: {
@@ -97,7 +93,7 @@ export default {
           this.reload();
         })
         .catch((e) => {
-          this.errors.push(e); // co loi o day chua fix duoc 
+          this.errors.push(e); // co loi o day chua fix duoc
         });
     },
   },

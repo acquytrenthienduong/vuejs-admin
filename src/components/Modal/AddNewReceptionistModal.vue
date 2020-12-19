@@ -1,7 +1,7 @@
 <template>
   <div>
     <form action="">
-      <div class="modal-card" style="width: 600px;  height: 500px">
+      <div class="modal-card" style="width: 600px; height: 500px">
         <header class="modal-card-head">
           <p class="modal-card-title">Add New Receptionist</p>
           <button type="button" class="delete" @click="$emit('close')" />
@@ -47,12 +47,8 @@
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$emit('close')">
-            Close
-          </button>
-          <button @click="addNewReceptionist" class="button is-primary">
-            Submit
-          </button>
+          <button class="button" type="button" @click="$emit('close')">Đóng</button>
+          <button @click="addNewReceptionist" class="button is-primary">Xác nhận</button>
         </footer>
       </div>
     </form>
@@ -61,7 +57,7 @@
 
 <script>
 import axios from "axios";
-import config from "../../config/config.js"
+import config from "../../config/config.js";
 
 export default {
   props: {
@@ -79,22 +75,20 @@ export default {
       dob: "",
       selected_shift: "",
       errors: null,
-      host: config.config.host
+      host: config.config.host,
     };
   },
   methods: {
     addNewReceptionist() {
       axios
         .post(this.host + "/addReceptionist", {
-          account: this.account,  
+          account: this.account,
           password: this.password,
           dob: this.dob,
           shift_shift_id: this.selected_shift,
         })
         .then((response) => {
-          this.account = "",
-          this.password = "",
-          this.dob = "";
+          (this.account = ""), (this.password = ""), (this.dob = "");
           this.selected_shift = "";
           this.$emit("close");
           this.reload();

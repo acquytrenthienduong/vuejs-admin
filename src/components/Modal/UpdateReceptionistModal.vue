@@ -1,7 +1,7 @@
 <template>
   <div>
     <form action="">
-      <div class="modal-card" style="width: 600px;  height: 500px">
+      <div class="modal-card" style="width: 600px; height: 500px">
         <header class="modal-card-head">
           <p class="modal-card-title">Update Receptionist Info</p>
           <button type="button" class="delete" @click="$emit('close')" />
@@ -38,10 +38,7 @@
           </b-field>
 
           <b-field label="Shift">
-            <b-select
-              placeholder="Select a shift"
-              v-model="receptionist.shift_shift_id"
-            >
+            <b-select placeholder="Select a shift" v-model="receptionist.shift_shift_id">
               <option
                 v-for="shift in shifts"
                 :value="shift.shift_id"
@@ -53,14 +50,12 @@
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$emit('close')">
-            Close
-          </button>
+          <button class="button" type="button" @click="$emit('close')">Đóng</button>
           <button
             @click="updateReceptionistByID(receptionist.receptionist_id)"
             class="button is-primary"
           >
-            Update
+            Xác nhận
           </button>
         </footer>
       </div>
@@ -70,7 +65,7 @@
 
 <script>
 import axios from "axios";
-import config from "../../config/config.js"
+import config from "../../config/config.js";
 
 export default {
   props: {
@@ -87,8 +82,8 @@ export default {
 
   data() {
     return {
-      host: config.config.host
-    }
+      host: config.config.host,
+    };
   },
 
   methods: {

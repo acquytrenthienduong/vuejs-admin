@@ -1,7 +1,7 @@
 <template>
   <div>
     <form action="">
-      <div class="modal-card" style="width: 600px;  height: 500px">
+      <div class="modal-card" style="width: 600px; height: 500px">
         <header class="modal-card-head">
           <p class="modal-card-title">Update Manager info</p>
           <button type="button" class="delete" @click="$emit('close')" />
@@ -45,14 +45,12 @@
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$emit('close')">
-            Close
-          </button>
+          <button class="button" type="button" @click="$emit('close')">Đóng</button>
           <button
             class="button is-primary"
             @click="updateManagerByID(manager.manager_id)"
           >
-            Update
+            Cập nhật
           </button>
         </footer>
       </div>
@@ -62,7 +60,7 @@
 
 <script>
 import axios from "axios";
-import config from "../../config/config.js"
+import config from "../../config/config.js";
 
 export default {
   props: {
@@ -76,7 +74,7 @@ export default {
 
   data() {
     return {
-      host: config.config.host
+      host: config.config.host,
     };
   },
 

@@ -492,21 +492,19 @@ export default {
                 content:
                   "Lịch của bạn đã đổi sang ngày " + this.date + " vào lúc " + this.time,
               })
-              .then((response) => {
-                axios
-                  .post(this.host + "/createActivity", {
-                    content:
-                      logTime +
-                      " " +
-                      this.role +
-                      " đã tạo thay đổi lịch cho khách hàng " +
-                      row.customer.name +
-                      " sang ngày " +
-                      this.date +
-                      " vào lúc " +
-                      this.time,
-                  })
-                  .then(() => {});
+              .then(() => {
+                axios.post(this.host + "/createActivity", {
+                  content:
+                    logTime +
+                    " " +
+                    this.role +
+                    " đã tạo thay đổi lịch cho khách hàng " +
+                    row.customer.name +
+                    " sang ngày " +
+                    this.date +
+                    " vào lúc " +
+                    this.time,
+                });
               });
             this.isCardModalActive = false;
             this.loadAllPendingChange();

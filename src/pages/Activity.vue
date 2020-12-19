@@ -11,13 +11,13 @@
         aria-page-label="Page"
         aria-current-label="Current page"
       >
-        <b-table-column label="Stt" width="40" numeric>
+        <b-table-column label="STT" width="40" numeric>
           <template v-slot="props">
             {{ props.row.stt }}
           </template>
         </b-table-column>
 
-        <b-table-column label="Activity" centered>
+        <b-table-column label="Hoạt động" centered>
           <template v-slot="props">
             {{ props.row.content }}
           </template>

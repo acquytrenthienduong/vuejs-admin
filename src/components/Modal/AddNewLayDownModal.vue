@@ -25,7 +25,6 @@
               :value="money"
               placeholder="100,000"
               required
-              maxlength="8"
             >
             </b-input>
           </b-field>

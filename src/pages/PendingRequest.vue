@@ -65,11 +65,11 @@
                   <md-tooltip md-direction="top">Chấp nhận</md-tooltip>
                 </md-button>
                 <md-button
-                  @click="deleteManager(props.row.manager_id)"
+                  @click="rejectNew(props.row.reservation_id, props.row.customer_id)"
                   class="md-just-icon md-simple md-danger"
                 >
                   <md-icon>delete</md-icon>
-                  <md-tooltip md-direction="top">Không chấp nhận</md-tooltip>
+                  <md-tooltip md-direction="top">Từ chối</md-tooltip>
                 </md-button>
               </template>
             </b-table-column>
@@ -136,7 +136,7 @@
                       @click="updateInfor(props.row)"
                     >
                       <md-icon>create</md-icon>
-                      <md-tooltip md-direction="top">Accept</md-tooltip>
+                      <md-tooltip md-direction="top">Chấp nhận</md-tooltip>
                     </md-button>
                     <b-modal v-model="isCardModalActive" :width="640" scroll="keep">
                       <div class="card">
@@ -199,12 +199,14 @@
                     class="md-just-icon md-simple md-danger"
                   >
                     <md-icon>delete</md-icon>
-                    <md-tooltip md-direction="top">Reject</md-tooltip>
+                    <md-tooltip md-direction="top">Từ chối</md-tooltip>
                   </md-button>
                 </div>
               </template>
             </b-table-column>
-            <h3 class="empty" v-if="requests1.length == 0">Không có cuộc hẹn nào đang chờ duyệt</h3>
+            <h3 class="empty" v-if="requests1.length == 0">
+              Không có cuộc hẹn nào đang chờ duyệt
+            </h3>
           </b-table>
         </b-tab-item>
       </b-tabs>
@@ -346,6 +348,31 @@ export default {
                 });
               this.loadAllPendingChange();
             });
+        }
+      });
+    },
+
+    rejectNew(id, customer_id) {
+      Swal.fire({
+        title: "Từ chối?",
+        text: "Chắc chắn Không nhận cuộc hẹn này!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Không",
+        confirmButtonText: "Đúng vậy!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.delete(this.host + "/deleteReservation/" + id).then(() => {
+            Swal.fire("Thành công!", "đã xóa lịch.", "success");
+            axios
+              .post(this.host + "/createNotification/" + customer_id, {
+                content: "Chúng tôi rất tiếc khi không nhận được cuộc hẹn của bạn",
+              })
+              .then((response) => {});
+            this.loadAllPendingRequests();
+          });
         }
       });
     },

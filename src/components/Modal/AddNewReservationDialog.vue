@@ -159,6 +159,7 @@ export default {
     selectType: null,
     overlay: false,
     host: config.config.host,
+    role: localStorage.getItem("username"),
   }),
 
   mounted() {
@@ -214,6 +215,40 @@ export default {
                   this.overlay = false;
                   this.closeDialog();
                 }, 1000);
+                let dateRaw1 = new Date();
+                let year1 = dateRaw1.getFullYear();
+                let month1 = dateRaw1.getMonth() + 1;
+                let dt1 = dateRaw1.getDate();
+                let hour1 = dateRaw1.getHours();
+                let minute1 = dateRaw1.getMinutes();
+                let second1 = dateRaw1.getSeconds();
+
+                let logTime =
+                  year1 +
+                  "-" +
+                  month1 +
+                  "-" +
+                  dt1 +
+                  " " +
+                  hour1 +
+                  ":" +
+                  minute1 +
+                  ":" +
+                  second1;
+                axios
+                  .post(this.host + "/createActivity", {
+                    content:
+                      logTime +
+                      " " +
+                      this.role +
+                      " tạo lịch hẹn cho khách hàng " +
+                      this.customer.name +
+                      " lúc " +
+                      this.selectedDate +
+                      " " +
+                      this.time,
+                  })
+                  .then(() => {});
               } else {
                 Swal.fire({
                   icon: "warning",

@@ -162,7 +162,6 @@ export default {
 
     transFormData(data) {
       if (data) {
-        console.log(data);
         this.events = [];
         data.forEach((element) => {
           let event = {};
@@ -257,8 +256,6 @@ export default {
       }
 
       return false;
-      // console.log(today.getTime() === dateRaw.getTime());
-      // return today.getTime() === dateRaw.getTime();
     },
 
     transform(time) {
@@ -377,7 +374,6 @@ export default {
       let hour = dateRaw.getHours();
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
-      console.log("checkin ", hour + ":" + minute + ":" + second);
       let checkin = hour + ":" + minute + ":" + second;
 
       axios
@@ -386,7 +382,6 @@ export default {
         })
         .then((response) => {
           // this.selectedOpen = false;
-          console.log(response);
           this.loadData();
         });
     },
@@ -435,8 +430,6 @@ export default {
             reservation_time: null,
           })
           .then((response) => {
-            // this.selectedOpen = false;
-            console.log(response);
             this.loadData();
           });
       }

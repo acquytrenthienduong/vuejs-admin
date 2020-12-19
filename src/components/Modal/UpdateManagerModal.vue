@@ -7,34 +7,34 @@
           <button type="button" class="delete" @click="$emit('close')" />
         </header>
         <section class="modal-card-body">
-          <b-field label="Account">
+          <b-field label="Tài khoản">
             <b-input
               type="text"
               v-model="manager.account"
-              placeholder="Your account"
+              placeholder="Tài khoản"
               required
             >
             </b-input>
           </b-field>
 
-          <b-field label="Password">
+          <b-field label="Mật khẩu">
             <b-input
               type="password"
               v-model="manager.password"
               password-reveal
-              placeholder="Your password"
+              placeholder="Mật khẩu"
               required
             >
             </b-input>
           </b-field>
 
-          <b-field label="DoB">
+          <b-field label="Ngày sinh">
             <b-input type="date" v-model="manager.dob" required> </b-input>
           </b-field>
 
-          <b-field label="Gender">
+          <b-field label="Giới tinh">
             <b-select
-              placeholder="Gender"
+              placeholder="Giới tính"
               icon="fas fa-venus-mars"
               icon-pack="fas"
               v-model="manager.gender"

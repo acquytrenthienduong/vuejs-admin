@@ -7,24 +7,24 @@
           <button type="button" class="delete" @click="$emit('close')" />
         </header>
         <section class="modal-card-body">
-          <b-field label="Account">
+          <b-field label="Tài Khoản">
             <b-input
               type="text"
               v-model="account"
               :value="account"
-              placeholder="Your account"
+              placeholder="Tài khoản"
               required
             >
             </b-input>
           </b-field>
 
-          <b-field label="Password">
+          <b-field label="Mật khẩu">
             <b-input
               type="password"
               v-model="password"
               :value="password"
               password-reveal
-              placeholder="Your password"
+              placeholder="Mật khẩu"
               required
               maxlength="8"
             >
@@ -35,15 +35,15 @@
             <b-input type="date" v-model="dob" :value="dob" required> </b-input>
           </b-field>
 
-          <b-field label="Gender">
+          <b-field label="Giới tính">
             <b-select
-              placeholder="Gender"
+              placeholder="Giới tính"
               icon="fas fa-venus-mars"
               icon-pack="fas"
               v-model="gender"
             >
-              <option value="1">Male</option>
-              <option value="2">Female</option>
+              <option value="1">Nam</option>
+              <option value="2">Nữ</option>
             </b-select>
           </b-field>
         </section>

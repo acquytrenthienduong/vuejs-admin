@@ -7,34 +7,34 @@
           <button type="button" class="delete" @click="$emit('close')" />
         </header>
         <section class="modal-card-body">
-          <b-field label="Account">
+          <b-field label="Tài khoản">
             <b-input
               type="text"
               v-model="account"
               :value="account"
-              placeholder="Your account"
+              placeholder="Tài khoản"
               required
             >
             </b-input>
           </b-field>
 
-          <b-field label="Password">
+          <b-field label="Mật khẩu">
             <b-input
               type="password"
               v-model="password"
               :value="password"
               password-reveal
-              placeholder="Your password"
+              placeholder="Mật khẩu"
               required
               maxlength="8"
             >
             </b-input>
           </b-field>
-          <b-field label="DoB">
+          <b-field label="Ngày sinh">
             <b-input type="date" v-model="dob" :value="dob" required> </b-input>
           </b-field>
 
-          <b-field label="Shift">
+          <b-field label="Ca làm việc">
             <b-select placeholder="Select a shift" v-model="selected_shift">
               <option
                 v-for="shift in shifts"

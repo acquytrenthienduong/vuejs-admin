@@ -4,17 +4,17 @@
       <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
         <md-card class="md-card-plain">
           <md-card-header data-background-color="dark">
-            <h4 class="title">Account List</h4>
+            <h4 class="title">Quản lí tài khoản</h4>
           </md-card-header>
           <md-card-content>
             <!-- <ManagerTable /> -->
             <section>
               <b-tabs>
-                <b-tab-item icon="google-photos" label="Manager">
+                <b-tab-item icon="google-photos" label="Quản lí">
                   <ManagerTable />
                 </b-tab-item>
 
-                <b-tab-item icon="video" label="Receptionist">
+                <b-tab-item icon="video" label="Lễ tân">
                   <ReceptionistTable />
                 </b-tab-item>
               </b-tabs>

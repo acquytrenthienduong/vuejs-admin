@@ -1,20 +1,14 @@
 <template>
   <div>
     <form action="">
-      <div class="modal-card" style="width: 600px;  height: 500px">
+      <div class="modal-card" style="width: 600px; height: 500px">
         <header class="modal-card-head">
-          <p class="modal-card-title">Update Spray Tanning</p>
+          <p class="modal-card-title">Thay đổi thông tin gói Spray Tanning</p>
           <button type="button" class="delete" @click="$emit('close')" />
         </header>
         <section class="modal-card-body">
           <b-field label="Khoảng thời gian">
-            <b-input
-              type="text"
-              v-model="service.session"
-              placeholder="Your account"
-              required
-            >
-            </b-input>
+            <b-input type="text" v-model="service.session" required> </b-input>
           </b-field>
 
           <b-field label="Giá tiền">
@@ -27,12 +21,9 @@
             >
             </b-input>
           </b-field>
-
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$emit('close')">
-            Close
-          </button>
+          <button class="button" type="button" @click="$emit('close')">Close</button>
           <button
             class="button is-primary"
             @click="updateServiceByID(service.sub_service_id)"
@@ -47,7 +38,7 @@
 
 <script>
 import axios from "axios";
-import config from "../../config/config.js"
+import config from "../../config/config.js";
 
 export default {
   props: {
@@ -61,7 +52,7 @@ export default {
 
   data() {
     return {
-      host: config.config.host
+      host: config.config.host,
     };
   },
 

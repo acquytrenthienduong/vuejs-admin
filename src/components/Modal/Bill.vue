@@ -145,6 +145,8 @@ export default {
 
       let date = year + "-" + month + "-" + dt;
 
+      let logTime = year + "-" + month + "-" + " " + hour + ":" + minute + ":" + second;
+
       axios
         .post(this.host + "/createBill", {
           total_money: this.event.service.money,
@@ -164,6 +166,8 @@ export default {
             axios
               .post(this.host + "/createActivity", {
                 content:
+                  logTime +
+                  "" +
                   this.role +
                   " đã tạo bill cho khách hàng " +
                   this.event.name +

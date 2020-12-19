@@ -370,12 +370,15 @@ export default {
       let hour = dateRaw.getHours();
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
+      let logTime = year + "-" + month + "-" + " " + hour + ":" + minute + ":" + second;
       if (val) {
         this.updateReservation();
         this.selectedEvent.reservation_time = hour + ":" + minute + ":" + second;
         axios
           .post(this.host + "/createActivity", {
             content:
+              logTime +
+              " " +
               this.role +
               " đã tạo checkin cho khách hàng " +
               this.selectedEvent.name +

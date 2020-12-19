@@ -65,7 +65,13 @@
                   <md-tooltip md-direction="top">Chấp nhận</md-tooltip>
                 </md-button>
                 <md-button
-                  @click="rejectNew(props.row.reservation_id, props.row.customer_id)"
+                  @click="
+                    rejectNew(
+                      props.row.reservation_id,
+                      props.row.customer_id,
+                      props.row.customer.name
+                    )
+                  "
                   class="md-just-icon md-simple md-danger"
                 >
                   <md-icon>delete</md-icon>
@@ -195,7 +201,13 @@
                     </b-modal>
                   </section>
                   <md-button
-                    @click="rejectChange(props.row.reservation_id, props.row.customer_id)"
+                    @click="
+                      rejectChange(
+                        props.row.reservation_id,
+                        props.row.customer_id,
+                        props.row.customer.name
+                      )
+                    "
                     class="md-just-icon md-simple md-danger"
                   >
                     <md-icon>delete</md-icon>
@@ -290,6 +302,14 @@ export default {
 
     acceptRequest(requestID, customer_id, customer) {
       let dateRaw = new Date();
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
+
+      let logTime = year + "-" + month + "-" + " " + hour + ":" + minute + ":" + second;
 
       Swal.fire({
         title: "Chấp nhận?",
@@ -323,6 +343,8 @@ export default {
               axios
                 .post(this.host + "/createActivity", {
                   content:
+                    logTime +
+                    " " +
                     this.role +
                     " chấp nhận lịch hẹn của khách hàng " +
                     customer.customer.name +
@@ -337,7 +359,17 @@ export default {
       });
     },
 
-    rejectChange(id, customer_id) {
+    rejectChange(id, customer_id, name) {
+      let dateRaw = new Date();
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
+
+      let logTime = year + "-" + month + "-" + " " + hour + ":" + minute + ":" + second;
+
       Swal.fire({
         title: "Hủy thay đổi?",
         text: "Chắc chắn hủy thay đổi!",
@@ -362,13 +394,30 @@ export default {
                 .then((response) => {
                   console.log(response);
                 });
+              axios.post(this.host + "/createActivity", {
+                content:
+                  logTime +
+                  " " +
+                  this.role +
+                  " đã từ chối thay đổi cuộc hẹn của khách hàng " +
+                  name,
+              });
               this.loadAllPendingChange();
             });
         }
       });
     },
 
-    rejectNew(id, customer_id) {
+    rejectNew(id, customer_id, name) {
+      let dateRaw = new Date();
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
+
+      let logTime = year + "-" + month + "-" + " " + hour + ":" + minute + ":" + second;
       Swal.fire({
         title: "Từ chối?",
         text: "Chắc chắn Không nhận cuộc hẹn này!",
@@ -387,6 +436,11 @@ export default {
                 content: "Chúng tôi rất tiếc khi không nhận được cuộc hẹn của bạn",
               })
               .then((response) => {});
+
+            axios.post(this.host + "/createActivity", {
+              content:
+                logTime + " " + this.role + " đã từ chối cuộc hẹn của khách hàng " + name,
+            });
             this.loadAllPendingRequests();
           });
         }
@@ -417,7 +471,15 @@ export default {
     },
 
     OK(row) {
-      console.log(row);
+      let dateRaw = new Date();
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
+
+      let logTime = year + "-" + month + "-" + " " + hour + ":" + minute + ":" + second;
       if (this.compareDate(this.date)) {
         axios
           .post(this.host + "/updateReservation/" + row.reservation_id, {
@@ -438,6 +500,8 @@ export default {
                 axios
                   .post(this.host + "/createActivity", {
                     content:
+                      logTime +
+                      " " +
                       this.role +
                       " đã tạo thay đổi lịch cho khách hàng " +
                       row.customer.name +

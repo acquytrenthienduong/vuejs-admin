@@ -104,7 +104,7 @@ export default {
         //colors: ['#ffffff'],
         series: [
           {
-            name: "Reservation",
+            name: "Lượt đặt",
             data: [1, 3, 2, 4, 10, 6, 7], // sample data
           },
         ],
@@ -135,7 +135,7 @@ export default {
         //colors: ['#ffffff'],
         series: [
           {
-            name: "Reservation",
+            name: "Lượt đặt",
             data: [1, 3, 2, 4, 10, 6, 7, 10, 6, 7, 4, 6, 7], // sample data
           },
         ],
@@ -179,7 +179,7 @@ export default {
         //colors: ['#ffffff'],
         series: [
           {
-            name: "Reservation",
+            name: "Lượt đăng kí",
             data: [1, 3, 2, 4, 10, 6, 7], // sample data
           },
         ],
@@ -273,7 +273,7 @@ export default {
       // var day = days[now.getDay()];
       let x = [
         {
-          name: "Reservation",
+          name: "Lượt đặt",
           data: [0, 0, 0, 0, 0, 0, 0],
         },
       ];
@@ -321,7 +321,7 @@ export default {
       var months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
       let x = [
         {
-          name: "Reservation",
+          name: "Lượt đặt",
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         },
       ];
@@ -389,7 +389,7 @@ export default {
       // var day = days[now.getDay()];
       let x = [
         {
-          name: "Register",
+          name: "Lượt đăng kí",
           data: [0, 0, 0, 0, 0, 0, 0],
         },
       ];

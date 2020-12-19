@@ -11,16 +11,14 @@
       <template v-slot:activator="{ on, attrs }">
         <v-text-field
           v-model="date"
-          label="Pick Date"
+          label="Chọn ngày"
           prepend-icon="mdi-calendar"
           readonly
           v-bind="attrs"
           v-on="on"
         ></v-text-field>
       </template>
-      <v-date-picker
-        @input="onInput"
-      ></v-date-picker>
+      <v-date-picker @input="onInput"></v-date-picker>
     </v-menu>
   </v-row>
 </template>
@@ -29,13 +27,13 @@
 export default {
   props: {
     selectedDate: {
-      type: String
-    }
+      type: String,
+    },
   },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
     menu: false,
-    pickerDate: null
+    pickerDate: null,
   }),
   methods: {
     emitToParent(event) {
@@ -45,10 +43,10 @@ export default {
       this.selectedDate = date;
     },
     onInput(val) {
-      this.menu = false
-      this.date = val
-      this.$emit('input', val)
-    }
+      this.menu = false;
+      this.date = val;
+      this.$emit("input", val);
+    },
   },
 };
 </script>

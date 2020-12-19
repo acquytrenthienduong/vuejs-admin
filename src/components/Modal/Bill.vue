@@ -12,7 +12,7 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="headline">Bill</span>
+          <span class="headline">Hóa đơn</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -21,7 +21,7 @@
                 <v-text-field
                   disabled
                   class="color"
-                  label="Customer Name"
+                  label="Tên khách hàng"
                   v-model="event.name"
                 ></v-text-field>
               </v-col>
@@ -29,14 +29,14 @@
               <v-col cols="12">
                 <v-text-field
                   disabled
-                  label="Service Name"
+                  label="Dịch vụ"
                   v-model="event.service.name"
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
                   disabled
-                  label="Money"
+                  label="Số tiền"
                   v-model="event.service.money"
                   prefix="$"
                 ></v-text-field>
@@ -44,21 +44,21 @@
               <v-col cols="12">
                 <v-text-field
                   disabled
-                  label="Time"
+                  label="Thời gian"
                   v-model="event.service.time"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field
                   disabled
-                  label="Checkin Time"
+                  label="Giờ đến"
                   v-model="event.reservation_time"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field
                   disabled
-                  label="Checkout Time"
+                  label="Giờ hoàn thành"
                   v-model="event.checkout_time"
                 ></v-text-field>
               </v-col>

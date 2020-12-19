@@ -40,17 +40,17 @@ const routes = [
       },
       {
         path: "services",
-        name: "Services",
+        name: "Dịch vụ",
         component: Services
       },
       {
         path: "schedule",
-        name: "Schedule",
+        name: "Lịch hẹn",
         component: UserProfile
       },
       {
         path: "account",
-        name: "Account Manager",
+        name: "Tài khoản",
         component: AccountManager,
         beforeEnter: (to, from, next) => {
           if (localStorage.getItem('role') != 'admin') {
@@ -63,17 +63,17 @@ const routes = [
       },
       {
         path: "pendingRequest",
-        name: "Pending Request",
+        name: "Chờ được duyệt",
         component: PendingRequest
       },
       {
         path: "report",
-        name: "Report",
+        name: "Thống kê",
         component: Report
       },
       {
         path: "customerDetails",
-        name: "Customer Details",
+        name: "Chi thiết khách hàng",
         component: SearchCustomer
       },
       {
@@ -88,7 +88,7 @@ const routes = [
       },
       {
         path: "activity",
-        name: "Activity",
+        name: "Hoạt động",
         component: Activity
       }
     ],

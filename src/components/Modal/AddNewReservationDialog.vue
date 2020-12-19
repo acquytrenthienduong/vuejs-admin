@@ -15,7 +15,7 @@
                 <multiselect
                   v-model="customer"
                   id="ajax"
-                  placeholder="Customer Name"
+                  placeholder="Số điện thoại khách hàng"
                   open-direction="bottom"
                   :options="customers"
                   :multiple="false"
@@ -36,7 +36,7 @@
               </v-col>
               <v-col v-if="customer != null" cols="12">
                 <v-text-field
-                  label="Customer Name"
+                  label="Tên khách hàng"
                   v-model="customer.name"
                   disabled
                 ></v-text-field>
@@ -46,7 +46,7 @@
                   :items="chooseServices"
                   item-text="name"
                   item-value="value"
-                  label="Service"
+                  label="Dịch vụ"
                   class="duration-selector"
                   single-line
                   v-model="selectType"
@@ -59,7 +59,7 @@
                   :items="items"
                   item-text="name"
                   item-value="value"
-                  label="Duration"
+                  label="Gói"
                   return-object
                   single-line
                 ></v-select>
@@ -85,7 +85,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="time"
-                      label="Pick Time"
+                      label="Chọn giờ"
                       prepend-icon="mdi-clock-time-four-outline"
                       readonly
                       v-bind="attrs"

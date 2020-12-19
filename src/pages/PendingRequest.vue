@@ -54,7 +54,7 @@
                 <md-button
                   class="md-just-icon md-simple md-primary"
                   @click="
-                    confirm(
+                    acceptRequest(
                       props.row.reservation_id,
                       props.row.customer.customer_id,
                       props.row
@@ -290,35 +290,51 @@ export default {
 
     acceptRequest(requestID, customer_id, customer) {
       let dateRaw = new Date();
-      axios
-        .post(this.host + "/updateReservation/" + requestID, {
-          is_access: 1,
-        })
-        .then((response) => {
-          this.success();
-          this.loadAllPendingRequests();
 
+      Swal.fire({
+        title: "Chấp nhận?",
+        text: "Chắc chắn muốn nhận cuộc hẹn!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Không",
+        confirmButtonText: "Đúng vậy!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios;
           axios
-            .post(this.host + "/createNotification/" + customer_id, {
-              content: "Lịch của bạn đã được đặt thành công!",
+            .post(this.host + "/updateReservation/" + requestID, {
+              is_access: 1,
             })
             .then((response) => {
-              console.log(response);
-            });
+              Swal.fire("Thành công!", "Nhận lịch thành công.", "success");
 
-          axios
-            .post(this.host + "/createActivity", {
-              content:
-                this.role +
-                " chấp nhận lịch hẹn của khách hàng " +
-                customer.customer.name +
-                "lúc " +
-                customer.reservation_date +
-                " " +
-                customer.checkin_time,
-            })
-            .then(() => {});
-        });
+              this.loadAllPendingRequests();
+
+              axios
+                .post(this.host + "/createNotification/" + customer_id, {
+                  content: "Lịch của bạn đã được đặt thành công!",
+                })
+                .then((response) => {
+                  console.log(response);
+                });
+
+              axios
+                .post(this.host + "/createActivity", {
+                  content:
+                    this.role +
+                    " chấp nhận lịch hẹn của khách hàng " +
+                    customer.customer.name +
+                    "lúc " +
+                    customer.reservation_date +
+                    " " +
+                    customer.checkin_time,
+                })
+                .then(() => {});
+            });
+        }
+      });
     },
 
     rejectChange(id, customer_id) {

@@ -23,12 +23,12 @@
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$emit('close')">Close</button>
+          <button class="button" type="button" @click="$emit('close')">Đóng</button>
           <button
             class="button is-primary"
             @click="updateServiceByID(service.sub_service_id)"
           >
-            Update
+            Thay đổi
           </button>
         </footer>
       </div>

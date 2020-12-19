@@ -31,12 +31,8 @@
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$emit('close')">
-            Close
-          </button>
-          <button @click="addNewService" class="button is-primary">
-            Submit
-          </button>
+          <button class="button" type="button" @click="$emit('close')">Đóng</button>
+          <button @click="addNewService" class="button is-primary">Xác nhận</button>
         </footer>
       </div>
     </form>

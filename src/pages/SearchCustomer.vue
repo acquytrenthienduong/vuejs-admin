@@ -42,7 +42,7 @@
                     Số lần đặt: <span>{{ reservations.length }}</span>
                   </p>
                   <p>Tổng số tiền thu được: {{ totalMoney | priceVndFormat }}</p>
-                  <p>Favourite Service:</p>
+                  <!-- <p>Favourite Service:</p> -->
                 </div>
               </v-card-text>
             </v-container>

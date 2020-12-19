@@ -55,6 +55,7 @@
                   :items="reservations"
                   :items-per-page="5"
                   class="elevation-1"
+                  :footer-props="{ itemsPerPageText: 'Số lượng 1 trang' }"
                 ></v-data-table>
               </v-card-text>
             </v-container>

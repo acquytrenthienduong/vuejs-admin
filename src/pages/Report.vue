@@ -6,6 +6,7 @@
         :items="data"
         :items-per-page="10"
         class="elevation-1"
+        :footer-props="{ itemsPerPageText: 'Số lượng 1 trang' }"
       >
         <template v-slot:item.total_money="{ item }">
           <span>{{ item.total_money | priceVndFormat }}</span>

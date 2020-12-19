@@ -309,8 +309,8 @@ export default {
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
 
-      let logTime = year + "-" + month + "-" + " " + hour + ":" + minute + ":" + second;
-
+      let logTime =
+        year + "-" + month + "-" + dt + " " + hour + ":" + minute + ":" + second;
       Swal.fire({
         title: "Chấp nhận?",
         text: "Chắc chắn muốn nhận cuộc hẹn!",
@@ -368,8 +368,8 @@ export default {
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
 
-      let logTime = year + "-" + month + "-" + " " + hour + ":" + minute + ":" + second;
-
+      let logTime =
+        year + "-" + month + "-" + dt + " " + hour + ":" + minute + ":" + second;
       Swal.fire({
         title: "Hủy thay đổi?",
         text: "Chắc chắn hủy thay đổi!",
@@ -417,7 +417,8 @@ export default {
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
 
-      let logTime = year + "-" + month + "-" + " " + hour + ":" + minute + ":" + second;
+      let logTime =
+        year + "-" + month + "-" + dt + " " + hour + ":" + minute + ":" + second;
       Swal.fire({
         title: "Từ chối?",
         text: "Chắc chắn Không nhận cuộc hẹn này!",
@@ -479,7 +480,8 @@ export default {
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
 
-      let logTime = year + "-" + month + "-" + " " + hour + ":" + minute + ":" + second;
+      let logTime =
+        year + "-" + month + "-" + dt + " " + hour + ":" + minute + ":" + second;
       if (this.compareDate(this.date)) {
         axios
           .post(this.host + "/updateReservation/" + row.reservation_id, {

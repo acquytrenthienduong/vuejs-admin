@@ -145,7 +145,8 @@ export default {
 
       let date = year + "-" + month + "-" + dt;
 
-      let logTime = year + "-" + month + "-" + " " + hour + ":" + minute + ":" + second;
+      let logTime =
+        year + "-" + month + "-" + dt + " " + hour + ":" + minute + ":" + second;
 
       axios
         .post(this.host + "/createBill", {

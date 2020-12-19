@@ -167,6 +167,8 @@ export default {
         data.forEach((element) => {
           let event = {};
           event.name = element.customer.name;
+          event.customer_id = element.customer.customer_id;
+          event.reservation_date = element.reservation_date;
           event.reservation_id = element.reservation_id;
           event.start = element.reservation_date + " " + element.checkin_time;
           let x = element.checkin_time.split(":");
@@ -312,6 +314,16 @@ export default {
       nativeEvent.stopPropagation();
     },
     Remove() {
+      let dateRaw = new Date();
+      let year = dateRaw.getFullYear();
+      let month = dateRaw.getMonth() + 1;
+      let dt = dateRaw.getDate();
+      let hour = dateRaw.getHours();
+      let minute = dateRaw.getMinutes();
+      let second = dateRaw.getSeconds();
+
+      let logTime =
+        year + "-" + month + "-" + dt + " " + hour + ":" + minute + ":" + second;
       Swal.fire({
         title: "Xóa cuộc hẹn?",
         text: "Chắc chắn muốn xóa!",
@@ -327,6 +339,24 @@ export default {
             .delete(this.host + "/deleteReservation/" + this.selectedEvent.reservation_id)
             .then((response) => {
               window.location.reload();
+              axios
+                .post(
+                  this.host + "/createNotification/" + this.selectedEvent.customer_id,
+                  {
+                    content:
+                      "Chúng tôi rất tiếc khi phải từ chối cuộc hẹn của bạn " +
+                      this.selectedEvent.reservation_date,
+                  }
+                )
+                .then((response) => {});
+              axios.post(this.host + "/createActivity", {
+                content:
+                  logTime +
+                  " " +
+                  this.role +
+                  " đã xóa cuộc hẹn của khách hàng " +
+                  this.selectedEvent.name,
+              });
             })
             .catch((e) => {
               Swal.fire({
@@ -370,7 +400,8 @@ export default {
       let hour = dateRaw.getHours();
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
-      let logTime = year + "-" + month + "-" + " " + hour + ":" + minute + ":" + second;
+      let logTime =
+        year + "-" + month + "-" + dt + " " + hour + ":" + minute + ":" + second;
       if (val) {
         this.updateReservation();
         this.selectedEvent.reservation_time = hour + ":" + minute + ":" + second;

@@ -105,8 +105,10 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="createNewReservation"> Create </v-btn>
-          <v-btn color="blue darken-1" text @click="closeDialog"> Close </v-btn>
+          <v-btn color="blue darken-1" text @click="createNewReservation">
+            Tạo cuộc hẹn
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="closeDialog"> Đóng </v-btn>
         </v-card-actions>
         <v-overlay :z-index="0" :value="overlay">
           <v-progress-circular

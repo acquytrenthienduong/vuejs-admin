@@ -1,10 +1,7 @@
 <template>
   <div>
     <section>
-      <div
-        class="buttons"
-        style=".buttons:not(:last-child) : margin-bottom: 1rem"
-      >
+      <div class="buttons" style=".buttons:not(:last-child) : margin-bottom: 1rem">
         <b-button
           size="is-medium"
           class="fas fa-user-plus"
@@ -116,8 +113,9 @@
 import axios from "axios";
 import AddNewManagerModal from "../Modal/AddNewManagerModal";
 import UpdateManagerModal from "../Modal/UpdateManagerModal";
-import config from "../../config/config.js"
-
+import config from "../../config/config.js";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 import { id } from "date-fns/locale";
 export default {
   components: {
@@ -131,16 +129,27 @@ export default {
       //data for modal
       isAddNewModalActive: false,
       isUpdateModalActive: false,
-      host: config.config.host
+      host: config.config.host,
     };
   },
   methods: {
     deleteManager(managerID) {
-      axios
-        .delete(this.host + "/manager/" + managerID)
-        .then((response) => {
-          this.loadData();
-        });
+      Swal.fire({
+        title: "Xóa?",
+        text: "Chắc chắn muốn xóa!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Không",
+        confirmButtonText: "Đúng vậy!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.delete(this.host + "/manager/" + managerID).then((response) => {
+            this.loadData();
+          });
+        }
+      });
     },
 
     loadData() {

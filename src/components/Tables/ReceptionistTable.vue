@@ -1,10 +1,7 @@
 <template>
   <div>
     <section>
-      <div
-        class="buttons"
-        style=".buttons:not(:last-child) : margin-bottom: 1rem"
-      >
+      <div class="buttons" style=".buttons:not(:last-child) : margin-bottom: 1rem">
         <b-button
           size="is-medium"
           class="fas fa-user-plus"
@@ -118,7 +115,9 @@
 import axios from "axios";
 import AddNewReceptionistModal from "../Modal/AddNewReceptionistModal";
 import UpdateReceptionistModal from "../Modal/UpdateReceptionistModal";
-import config from "../../config/config.js"
+import config from "../../config/config.js";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 
 import { id } from "date-fns/locale";
 export default {
@@ -134,16 +133,27 @@ export default {
       //data for modal
       isAddNewModalActive: false,
       isUpdateModalActive: false,
-      host: config.config.host
+      host: config.config.host,
     };
   },
   methods: {
     deleteReceptionist(id) {
-      axios
-        .delete(this.host + "/deleteReceptionist/" + id)
-        .then((response) => {
-          this.loadData();
-        });
+      Swal.fire({
+        title: "Xóa?",
+        text: "Chắc chắn muốn xóa!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Không",
+        confirmButtonText: "Đúng vậy!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.delete(this.host + "/deleteReceptionist/" + id).then((response) => {
+            this.loadData();
+          });
+        }
+      });
     },
 
     loadShift() {
@@ -165,7 +175,7 @@ export default {
       axios
         .get(this.host + "/getReceptionistByID/" + receptionist_id)
         .then((response) => (this.receptionist = response.data));
-        // .then((response) => console.log(response));
+      // .then((response) => console.log(response));
     },
   },
   mounted() {

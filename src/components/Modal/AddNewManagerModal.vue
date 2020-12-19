@@ -3,7 +3,7 @@
     <form action="">
       <div class="modal-card" style="width: 600px; height: 500px">
         <header class="modal-card-head">
-          <p class="modal-card-title">Add New Manager</p>
+          <p class="modal-card-title">Thêm mới quản lí</p>
           <button type="button" class="delete" @click="$emit('close')" />
         </header>
         <section class="modal-card-body">

@@ -3,7 +3,7 @@
     <form action="">
       <div class="modal-card" style="width: 600px; height: 500px">
         <header class="modal-card-head">
-          <p class="modal-card-title">Update Receptionist Info</p>
+          <p class="modal-card-title">Thay đổi thông tin</p>
           <button type="button" class="delete" @click="$emit('close')" />
         </header>
         <section class="modal-card-body">

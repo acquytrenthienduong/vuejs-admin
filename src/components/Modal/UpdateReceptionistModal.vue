@@ -36,18 +36,6 @@
             >
             </b-input>
           </b-field>
-
-          <b-field label="Ca làm việc">
-            <b-select placeholder="Select a shift" v-model="receptionist.shift_shift_id">
-              <option
-                v-for="shift in shifts"
-                :value="shift.shift_id"
-                :key="shift.shift_id"
-              >
-                {{ shift.shift_name }}
-              </option>
-            </b-select>
-          </b-field>
         </section>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="$emit('close')">Đóng</button>

@@ -31,18 +31,6 @@
           <b-field label="Ngày sinh">
             <b-input type="date" v-model="manager.dob" required> </b-input>
           </b-field>
-
-          <b-field label="Giới tinh">
-            <b-select
-              placeholder="Giới tính"
-              icon="fas fa-venus-mars"
-              icon-pack="fas"
-              v-model="manager.gender"
-            >
-              <option value="1">Male</option>
-              <option value="2">Female</option>
-            </b-select>
-          </b-field>
         </section>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="$emit('close')">Đóng</button>

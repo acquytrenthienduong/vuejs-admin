@@ -102,6 +102,7 @@
                           ></v-text-field>
                         </v-col>
                         <v-col class="d-flex" cols="12" sm="6" xsm="12">
+                          <div class="logoLogin">Studio</div>
                         </v-col>
                         <v-spacer></v-spacer>
                         <v-col
@@ -152,6 +153,7 @@
                           ></v-text-field>
                         </v-col>
                         <v-col class="d-flex" cols="12" sm="6" xsm="12">
+                          <div class="logoLogin">Studio</div>
                         </v-col>
                         <v-spacer></v-spacer>
                         <v-col
@@ -479,8 +481,7 @@ export default {
 .v-slide-group__content {
   background-color: #617ae8 !important;
 }
-.v-slide-group__wrapper{
-    background-color: #617ae8 !important;
+.v-slide-group__wrapper {
+  background-color: #617ae8 !important;
 }
 </style>
-

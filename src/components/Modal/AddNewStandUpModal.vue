@@ -8,14 +8,15 @@
         </header>
         <section class="modal-card-body">
           <b-field label="Thời gian">
-            <b-input
+            <!-- <b-input
               type="text"
-              v-model="time"
+              
               :value="time"
               placeholder="00:30:00 phút"
               required
             >
-            </b-input>
+            </b-input> -->
+            <vue-timepicker v-model="time" required format="HH:mm:ss"></vue-timepicker>
           </b-field>
 
           <b-field label="Giá tiền">
@@ -30,8 +31,12 @@
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$emit('close')">Đóng</button>
-          <button @click="addNewService" class="button is-primary">Xác nhận</button>
+          <button class="button" type="button" @click="$emit('close')">
+            Đóng
+          </button>
+          <button @click="addNewService" class="button is-primary">
+            Xác nhận
+          </button>
         </footer>
       </div>
     </form>
@@ -39,6 +44,11 @@
 </template>
 
 <script>
+// Main JS (in UMD format)
+import VueTimepicker from "vue2-timepicker";
+
+// CSS
+import "vue2-timepicker/dist/VueTimepicker.css";
 import axios from "axios";
 import config from "../../config/config.js";
 export default {
@@ -47,6 +57,7 @@ export default {
       type: Function,
     },
   },
+  components: { VueTimepicker },
   data() {
     return {
       name: "Stand up",

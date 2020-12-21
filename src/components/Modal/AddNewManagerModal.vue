@@ -31,20 +31,8 @@
             </b-input>
           </b-field>
 
-          <b-field label="DoB">
+          <b-field label="Ngày sinh">
             <b-input type="date" v-model="dob" :value="dob" required> </b-input>
-          </b-field>
-
-          <b-field label="Giới tính">
-            <b-select
-              placeholder="Giới tính"
-              icon="fas fa-venus-mars"
-              icon-pack="fas"
-              v-model="gender"
-            >
-              <option value="1">Nam</option>
-              <option value="2">Nữ</option>
-            </b-select>
           </b-field>
         </section>
         <footer class="modal-card-foot">
@@ -59,6 +47,8 @@
 <script>
 import axios from "axios";
 import config from "../../config/config.js";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 export default {
   props: {
     reload: {
@@ -77,24 +67,39 @@ export default {
   },
   methods: {
     addNewManager() {
-      axios
-        .post(this.host + "/addManager", {
-          account: this.account,
-          password: this.password,
-          dob: this.dob,
-          gender: this.gender,
-        })
-        .then((response) => {
-          this.account = "";
-          this.dob = "";
-          this.password = "";
-          this.gender = "";
-          this.$emit("close");
-          this.reload();
-        })
-        .catch((e) => {
-          this.errors.push(e); // co loi o day chua fix duoc
-        });
+      if (this.account != "" && this.password != "" && this.dob != "") {
+        axios
+          .post(this.host + "/addManager", {
+            account: this.account,
+            password: this.password,
+            dob: this.dob,
+            gender: this.gender,
+          })
+          .then((response) => {
+            if (response.status === 201) {
+              Swal.fire("Không thành công!", "Tài khoản đã tồn tại.", "warning");
+            } else {
+              this.account = "";
+              this.dob = "";
+              this.password = "";
+              this.gender = "";
+              Swal.fire("Thành công!", "Tạo tài khoản thành công.", "success");
+              this.$emit("close");
+              this.reload();
+            }
+          })
+          .catch((e) => {
+            Swal.fire("Không thành công!", "Có lỗi đã xảy ra.", "warning");
+
+            // this.errors.push(e); // co loi o day chua fix duoc
+          });
+      } else {
+        Swal.fire(
+          "Không thành công!",
+          "Vui lòng điền hết những trường bắt buộc",
+          "warning"
+        );
+      }
     },
   },
 };

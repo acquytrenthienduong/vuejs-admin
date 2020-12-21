@@ -34,7 +34,7 @@
             <b-input type="date" v-model="dob" :value="dob" required> </b-input>
           </b-field>
 
-          <b-field label="Ca làm việc">
+          <!-- <b-field label="Ca làm việc">
             <b-select placeholder="Select a shift" v-model="selected_shift">
               <option
                 v-for="shift in shifts"
@@ -44,7 +44,7 @@
                 {{ shift.shift_name }}
               </option>
             </b-select>
-          </b-field>
+          </b-field> -->
         </section>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="$emit('close')">Đóng</button>
@@ -58,7 +58,8 @@
 <script>
 import axios from "axios";
 import config from "../../config/config.js";
-
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 export default {
   props: {
     reload: {
@@ -80,22 +81,35 @@ export default {
   },
   methods: {
     addNewReceptionist() {
-      axios
-        .post(this.host + "/addReceptionist", {
-          account: this.account,
-          password: this.password,
-          dob: this.dob,
-          shift_shift_id: this.selected_shift,
-        })
-        .then((response) => {
-          (this.account = ""), (this.password = ""), (this.dob = "");
-          this.selected_shift = "";
-          this.$emit("close");
-          this.reload();
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      if (this.account != "" && this.password != "" && this.dob != "") {
+        axios
+          .post(this.host + "/addReceptionist", {
+            account: this.account,
+            password: this.password,
+            dob: this.dob,
+            shift_shift_id: this.selected_shift,
+          })
+          .then((response) => {
+            if (response.status === 201) {
+              Swal.fire("Không thành công!", "Tài khoản đã tồn tại.", "warning");
+            } else {
+              (this.account = ""), (this.password = ""), (this.dob = "");
+              this.selected_shift = "";
+              Swal.fire("Thành công!", "Tạo tài khoản thành công.", "success");
+              this.$emit("close");
+              this.reload();
+            }
+          })
+          .catch((e) => {
+            Swal.fire("Không thành công!", "Có lỗi đã xảy ra.", "warning");
+          });
+      } else {
+        Swal.fire(
+          "Không thành công!",
+          "Vui lòng điền hết những trường bắt buộc",
+          "warning"
+        );
+      }
     },
   },
 };

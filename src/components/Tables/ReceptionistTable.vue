@@ -64,27 +64,21 @@
           </template>
         </b-table-column>
 
-        <b-table-column label="Account">
+        <b-table-column label="Tài khoản">
           <template v-slot="props">
             {{ props.row.account }}
           </template>
         </b-table-column>
 
-        <b-table-column label="Password">
+        <b-table-column label="Mật khẩu">
           <template v-slot="props">
             {{ props.row.password }}
           </template>
         </b-table-column>
 
-        <b-table-column label="DoB" centered>
+        <b-table-column label="Ngày sinh" centered>
           <template v-slot="props">
             {{ props.row.dob }}
-          </template>
-        </b-table-column>
-
-        <b-table-column label="shift">
-          <template v-slot="props">
-            {{ props.row.shift.shift_name }}
           </template>
         </b-table-column>
 

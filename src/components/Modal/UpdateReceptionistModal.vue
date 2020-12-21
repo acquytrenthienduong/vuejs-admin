@@ -66,7 +66,8 @@
 <script>
 import axios from "axios";
 import config from "../../config/config.js";
-
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 export default {
   props: {
     receptionist: {
@@ -96,8 +97,15 @@ export default {
           shift_shift_id: this.receptionist.shift_shift_id,
         })
         .then((response) => {
-          this.reload();
-          this.$emit("close");
+          if (response.status === 500) {
+            Swal.fire("Không thành công!", "Tài khoản đã tồn tại.", "warning");
+          } else {
+            this.reload();
+            this.$emit("close");
+          }
+        })
+        .catch((e) => {
+          Swal.fire("Không thành công!", "Tài khoản đã tồn tại.", "warning");
         });
     },
   },

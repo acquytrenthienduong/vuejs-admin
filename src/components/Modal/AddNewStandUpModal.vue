@@ -8,14 +8,6 @@
         </header>
         <section class="modal-card-body">
           <b-field label="Thời gian">
-            <!-- <b-input
-              type="text"
-              
-              :value="time"
-              placeholder="00:30:00 phút"
-              required
-            >
-            </b-input> -->
             <vue-timepicker v-model="time" required format="HH:mm:ss"></vue-timepicker>
           </b-field>
 
@@ -31,12 +23,8 @@
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="$emit('close')">
-            Đóng
-          </button>
-          <button @click="addNewService" class="button is-primary">
-            Xác nhận
-          </button>
+          <button class="button" type="button" @click="$emit('close')">Đóng</button>
+          <button @click="addNewService" class="button is-primary">Xác nhận</button>
         </footer>
       </div>
     </form>
@@ -97,3 +85,16 @@ export default {
   },
 };
 </script>
+
+<style lang="css">
+.d_block {
+  display: block;
+}
+
+.vue__time-picker input.display-time {
+  width: 40em !important;
+  height: 3.2em !important;
+  box-shadow: inset 0 0.0625em 0.125em rgba(10, 10, 10, 0.05) !important;
+  border-radius: 4px !important;
+}
+</style>

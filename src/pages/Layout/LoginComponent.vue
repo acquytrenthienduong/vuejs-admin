@@ -5,12 +5,7 @@
         <div class="titleText">
           <h2>Chào mừng đến với trang quản lí của NAVATAN</h2>
         </div>
-        <v-dialog
-          v-model="dialog"
-          persistent
-          max-width="600px"
-          min-width="360px"
-        >
+        <v-dialog v-model="dialog" persistent max-width="600px" min-width="360px">
           <div>
             <v-tabs
               v-model="tab"
@@ -54,13 +49,7 @@
                           <div class="logoLogin">Studio</div>
                         </v-col>
                         <v-spacer></v-spacer>
-                        <v-col
-                          class="d-flex"
-                          cols="12"
-                          sm="4"
-                          xsm="12"
-                          align-end
-                        >
+                        <v-col class="d-flex" cols="12" sm="4" xsm="12" align-end>
                           <v-btn
                             x-large
                             block
@@ -105,13 +94,7 @@
                           <div class="logoLogin">Studio</div>
                         </v-col>
                         <v-spacer></v-spacer>
-                        <v-col
-                          class="d-flex"
-                          cols="12"
-                          sm="4"
-                          xsm="12"
-                          align-end
-                        >
+                        <v-col class="d-flex" cols="12" sm="4" xsm="12" align-end>
                           <v-btn
                             x-large
                             block
@@ -156,13 +139,7 @@
                           <div class="logoLogin">Studio</div>
                         </v-col>
                         <v-spacer></v-spacer>
-                        <v-col
-                          class="d-flex"
-                          cols="12"
-                          sm="4"
-                          xsm="12"
-                          align-end
-                        >
+                        <v-col class="d-flex" cols="12" sm="4" xsm="12" align-end>
                           <v-btn
                             x-large
                             block
@@ -236,7 +213,7 @@ export default {
   },
 
   methods: {
-    loginForManager: function() {
+    loginForManager: function () {
       axios
         .post(this.host + "/loginManager", {
           username: this.username,
@@ -258,7 +235,7 @@ export default {
           this.errors.push(e);
         });
     },
-    loginForReceptionist: function() {
+    loginForReceptionist: function () {
       axios
         .post(this.host + "/loginReceptionist", {
           username: this.username,
@@ -284,7 +261,7 @@ export default {
           this.errors.push(e);
         });
     },
-    loginForAdmin: function() {
+    loginForAdmin: function () {
       axios
         .post(this.host + "/loginAdmin", {
           username: this.username,

@@ -8,14 +8,7 @@
         </header>
         <section class="modal-card-body">
           <b-field label="Gói dịch vụ">
-            <b-input
-              type="text"
-              v-model="session"
-              :value="session"
-              placeholder="00:30:00 phút"
-              required
-            >
-            </b-input>
+            <b-input type="text" v-model="session" :value="session" required> </b-input>
           </b-field>
 
           <b-field label="Giá tiền">

@@ -8,7 +8,11 @@
         </header>
         <section class="modal-card-body">
           <b-field label="Khoảng thời gian">
-            <b-input type="text" v-model="service.time" required> </b-input>
+            <vue-timepicker
+              v-model="service.time"
+              required
+              format="HH:mm:ss"
+            ></vue-timepicker>
           </b-field>
 
           <b-field label="Giá tiền">
@@ -37,10 +41,14 @@
 </template>
 
 <script>
+import VueTimepicker from "vue2-timepicker";
+
 import axios from "axios";
 import config from "../../config/config.js";
 
 export default {
+  components: { VueTimepicker },
+
   props: {
     service: {
       type: Object,

@@ -7,8 +7,12 @@
           <button type="button" class="delete" @click="$emit('close')" />
         </header>
         <section class="modal-card-body">
-          <b-field label="Khoảng thời gian">
-            <b-input type="text" v-model="service.time" required> </b-input>
+          <b-field label="Thời gian">
+            <vue-timepicker
+              v-model="service.time"
+              required
+              format="HH:mm:ss"
+            ></vue-timepicker>
           </b-field>
 
           <b-field label="Giá tiền">
@@ -39,8 +43,10 @@
 <script>
 import axios from "axios";
 import config from "../../config/config.js";
+import VueTimepicker from "vue2-timepicker";
 
 export default {
+  components: { VueTimepicker },
   props: {
     service: {
       type: Object,

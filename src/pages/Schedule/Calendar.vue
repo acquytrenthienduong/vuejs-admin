@@ -10,10 +10,10 @@
               </v-btn>
               <AddNewReservationDialog :reload="loadData"></AddNewReservationDialog>
               <v-btn fab text small color="grey darken-2" @click="prev">
-                <v-icon small> mdi-chevron-left </v-icon>
+                <md-icon>navigate_before</md-icon>
               </v-btn>
               <v-btn fab text small color="grey darken-2" @click="next">
-                <v-icon small> mdi-chevron-right </v-icon>
+                <md-icon>navigate_next</md-icon>
               </v-btn>
               <v-toolbar-title v-if="$refs.calendar">
                 {{ $refs.calendar.title }}

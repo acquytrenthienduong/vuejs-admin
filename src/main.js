@@ -19,6 +19,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import MaterialDashboard from "./material-dashboard";
 
 import Chartist from "chartist";
+import MenuIcon from 'vue-material-design-icons/Menu.vue';
 
 // configure router
 const router = new VueRouter({
@@ -43,7 +44,7 @@ Vue.use(GlobalDirectives);
 Vue.use(Notifications);
 Vue.use(Buefy);
 Vue.use(excel);
-
+Vue.component('menu-icon', MenuIcon);
 
 /* eslint-disable no-new */
 new Vue({

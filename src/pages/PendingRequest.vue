@@ -2,7 +2,7 @@
   <div>
     <section>
       <b-tabs>
-        <b-tab-item icon="google-photos" label="Tạo mới">
+        <b-tab-item icon="account" label="Tạo mới">
           <b-table
             :data="requests"
             ref="table"

@@ -222,7 +222,6 @@ export default {
                 let hour1 = dateRaw1.getHours();
                 let minute1 = dateRaw1.getMinutes();
                 let second1 = dateRaw1.getSeconds();
-
                 let logTime =
                   year1 +
                   "-" +
@@ -320,7 +319,8 @@ export default {
     compareDate(date) {
       let today = new Date();
       let dateRaw = new Date(date);
-
+      let temp = [];
+      temp = this.time.split(":");
       if (today.getFullYear() > dateRaw.getFullYear()) {
         return true;
       }
@@ -330,6 +330,14 @@ export default {
       }
 
       if (today.getDate() > dateRaw.getDate()) {
+        return true;
+      }
+
+      if (today.getHours() > parseInt(temp[0], 10)) {
+        return true;
+      }
+
+      if (today.getMinutes() > parseInt(temp[1], 10)) {
         return true;
       }
 

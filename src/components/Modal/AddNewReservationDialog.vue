@@ -193,7 +193,7 @@ export default {
       let month = dateRaw.getMonth() + 1;
       let dt = dateRaw.getDate();
       if (this.selectSubService != null && this.customer != null && this.time != null) {
-        if (this.compareDate(this.selectedDate)) {
+        if (!this.compareDate(this.selectedDate)) {
           axios
             .post(this.host + "/createNewReservation", {
               customer_id: this.customer.customer_id,
@@ -320,11 +320,20 @@ export default {
     compareDate(date) {
       let today = new Date();
       let dateRaw = new Date(date);
-      if (today > dateRaw) {
-        return false;
-      } else {
+
+      if (today.getFullYear() > dateRaw.getFullYear()) {
         return true;
       }
+
+      if (today.getMonth() > dateRaw.getMonth()) {
+        return true;
+      }
+
+      if (today.getDate() > dateRaw.getDate()) {
+        return true;
+      }
+
+      return false;
     },
   },
 

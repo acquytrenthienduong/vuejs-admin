@@ -86,7 +86,6 @@
         </b-tab-item>
 
         <b-tab-item icon="google-drive" label="Thay đổi">
-          <h3>Thay đổi ngày</h3>
           <b-table
             :data="requests1"
             ref="table"
@@ -256,6 +255,7 @@ export default {
         { value: 3, name: "Spray" },
       ],
       time: null,
+      selectedReservationId: 0,
     };
   },
   methods: {
@@ -444,6 +444,7 @@ export default {
     },
 
     updateInfor(row) {
+      this.selectedReservationId = row.reservation_id;
       this.isCardModalActive = true;
       this.chooseServices.forEach((element) => {
         if (element.name === row.sub_service.name) {
@@ -467,6 +468,7 @@ export default {
     },
 
     OK(row) {
+      console.log("row", row.reservation_id);
       let dateRaw = new Date();
       let year = dateRaw.getFullYear();
       let month = dateRaw.getMonth() + 1;
@@ -479,7 +481,7 @@ export default {
         year + "-" + month + "-" + dt + " " + hour + ":" + minute + ":" + second;
       if (this.compareDate(this.date)) {
         axios
-          .post(this.host + "/updateReservation/" + row.reservation_id, {
+          .post(this.host + "/updateReservation/" + this.selectedReservationId, {
             is_access: 1,
             reservation_date: this.date,
             checkin_time: this.time,

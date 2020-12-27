@@ -16,7 +16,7 @@
         </md-button>
 
         <div class="md-collapse">
-          <md-list>
+          <md-list class="align-center">
             <div v-if="role == 'manager' || role == 'receptionist'">
               <AddNewCustomerDialog />
             </div>
@@ -184,5 +184,10 @@ export default {
   display: flex !important;
   justify-content: center !important;
   padding-right: 20px !important;
+}
+
+.align-center {
+  display: flex !important;
+  align-items: center !important;
 }
 </style>

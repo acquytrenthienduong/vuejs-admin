@@ -321,6 +321,7 @@ export default {
       let dateRaw = new Date(date);
       let temp = [];
       temp = this.time.split(":");
+
       if (today.getFullYear() > dateRaw.getFullYear()) {
         return true;
       }
@@ -333,12 +334,14 @@ export default {
         return true;
       }
 
-      if (today.getHours() > parseInt(temp[0], 10)) {
-        return true;
-      }
+      if (today.getDate() === dateRaw.getDate()) {
+        if (today.getHours() > parseInt(temp[0], 10)) {
+          return true;
+        }
 
-      if (today.getMinutes() > parseInt(temp[1], 10)) {
-        return true;
+        if (today.getMinutes() > parseInt(temp[1], 10)) {
+          return true;
+        }
       }
 
       return false;

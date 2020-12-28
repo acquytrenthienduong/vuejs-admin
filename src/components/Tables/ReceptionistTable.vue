@@ -58,9 +58,9 @@
         aria-page-label="Page"
         aria-current-label="Current page"
       >
-        <b-table-column label="ID" width="40" numeric>
+        <b-table-column label="STT" width="40" numeric>
           <template v-slot="props">
-            {{ props.row.receptionist_id }}
+            {{ props.row.stt }}
           </template>
         </b-table-column>
 
@@ -82,21 +82,21 @@
           </template>
         </b-table-column>
 
-        <b-table-column label="Action">
+        <b-table-column label="Hành động">
           <template v-slot="props">
             <md-button
               class="md-just-icon md-simple md-primary"
               @click="loadReceptionistByID(props.row.receptionist_id)"
             >
               <md-icon>edit</md-icon>
-              <md-tooltip md-direction="top">Edit</md-tooltip>
+              <md-tooltip md-direction="top">Chỉnh sửa</md-tooltip>
             </md-button>
             <md-button
               class="md-just-icon md-simple md-danger"
               @click="deleteReceptionist(props.row.receptionist_id)"
             >
               <md-icon>delete</md-icon>
-              <md-tooltip md-direction="top">delete</md-tooltip>
+              <md-tooltip md-direction="top">Xóa</md-tooltip>
             </md-button>
           </template>
         </b-table-column>
@@ -157,9 +157,17 @@ export default {
     },
 
     loadData() {
-      axios
-        .get(this.host + "/receptionist")
-        .then((response) => (this.receptionists = response.data));
+      this.receptionists = [];
+      var stt = 1;
+      axios.get(this.host + "/receptionist").then((response) => {
+        response.data.forEach((element) => {
+          let recep = {};
+          recep = element;
+          recep.stt = stt++;
+          this.receptionists.push(recep);
+        });
+        // this.receptionists = response.data;
+      });
     },
 
     loadReceptionistByID(receptionist_id) {

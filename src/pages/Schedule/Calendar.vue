@@ -55,6 +55,7 @@
                   ></v-checkbox>
                 </v-toolbar>
                 <v-card-text>
+                  <h3>SĐT: {{ selectedEvent.phonenumber }}</h3>
                   <h3>Dịch vụ: {{ selectedEvent.serviceName }}</h3>
                   <h3>Thời gian: {{ selectedEvent.serviceTime }}</h3>
                 </v-card-text>
@@ -165,6 +166,7 @@ export default {
         this.events = [];
         data.forEach((element) => {
           let event = {};
+          event.phonenumber = element.customer.account;
           event.name = element.customer.name;
           event.customer_id = element.customer.customer_id;
           event.reservation_date = element.reservation_date;

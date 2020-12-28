@@ -56,9 +56,9 @@
         aria-page-label="Page"
         aria-current-label="Current page"
       >
-        <b-table-column label="ID" width="40" numeric>
+        <b-table-column label="STT" width="40" numeric>
           <template v-slot="props">
-            {{ props.row.manager_id }}
+            {{ props.row.stt }}
           </template>
         </b-table-column>
 
@@ -80,21 +80,21 @@
           </template>
         </b-table-column>
 
-        <b-table-column label="Action">
+        <b-table-column label="Hành động">
           <template v-slot="props">
             <md-button
               class="md-just-icon md-simple md-primary"
               @click="loadDataByID(props.row.manager_id)"
             >
               <md-icon>edit</md-icon>
-              <md-tooltip md-direction="top">Edit</md-tooltip>
+              <md-tooltip md-direction="top">Chỉnh sửa</md-tooltip>
             </md-button>
             <md-button
               @click="deleteManager(props.row.manager_id)"
               class="md-just-icon md-simple md-danger"
             >
               <md-icon>delete</md-icon>
-              <md-tooltip md-direction="top">delete</md-tooltip>
+              <md-tooltip md-direction="top">Xóa</md-tooltip>
             </md-button>
           </template>
         </b-table-column>
@@ -147,9 +147,17 @@ export default {
     },
 
     loadData() {
-      axios
-        .get(this.host + "/manager")
-        .then((response) => (this.managers = response.data));
+      this.managers = [];
+      var stt = 1;
+      axios.get(this.host + "/manager").then((response) => {
+        response.data.forEach((element) => {
+          let manager = {};
+          manager = element;
+          manager.stt = stt++;
+          this.managers.push(manager);
+        });
+        // this.managers = response.data;
+      });
     },
 
     loadDataByID(managerID) {

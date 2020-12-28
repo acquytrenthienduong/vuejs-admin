@@ -26,7 +26,8 @@
               password-reveal
               placeholder="Mật khẩu"
               required
-              maxlength="8"
+              maxlength="16"
+              minlength="8"
             >
             </b-input>
           </b-field>

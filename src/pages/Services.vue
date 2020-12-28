@@ -3,13 +3,10 @@
     <section>
       <b-tabs>
         <b-tab-item icon="human-male" label="Stand up">
-          <div
-            class="buttons"
-            style=".buttons:not(:last-child) : margin-bottom: 1rem"
-          >
+          <div class="buttons" style=".buttons:not(:last-child) : margin-bottom: 1rem">
             <b-button
               size="is-medium"
-              class="fas fa-user-plus"
+              class="fas fa-plus"
               @click="isAddNewStandUpActive = true"
             >
             </b-button>
@@ -57,9 +54,9 @@
             aria-page-label="Page"
             aria-current-label="Current page"
           >
-            <b-table-column label="ID" width="40" numeric>
+            <b-table-column label="STT" width="40" numeric>
               <template v-slot="props">
-                {{ props.row.sub_service_id }}
+                {{ props.row.stt }}
               </template>
             </b-table-column>
 
@@ -88,7 +85,7 @@
                   @click="loadStandUpByID(props.row.sub_service_id)"
                 >
                   <md-icon>edit</md-icon>
-                  <md-tooltip md-direction="top">Edit</md-tooltip>
+                  <md-tooltip md-direction="top">Chỉnh sửa</md-tooltip>
                 </md-button>
               </template>
             </b-table-column>
@@ -96,13 +93,10 @@
         </b-tab-item>
 
         <b-tab-item icon="bed" label="Lay Down">
-          <div
-            class="buttons"
-            style=".buttons:not(:last-child) : margin-bottom: 1rem"
-          >
+          <div class="buttons" style=".buttons:not(:last-child) : margin-bottom: 1rem">
             <b-button
               size="is-medium"
-              class="fas fa-user-plus"
+              class="fas fa-plus"
               @click="isAddNewLayDownActive = true"
             >
             </b-button>
@@ -150,9 +144,9 @@
             aria-page-label="Page"
             aria-current-label="Current page"
           >
-            <b-table-column label="ID" width="40" numeric>
+            <b-table-column label="STT" width="40" numeric>
               <template v-slot="props">
-                {{ props.row.sub_service_id }}
+                {{ props.row.stt }}
               </template>
             </b-table-column>
 
@@ -181,7 +175,7 @@
                   @click="loadLayDownByID(props.row.sub_service_id)"
                 >
                   <md-icon>edit</md-icon>
-                  <md-tooltip md-direction="top">Edit</md-tooltip>
+                  <md-tooltip md-direction="top">Chỉnh sửa</md-tooltip>
                 </md-button>
               </template>
             </b-table-column>
@@ -189,13 +183,10 @@
         </b-tab-item>
 
         <b-tab-item icon="spray" label="Spray">
-          <div
-            class="buttons"
-            style=".buttons:not(:last-child) : margin-bottom: 1rem"
-          >
+          <div class="buttons" style=".buttons:not(:last-child) : margin-bottom: 1rem">
             <b-button
               size="is-medium"
-              class="fas fa-user-plus"
+              class="fas fa-plus"
               @click="isAddSprayActive = true"
             >
             </b-button>
@@ -242,9 +233,9 @@
             aria-page-label="Page"
             aria-current-label="Current page"
           >
-            <b-table-column label="ID" width="40" numeric>
+            <b-table-column label="STT" width="40" numeric>
               <template v-slot="props">
-                {{ props.row.sub_service_id }}
+                {{ props.row.stt }}
               </template>
             </b-table-column>
 
@@ -273,7 +264,7 @@
                   @click="loadSprayByID(props.row.sub_service_id)"
                 >
                   <md-icon>edit</md-icon>
-                  <md-tooltip md-direction="top">Edit</md-tooltip>
+                  <md-tooltip md-direction="top">Chỉnh sửa</md-tooltip>
                 </md-button>
               </template>
             </b-table-column>
@@ -323,7 +314,6 @@ export default {
     };
   },
   methods: {
-    
     loadStandUpByID(standup_id) {
       this.isUpdateStandUpActive = true;
       axios
@@ -346,18 +336,40 @@ export default {
     },
 
     loadStandUpService() {
+      this.services = [];
+      var stt = 1;
       axios.get(this.host + "/getAllSubService/" + 1).then((response) => {
-        this.services = response.data;
+        response.data.forEach((element) => {
+          let stand = {};
+          stand = element;
+          stand.stt = stt++;
+          this.services.push(stand);
+        });
+        // this.services = response.data;
       });
     },
     loadLayDownService() {
+      this.services1 = [];
+      var stt = 1;
       axios.get(this.host + "/getAllSubService/" + 2).then((response) => {
-        this.services1 = response.data;
+        response.data.forEach((element) => {
+          let laydown = {};
+          laydown = element;
+          laydown.stt = stt++;
+          this.services1.push(laydown);
+        });
       });
     },
     loadSprayService() {
+      this.services2 = [];
+      var stt = 1;
       axios.get(this.host + "/getAllSubService/" + 3).then((response) => {
-        this.services2 = response.data;
+        response.data.forEach((element) => {
+          let spray = {};
+          spray = element;
+          spray.stt = stt++;
+          this.services2.push(spray);
+        });
       });
     },
   },

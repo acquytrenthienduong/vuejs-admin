@@ -257,7 +257,7 @@
               </template>
             </b-table-column>
 
-            <b-table-column label="Action">
+            <b-table-column label="Hàng động">
               <template v-slot="props">
                 <md-button
                   class="md-just-icon md-simple md-primary"

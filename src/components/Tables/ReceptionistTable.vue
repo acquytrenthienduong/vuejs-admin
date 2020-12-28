@@ -152,7 +152,6 @@ export default {
 
     loadShift() {
       axios.get(this.host + "/shift").then((response) => {
-        // console.log(response);
         this.shifts = response.data;
       });
     },
@@ -161,7 +160,6 @@ export default {
       axios
         .get(this.host + "/receptionist")
         .then((response) => (this.receptionists = response.data));
-      // .then((response) => console.log(response));
     },
 
     loadReceptionistByID(receptionist_id) {
@@ -169,7 +167,6 @@ export default {
       axios
         .get(this.host + "/getReceptionistByID/" + receptionist_id)
         .then((response) => (this.receptionist = response.data));
-      // .then((response) => console.log(response));
     },
   },
   mounted() {

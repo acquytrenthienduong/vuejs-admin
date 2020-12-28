@@ -128,9 +128,7 @@ export default {
     role: localStorage.getItem("username"),
   }),
   methods: {
-    eventload() {
-      console.log(this.event);
-    },
+    eventload() {},
 
     createBill() {
       let dateRaw = new Date();
@@ -215,7 +213,6 @@ export default {
       let hour = dateRaw.getHours();
       let minute = dateRaw.getMinutes();
       let second = dateRaw.getSeconds();
-      console.log("checkout  ", hour + ":" + minute + ":" + second);
       let checkout = hour + ":" + minute + ":" + second;
       axios
         .post(this.host + "/updateReservation/" + this.event.reservation_id, {

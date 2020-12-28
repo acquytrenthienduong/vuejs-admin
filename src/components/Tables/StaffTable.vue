@@ -1,10 +1,7 @@
 <template>
   <div>
     <section>
-      <div
-        class="buttons"
-        style=".buttons:not(:last-child) : margin-bottom: 1rem"
-      >
+      <div class="buttons" style=".buttons:not(:last-child) : margin-bottom: 1rem">
         <b-button
           size="is-medium"
           class="fas fa-user-plus"
@@ -94,7 +91,10 @@
               <md-icon>edit</md-icon>
               <md-tooltip md-direction="top">Edit</md-tooltip>
             </md-button>
-            <md-button class="md-just-icon md-simple md-danger" @click="deleteStaff(props.row.staff_id)">
+            <md-button
+              class="md-just-icon md-simple md-danger"
+              @click="deleteStaff(props.row.staff_id)"
+            >
               <md-icon>delete</md-icon>
               <md-tooltip md-direction="top">delete</md-tooltip>
             </md-button>
@@ -109,7 +109,7 @@
 import axios from "axios";
 import AddNewStaffModal from "../Modal/AddNewStaffModal";
 import UpdateStaffModal from "../Modal/UpdateStaffModal";
-import config from "../../config/config.js"
+import config from "../../config/config.js";
 
 import { id } from "date-fns/locale";
 export default {
@@ -125,29 +125,22 @@ export default {
       //data for modal
       isAddNewModalActive: false,
       isUpdateModalActive: false,
-      host: config.config.host
+      host: config.config.host,
     };
   },
   methods: {
     deleteStaff(staffID) {
-      axios
-        .delete(this.host + "/deleteStaff/" + staffID)
-        .then((response) => {
-          this.loadData();
-          // window.location.reload();
-        });
+      axios.delete(this.host + "/deleteStaff/" + staffID).then((response) => {
+        this.loadData();
+      });
     },
     loadShift() {
       axios.get(this.host + "/shift").then((response) => {
-        // console.log(response);
         this.shifts = response.data;
       });
     },
     loadData() {
-      axios
-        .get(this.host + "/staff")
-        .then((response) => (this.staffs = response.data));
-      // .then((response) => console.log(response));
+      axios.get(this.host + "/staff").then((response) => (this.staffs = response.data));
     },
 
     loadStaffByID(staffID) {
@@ -155,8 +148,6 @@ export default {
       axios
         .get(this.host + "/findId/" + staffID)
         .then((response) => (this.staff = response.data));
-        // .then((response) => console.log(response));
-
     },
 
     reloadPage() {

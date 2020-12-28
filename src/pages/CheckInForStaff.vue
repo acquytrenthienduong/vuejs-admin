@@ -73,7 +73,7 @@
 <script>
 import axios from "axios";
 import { id } from "date-fns/locale";
-import config from "../config/config"
+import config from "../config/config";
 
 export default {
   components: {},
@@ -82,7 +82,7 @@ export default {
       data: [],
       request: {},
       isActive: false,
-      host: config.config.host
+      host: config.config.host,
     };
   },
   methods: {
@@ -90,18 +90,16 @@ export default {
       axios
         .get(this.host + "/getAllStaff")
         .then((response) => (this.data = response.data));
-      // .then((response) => console.log(response));
     },
 
     acceptRequest(requestID) {
       window.alert("Your request is accpeted!");
       axios
-        .post(this.host +"/updateReservation/" + requestID, {
+        .post(this.host + "/updateReservation/" + requestID, {
           is_access: 1,
         })
         .then((response) => {
           this.loadAllPendingRequests();
-          console.log(response);
         });
     },
   },

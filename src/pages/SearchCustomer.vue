@@ -122,8 +122,6 @@ export default {
       if (query != "") {
         this.isLoading = true;
         axios.get(this.host + "/searchCustomer/" + query).then((response) => {
-          // console.log(response);
-          // customers = [];
           this.customers = response.data;
           this.isLoading = false;
         });
@@ -137,7 +135,6 @@ export default {
     customer: function (val) {
       let array = ["Stand up", "Lay Down", "Spray"];
       if (val != null) {
-        console.log(val);
         this.reservations = val.reservations;
         this.totalMoney = 0;
         val.reservations.forEach((element) => {
@@ -149,7 +146,6 @@ export default {
           this.items.push(x);
           this.value.push(x);
 
-          // console.log("eveveve", element.bills[0].total_money);
           if (element.bills.length > 0) {
             this.totalMoney += element.bills[0].total_money;
           }

@@ -147,7 +147,6 @@ export default {
 
     seenNoti(noti) {
       this.numberOfNotificationNotSeen--;
-      console.log(noti);
       noti.seen = 1;
       axios
         .post(this.host + "/seenNoti/" + noti.notification_id, {

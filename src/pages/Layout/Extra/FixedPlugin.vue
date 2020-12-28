@@ -1,6 +1,5 @@
 <template>
-  <div class="fixed-plugin" v-click-outside="closeDropDown">
-  </div>
+  <div class="fixed-plugin" v-click-outside="closeDropDown"></div>
 </template>
 <script>
 import Vue from "vue";
@@ -24,14 +23,14 @@ export default {
         { color: "blue", active: false },
         { color: "green", active: true },
         { color: "orange", active: false },
-        { color: "red", active: false }
+        { color: "red", active: false },
       ],
       sidebarImages: [
         { image: require("@/assets/img/sidebar-1.jpg"), active: false },
         { image: require("@/assets/img/sidebar-2.jpg"), active: true },
         { image: require("@/assets/img/sidebar-3.jpg"), active: false },
-        { image: require("@/assets/img/sidebar-4.jpg"), active: false }
-      ]
+        { image: require("@/assets/img/sidebar-4.jpg"), active: false },
+      ],
     };
   },
   methods: {
@@ -42,13 +41,12 @@ export default {
       this.isOpen = false;
     },
     toggleList(list, itemToActivate) {
-      list.forEach(listItem => {
+      list.forEach((listItem) => {
         listItem.active = false;
       });
       itemToActivate.active = true;
     },
     updateValue(name, val) {
-      console.log(name);
       this.$emit(`update:${name}`, val);
     },
     changeSidebarBackground(item) {
@@ -58,8 +56,8 @@ export default {
     changeSidebarImage(item) {
       this.$emit("update:image", item.image);
       this.toggleList(this.sidebarImages, item);
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

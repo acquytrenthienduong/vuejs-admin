@@ -242,13 +242,9 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          console.log("response", response);
           if (response.status === 200) {
             localStorage.setItem("username", response.data.account);
             localStorage.setItem("role", response.data.role);
-
-            console.log("username", localStorage.getItem("username"));
-            console.log("role", localStorage.getItem("role"));
             this.$router.push("/schedule");
           }
         })
@@ -271,9 +267,6 @@ export default {
           if (response.status === 200) {
             localStorage.setItem("username", response.data.username);
             localStorage.setItem("role", response.data.role);
-
-            console.log("username", localStorage.getItem("username"));
-            console.log("role", localStorage.getItem("role"));
             this.$router.push("/account");
           }
         })

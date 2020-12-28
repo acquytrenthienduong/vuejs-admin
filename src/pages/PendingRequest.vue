@@ -263,21 +263,18 @@ export default {
       this.$buefy.toast.open({
         message: "Request Accepted!",
         type: "is-success",
-        // duration: 5000000,
       });
     },
     loadAllPendingRequests() {
       this.requests = [];
       var stt = 1;
       axios.get(this.host + "/getAllReservationNotAccess").then((response) => {
-        // console.log("response", response.data);
         response.data.forEach((element) => {
           let request = {};
           request = element;
           request.stt = stt++;
           this.requests.push(request);
         });
-        // console.log("requests", requests);
       });
     },
 
@@ -459,7 +456,6 @@ export default {
               this.selectedType = 3;
               break;
           }
-          console.log("this.selectedType", this.selectedType);
           this.selectSubService = row.sub_service.sub_service_id;
           this.date = row.reservation_date;
           this.time = row.checkin_time;
@@ -468,7 +464,6 @@ export default {
     },
 
     OK(row) {
-      console.log("row", row.reservation_id);
       let dateRaw = new Date();
       let year = dateRaw.getFullYear();
       let month = dateRaw.getMonth() + 1;
@@ -539,7 +534,6 @@ export default {
               selectItem.name = element.session;
               selectItem.value = element.sub_service_id;
             }
-            console.log("selected item");
             this.items.push(selectItem);
           });
         })
@@ -566,7 +560,6 @@ export default {
 
   watch: {
     selectedType: function (val) {
-      console.log(val);
       this.loadSubService(val);
     },
   },

@@ -49,7 +49,6 @@ export default {
       this.activities = [];
       var stt = 1;
       axios.get(this.host + "/findAllActivity").then((response) => {
-        console.log("response", response.data);
         response.data.forEach((element) => {
           let activity = {};
           activity = element;

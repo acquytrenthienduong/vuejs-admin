@@ -474,7 +474,7 @@ export default {
 
       let logTime =
         year + "-" + month + "-" + dt + " " + hour + ":" + minute + ":" + second;
-      if (this.compareDate(this.date)) {
+      if (!this.compareDate(this.date)) {
         axios
           .post(this.host + "/updateReservation/" + this.selectedReservationId, {
             is_access: 1,
@@ -545,11 +545,34 @@ export default {
     compareDate(date) {
       let today = new Date();
       let dateRaw = new Date(date);
-      if (today > dateRaw) {
-        return false;
-      } else {
+      let temp = [];
+      temp = this.time.split(":");
+
+      if (today.getFullYear() > dateRaw.getFullYear()) {
         return true;
       }
+
+      if (today.getMonth() > dateRaw.getMonth()) {
+        return true;
+      }
+
+      if (today.getDate() > dateRaw.getDate()) {
+        return true;
+      }
+
+      if (today.getDate() === dateRaw.getDate()) {
+        if (today.getHours() > parseInt(temp[0], 10)) {
+          return true;
+        } else if (today.getHours() === parseInt(temp[0], 10)) {
+          if (today.getMinutes() === parseInt(temp[1], 10)) {
+            return false;
+          } else if (today.getMinutes() > parseInt(temp[1], 10)) {
+            return true;
+          }
+        }
+      }
+
+      return false;
     },
   },
   mounted() {

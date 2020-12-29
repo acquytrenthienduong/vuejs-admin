@@ -109,7 +109,7 @@ export default {
           },
         ],
         xAxis: {
-          categories: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
+          categories: ["Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"],
         },
         yAxis: {
           title: {
@@ -184,7 +184,7 @@ export default {
           },
         ],
         xAxis: {
-          categories: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
+          categories: ["Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"],
         },
         yAxis: {
           title: {
@@ -285,31 +285,31 @@ export default {
         switch (thutrongtuan) {
           case "Sunday":
             // this.dailySalesChart.data.series[0][0]++;
-            x[0].data[6]++;
+            x[0].data[0]++;
             break;
           case "Monday":
             // this.dailySalesChart.data.series[0][1]++;
-            x[0].data[0]++;
+            x[0].data[1]++;
             break;
           case "Tuesday":
             // this.dailySalesChart.data.series[0][2]++;
-            x[0].data[1]++;
+            x[0].data[2]++;
             break;
           case "Wednesday":
             // this.dailySalesChart.data.series[0][3]++;
-            x[0].data[2]++;
+            x[0].data[3]++;
             break;
           case "Thursday":
             // this.dailySalesChart.data.series[0][4]++;
-            x[0].data[3]++;
+            x[0].data[4]++;
             break;
           case "Friday":
             // this.dailySalesChart.data.series[0][5]++;
-            x[0].data[4]++;
+            x[0].data[5]++;
             break;
           case "Saturday":
             // this.dailySalesChart.data.series[0][6]++;
-            x[0].data[5]++;
+            x[0].data[6]++;
             break;
         }
       });
@@ -401,31 +401,31 @@ export default {
         switch (thutrongtuan) {
           case "Sunday":
             // this.dailySalesChart.data.series[0][0]++;
-            x[0].data[6]++;
+            x[0].data[0]++;
             break;
           case "Monday":
             // this.dailySalesChart.data.series[0][1]++;
-            x[0].data[0]++;
+            x[0].data[1]++;
             break;
           case "Tuesday":
             // this.dailySalesChart.data.series[0][2]++;
-            x[0].data[1]++;
+            x[0].data[2]++;
             break;
           case "Wednesday":
             // this.dailySalesChart.data.series[0][3]++;
-            x[0].data[2]++;
+            x[0].data[3]++;
             break;
           case "Thursday":
             // this.dailySalesChart.data.series[0][4]++;
-            x[0].data[3]++;
+            x[0].data[4]++;
             break;
           case "Friday":
             // this.dailySalesChart.data.series[0][5]++;
-            x[0].data[4]++;
+            x[0].data[5]++;
             break;
           case "Saturday":
             // this.dailySalesChart.data.series[0][6]++;
-            x[0].data[5]++;
+            x[0].data[6]++;
             break;
         }
       });

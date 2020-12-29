@@ -178,8 +178,8 @@ export default {
       password: "",
       show1: false,
       rules: {
-        required: (value) => !!value || "Required.",
-        min: (v) => v.length >= 3 || "Min 3 characters",
+        required: (value) => !!value || "Bắt buộc.",
+        min: (v) => v.length >= 3 || "Hãy nhập hơn 3 kí tự nhé",
         emailMatch: () => `The email and password you entered don't match`,
       },
       host: config.config.host,
@@ -201,11 +201,11 @@ export default {
       loginEmail: "",
       loginEmailRules: [
         (v) => !!v || "Required",
-        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+        (v) => /.+@.+\..+/.test(v) || "Email của bạn không khả dụng",
       ],
       emailRules: [
         (v) => !!v || "Required",
-        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+        (v) => /.+@.+\..+/.test(v) || "Email của bạn không khả dụng",
       ],
 
       show1: false,

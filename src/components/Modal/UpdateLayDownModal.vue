@@ -19,7 +19,6 @@
             <b-input
               type="text"
               v-model="service.money"
-              password-reveal
               placeholder="pricing"
               required
             >

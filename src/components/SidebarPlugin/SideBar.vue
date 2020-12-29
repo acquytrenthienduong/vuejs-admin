@@ -5,7 +5,7 @@
     :data-image="sidebarBackgroundImage"
     :style="sidebarStyle"
   >
-    <div class="logo">
+    <div class="logo" @click="goHomePage">
       <a href="#" class="simple-text logo-mini">
         <div class="logo-img">
           <img :src="imgLogo" alt="" />
@@ -39,6 +39,11 @@ import SidebarLink from "./SidebarLink.vue";
 export default {
   components: {
     SidebarLink,
+  },
+  methods:{
+    goHomePage() {
+      this.$router.push({ name: "Dashboard" });
+    }
   },
   props: {
     title: {

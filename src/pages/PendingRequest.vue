@@ -2,7 +2,7 @@
   <div>
     <section>
       <b-tabs>
-        <b-tab-item icon="account" label="Tạo mới">
+        <b-tab-item icon="check-decagram" label="Cuộc hẹn mới">
           <b-table
             :data="requests"
             ref="table"
@@ -85,7 +85,7 @@
           </b-table>
         </b-tab-item>
 
-        <b-tab-item icon="google-drive" label="Thay đổi">
+        <b-tab-item icon="animation" label="Đổi lịch hẹn">
           <b-table
             :data="requests1"
             ref="table"

@@ -90,7 +90,17 @@ const routes = [
         path: "activity",
         name: "Hoạt động",
         component: Activity
-      }
+      },
+      {
+        path: "/404",
+        name: "errorpage",
+        component: () =>
+          import(/* webpackChunkName: "about" */ "../components/404.vue"),
+      },
+      {
+        path: "*",
+        redirect: "/404",
+      },
     ],
     beforeEnter: (to, from, next) => {
       if (!localStorage.getItem('username')) {
